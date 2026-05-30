@@ -1,0 +1,24 @@
+# Local dev secrets for `wrangler dev`. Copy to `.dev.vars` (gitignored) and fill in.
+# In production these are set with `wrangler secret put <NAME>` instead — never commit real values.
+
+# Anthropic API key (cap a monthly budget in the console). https://console.anthropic.com
+ANTHROPIC_API_KEY=
+
+# Discord webhook URL for briefing delivery.
+# Discord: target channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL.
+DISCORD_WEBHOOK_URL=
+
+# Long random string required on the X-Trigger-Token header for /trigger and /api/* routes.
+# Generate with: openssl rand -hex 32
+TRIGGER_TOKEN=
+
+# 32+ char random string used in the /webhook/apify/<secret> path.
+# Generate with: openssl rand -hex 32
+APIFY_WEBHOOK_SECRET=
+
+# Apify API token. https://console.apify.com/account/integrations
+APIFY_TOKEN=
+
+# Apify actor id for the tweet scraper, e.g. "apidojo~tweet-scraper".
+# See docs/apify-pricing.md for cheaper usage-based alternatives.
+APIFY_ACTOR_ID=apidojo~tweet-scraper

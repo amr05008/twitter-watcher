@@ -1,0 +1,22 @@
+{
+  "name": "twitter-watcher",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "predeploy": "if grep -q REPLACE_WITH_D1_ID wrangler.toml; then echo 'Set the D1 database id in wrangler.toml first — see README setup step 2' >&2; exit 1; fi",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260426.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.10.0",
+    "typescript": "^6.0.3",
+    "vitest": "^2.1.9",
+    "wrangler": "^4.85.0"
+  }
+}

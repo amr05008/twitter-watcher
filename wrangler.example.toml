@@ -1,0 +1,37 @@
+name = "twitter-watcher"
+main = "src/worker.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Public fetch surface is intentional: /trigger, /webhook/apify/<secret>, /api/discover, /api/promote
+# All routes are gated by either X-Trigger-Token (header) or a path-secret. Unmatched routes return 404.
+workers_dev = true
+preview_urls = false
+
+# Bundle prompts/*.md as strings at build time
+# (used by `import briefingPrompt from "../prompts/briefing.md"` etc.)
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+# D1 — used for watch_targets, posts, briefings.
+# Run `wrangler d1 create twitter-watcher` after `wrangler login` and paste the
+# returned database_id below before the first deploy.
+[[d1_databases]]
+binding = "DB"
+database_name = "twitter-watcher"
+database_id = "REPLACE_WITH_D1_ID"
+
+# Weekly briefing — Mondays 11:00 UTC ≈ 06:00–07:00 ET (accept DST drift).
+# To switch to daily, change this to "0 11 * * *".
+[triggers]
+crons = ["0 11 * * 1"]
+
+# Secrets — set via `wrangler secret put` (NOT defined here):
+#   ANTHROPIC_API_KEY        Anthropic API key (cap monthly budget in console)
+#   DISCORD_WEBHOOK_URL      Discord webhook URL for digest delivery
+#   TRIGGER_TOKEN            Long random string for X-Trigger-Token header on /trigger, /api/*
+#   APIFY_WEBHOOK_SECRET     32+ char random string — used in /webhook/apify/<secret> path
+#   APIFY_TOKEN              Apify API token — used for /api/discover run-sync calls
+#   APIFY_ACTOR_ID           Apify tweet-scraper actor id (e.g., 'apidojo~tweet-scraper')

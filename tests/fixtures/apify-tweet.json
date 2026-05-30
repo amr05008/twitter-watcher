@@ -1,0 +1,25 @@
+{
+  "type": "tweet",
+  "id": "1797823412345678901",
+  "url": "https://twitter.com/karpathy/status/1797823412345678901",
+  "twitterUrl": "https://twitter.com/karpathy/status/1797823412345678901",
+  "text": "Just shipped a new optimizer that beats AdamW on a few internal benchmarks. Writeup soon.",
+  "fullText": "Just shipped a new optimizer that beats AdamW on a few internal benchmarks. Writeup soon.",
+  "createdAt": "Wed May 27 14:23:45 +0000 2026",
+  "lang": "en",
+  "isRetweet": false,
+  "isReply": false,
+  "isQuote": false,
+  "retweetCount": 42,
+  "replyCount": 8,
+  "likeCount": 312,
+  "viewCount": 12450,
+  "author": {
+    "userName": "karpathy",
+    "name": "Andrej Karpathy",
+    "id": "33836629",
+    "isVerified": true,
+    "followers": 1200000,
+    "following": 540
+  }
+}
