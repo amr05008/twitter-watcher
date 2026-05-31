@@ -1,14 +1,10 @@
 # Twitter Watcher
 
-I want the signal from Twitter/X without being on Twitter/X. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading each week, and drops them into a Discord channel as a briefing. No feed, no doomscroll — one curated message a week.
+I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading each week, and drops them into a Discord channel as a briefing. No feed, no doomscroll, one curated message a week.
 
 It's a Cloudflare Worker on a cron. It pulls fresh tweets from [Apify](https://apify.com), stores them in D1, asks Claude Sonnet for the top 5–7 signals of the week, and posts a Discord embed. That's the whole thing.
 
-> **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook, and watch list. Adapt it — don't expect to clone and run it untouched.
-
-Sibling project: [`inbox-watcher`](https://github.com/amr05008/inbox-watcher) — same pattern, applied to email.
-
-> Origin: this started as a [ManyChat](https://manychat.com) hackathon build. This is the cleaned-up personal version — the briefing-only core, wired to my own Discord and running weekly.
+> **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook, and watch list. Adapt it, don't expect to clone and run it untouched.
 
 ## What it does
 
@@ -26,10 +22,8 @@ Sibling project: [`inbox-watcher`](https://github.com/amr05008/inbox-watcher) �
 ```
 
 - **Weekly briefing.** Every Monday the Worker pulls fresh tweets from the watched accounts, has Claude pick the 5–7 highest-signal posts of the past week, and posts them to Discord. If there's nothing new, it posts a short "no new signal" heartbeat. If the run *fails*, it posts a failure alert so it never silently goes dark.
-- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list — it's not part of the weekly run.
+- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekly run.
 - **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, or add/remove accounts from any Claude conversation.
-
-_(Screenshot of a real briefing: add `docs/briefing-example.png` once you've run one.)_
 
 ### Example briefing
 
@@ -40,8 +34,6 @@ A real run, picked from ~47 tweets, posted to my Discord:
 
 > **#2 — @karpathy** — Software horror: litellm PyPI supply-chain attack. `pip install litellm` was enough to exfiltrate SSH keys, cloud creds, Kubernetes configs…
 > _Active supply-chain attack — actionable security alert._
-
-Three things worth knowing, no scrolling. That's the point.
 
 ## Cadence
 
@@ -209,9 +201,8 @@ So ~$1–11/mo once you move off the Apify rental floor — Apify is the only re
 ## Version history
 
 ### v1.0.0 — 2026-05-30
-First public release. Forked from a ManyChat hackathon project into a personal, public-ready tool, deployed and verified end-to-end (Apify → D1 → Claude → Discord).
+First public release. Deployed and verified end-to-end (Apify → D1 → Claude → Discord).
 - Weekly Discord briefing (Mondays 11:00 UTC): refresh → top 5–7 signals via Claude → embed
 - "No new signal" heartbeat, Discord failure alerts, and D1 pruning of summarized posts older than 30 days
 - On-demand `discover` backend + local MCP server (7 tools) to drive it from any Claude client
-- Stripped the hackathon React UI; MIT licensed
 - Usage-based Apify migration researched but not yet applied — see [`docs/apify-pricing.md`](./docs/apify-pricing.md)
