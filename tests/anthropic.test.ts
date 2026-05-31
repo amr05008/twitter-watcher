@@ -94,17 +94,28 @@ describe("anthropic.selectTopSignal", () => {
     expect(body.system[0].cache_control).toEqual({ type: "ephemeral" });
   });
 
-  it("parses the tool_use response into picks", async () => {
+  it("parses the tool_use response into a lead + picks", async () => {
     const fakeFetch = fakeFetchOk("select_top_signal", {
+      lead: "Two frontier moves today.",
       picks: [
         { rank: 1, postIndex: 2, rationale: "swyx wins" },
         { rank: 2, postIndex: 1, rationale: "karpathy" },
-        { rank: 3, postIndex: 1, rationale: "filler" },
       ],
     });
-    const picks = await selectTopSignal(posts, env, "sys", fakeFetch as any);
-    expect(picks.length).toBe(3);
+    const { lead, picks } = await selectTopSignal(posts, env, "sys", fakeFetch as any);
+    expect(lead).toBe("Two frontier moves today.");
+    expect(picks.length).toBe(2);
     expect(picks[0]).toEqual({ rank: 1, postIndex: 2, rationale: "swyx wins" });
+  });
+
+  it("allows an empty picks array (quiet-day quality gate)", async () => {
+    const fakeFetch = fakeFetchOk("select_top_signal", { picks: [] });
+    const result = await selectTopSignal(posts, env, "sys", fakeFetch as any);
+    expect(result.picks).toEqual([]);
+    expect(result.lead).toBeUndefined();
+    // minItems is 0 so the tool schema permits returning nothing.
+    const body = JSON.parse(((fakeFetch.mock.calls as any[])[0][1] as any).body);
+    expect(body.tools[0].input_schema.properties.picks.minItems).toBe(0);
   });
 
   it("throws on non-OK responses (no silent fallback for signal pipeline)", async () => {

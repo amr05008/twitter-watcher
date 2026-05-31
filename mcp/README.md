@@ -20,7 +20,7 @@ Composable — Claude chains them automatically: *"Pull fresh tweets and run my 
 
 | Tool | What it does |
 | --- | --- |
-| `run_briefing` | Run a briefing now. Posts the top 5–7 weekly signals to Discord, or a heartbeat if nothing's new. |
+| `run_briefing` | Run a briefing now. Posts the day's tiered top signals to Discord, or reports skipped if nothing clears the bar. |
 | `refresh_tweets` | Pull fresh tweets for every watched handle from Apify into D1. Synchronous, ~15–45s. |
 | `discover_accounts` | Topic search → top accounts. Synchronous, ~15–45s. |
 | `list_watched_accounts` | Show the current watch list. |

@@ -39,7 +39,7 @@ const tools = [
   {
     name: "run_briefing",
     description:
-      "Trigger a Twitter Watcher passive briefing immediately. Pulls unsummarized tweets from the watched accounts, has Claude pick the top 5-7 highest-signal posts from the past week, and posts a digest embed to the configured Discord channel. If there are no new posts, posts a 'no new signal' heartbeat. Returns the briefing ID and post count.",
+      "Trigger a Twitter Watcher briefing immediately. Pulls unsummarized tweets from the watched accounts, has Claude pick the top signals (1-3 normally, up to 5 on heavy days), and posts a tiered digest embed to the configured Discord channel. If nothing clears the signal bar, it posts nothing and reports skipped. Returns the briefing ID and post count.",
     inputSchema: {
       type: "object",
       properties: {},
@@ -157,8 +157,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           content: [
             {
               type: "text",
-              text: result.heartbeat
-                ? `No new signal — heartbeat briefing posted (id: ${result.briefingId}).`
+              text: result.skipped
+                ? `No new signal — nothing cleared the bar, so no briefing was posted (id: ${result.briefingId}).`
                 : `Briefing posted to Discord. Briefing ID: ${result.briefingId}. Posts surfaced: ${result.postCount}.`,
             },
           ],

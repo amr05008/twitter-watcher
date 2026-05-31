@@ -90,17 +90,23 @@ export interface SelectTopSignalOptions {
   maxPicks?: number;
 }
 
+export interface SignalSelection {
+  /** One-sentence summary of the day's signal; omitted when nothing is picked. */
+  lead?: string;
+  picks: SignalPick[];
+}
+
 export async function selectTopSignal(
   posts: AnthropicPostInput[],
   env: { ANTHROPIC_API_KEY: string },
   systemPrompt: string,
   fetchImpl: FetchLike = fetch,
   opts: SelectTopSignalOptions = {},
-): Promise<SignalPick[]> {
-  // Weekly default: surface 5–7. Clamp to the batch size so quiet weeks (or a
-  // daily revert passing maxPicks:3) still produce a satisfiable tool schema.
-  const maxPicks = Math.max(1, Math.min(opts.maxPicks ?? 7, posts.length));
-  const minPicks = Math.max(1, Math.min(opts.minPicks ?? 5, maxPicks));
+): Promise<SignalSelection> {
+  // Weekday default: 1–3 is the norm, up to 5 on heavy days, and 0 is valid so
+  // the prompt's quality gate can keep a quiet day silent. Clamp to batch size.
+  const maxPicks = Math.max(1, Math.min(opts.maxPicks ?? 5, posts.length));
+  const minPicks = Math.max(0, Math.min(opts.minPicks ?? 0, maxPicks));
   const body = {
     model: MODEL,
     max_tokens: 1024,
@@ -110,10 +116,11 @@ export async function selectTopSignal(
     tools: [
       {
         name: "select_top_signal",
-        description: `Select the top ${minPicks}–${maxPicks} highest-signal posts from the batch.`,
+        description: `Select the top ${minPicks}–${maxPicks} highest-signal posts from the batch (return none if nothing clears the bar).`,
         input_schema: {
           type: "object",
           properties: {
+            lead: { type: "string", maxLength: 160 },
             picks: {
               type: "array",
               minItems: minPicks,
@@ -137,12 +144,12 @@ export async function selectTopSignal(
     messages: [{ role: "user", content: formatPostsForSignal(posts) }],
   };
 
-  const result = await callTool<{ picks: SignalPick[] }>(
+  const result = await callTool<SignalSelection>(
     body,
     env.ANTHROPIC_API_KEY,
     fetchImpl,
   );
-  return result.picks;
+  return { lead: result.lead, picks: result.picks ?? [] };
 }
 
 export async function suggestAccounts(

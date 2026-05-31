@@ -49,9 +49,10 @@ export async function refreshHandleIngest(
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       twitterHandles: handles,
-      // Weekly window: ~40 tweets/handle to capture a full week (vs ~15 for daily).
-      // Tune after observing real per-handle volume.
-      maxItems: Math.max(50, handles.length * 40),
+      // Weekday cadence: ~15 tweets/handle covers a day (plus the weekend on the
+      // Monday run, which the briefing window stretches back over). Lower if Apify
+      // volume matters (~8 ≈ cost-neutral vs the old weekly pull); higher for safety.
+      maxItems: Math.max(50, handles.length * 15),
       sort: "Latest",
       tweetLanguage: "en",
     }),

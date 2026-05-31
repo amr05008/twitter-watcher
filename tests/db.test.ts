@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import {
   upsertPost,
   getUnsummarized,
+  getLastBriefing,
   markSummarized,
   upsertWatchTarget,
   insertBriefing,
@@ -122,6 +123,48 @@ describe("db", () => {
       await markSummarized(db as any, [], "2026-05-27");
       const remaining = await getUnsummarized(db as any);
       expect(remaining.length).toBe(3);
+    });
+
+    it("filters by posted_at when sincePostedAt is given", async () => {
+      // Seed posts span the same timestamp; add an older and a newer one.
+      await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "old", timestamp: "2026-05-20T00:00:00.000Z" }));
+      await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "new", timestamp: "2026-05-30T00:00:00.000Z" }));
+
+      const windowed = await getUnsummarized(db as any, {
+        sincePostedAt: "2026-05-29T00:00:00.000Z",
+      });
+      // Only the "new" post (2026-05-30) is at/after the cutoff; the three
+      // 2026-05-27 seeds and the 2026-05-20 "old" post are excluded.
+      expect(windowed.map((p) => p.id)).toEqual(["twitter:new"]);
+
+      // Without the option, all five are returned (back-compat).
+      expect((await getUnsummarized(db as any)).length).toBe(5);
+    });
+  });
+
+  describe("getLastBriefing", () => {
+    it("returns null when there are no briefings", async () => {
+      expect(await getLastBriefing(db as any)).toBeNull();
+    });
+
+    it("returns the most recent briefing by generated_at", async () => {
+      await insertBriefing(db as any, {
+        id: "2026-05-25",
+        generatedAt: "2026-05-25T11:00:00.000Z",
+        postCount: 2,
+        output: "[]",
+        trigger: "cron",
+      });
+      await insertBriefing(db as any, {
+        id: "2026-05-27",
+        generatedAt: "2026-05-27T11:00:00.000Z",
+        postCount: 3,
+        output: "[]",
+        trigger: "cron",
+      });
+      const last = await getLastBriefing(db as any);
+      expect(last?.id).toBe("2026-05-27");
+      expect(last?.generated_at).toBe("2026-05-27T11:00:00.000Z");
     });
   });
 

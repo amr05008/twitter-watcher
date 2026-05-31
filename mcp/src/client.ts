@@ -7,7 +7,10 @@ export interface TwitterWatcherClientConfig {
 export interface BriefingResult {
   briefingId: string;
   postCount?: number;
-  heartbeat?: true;
+  /** Set when the run found nothing worth surfacing and posted nothing. */
+  skipped?: true;
+  /** Set on a quiet Monday cron that posted a liveness ping (cron-only). */
+  healthPing?: true;
 }
 
 export interface DiscoverResult {

@@ -44,7 +44,7 @@ export default {
     try {
       // Refresh first so the briefing sees fresh tweets, then brief.
       // Refresh failure must NOT block the briefing — older unsummarized posts
-      // may still be in D1, and a heartbeat is better than a silent skip.
+      // may still be in D1 and worth surfacing.
       try {
         const result = await refreshHandleIngest(env);
         console.log("scheduled refresh:", JSON.stringify(result));
@@ -70,7 +70,7 @@ export default {
       }
     } catch (err) {
       // The briefing itself failed (Claude, Discord, or D1). Surface it to the
-      // same Discord channel so a weekly tool never silently goes dark, then
+      // same Discord channel so the watcher never silently goes dark, then
       // rethrow so Cloudflare logs and surfaces the cron failure too.
       const message = err instanceof Error ? err.message : String(err);
       console.error("scheduled briefing failed:", message);

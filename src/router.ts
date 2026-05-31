@@ -31,7 +31,8 @@ export interface PromoteResponse {
 
 export type BriefingResult =
   | { briefingId: string; postCount: number }
-  | { heartbeat: true; briefingId: string };
+  | { skipped: true; briefingId: string }
+  | { healthPing: true; briefingId: string };
 
 export interface ListWatchTargetsResponse {
   targets: Array<{

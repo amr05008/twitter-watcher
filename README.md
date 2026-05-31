@@ -1,53 +1,60 @@
 # Twitter Watcher
 
-I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading each week, and drops them into a Discord channel as a briefing. No feed, no doomscroll, one curated message a week.
+I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a tight weekday briefing. No feed, no doomscroll — and on a quiet day, no message at all.
 
-It's a Cloudflare Worker on a cron. It pulls fresh tweets from [Apify](https://apify.com), stores them in D1, asks Claude Sonnet for the top 5–7 signals of the week, and posts a Discord embed. That's the whole thing.
+It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [Apify](https://apify.com), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
 
 > **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook, and watch list. Adapt it, don't expect to clone and run it untouched.
 
 ## What it does
 
 ```
-                    ┌─────────── Cloudflare Worker ───────────┐
-  weekly cron  ──▶  │  refresh → Apify (tweet scraper)         │
-  (Mon 11 UTC)      │     ↓                                    │
-                    │   D1 (posts) ──▶ Claude (top 5–7) ──────▶│──▶ Discord briefing
-                    │     ↑                                    │
-                    │   prune posts > 30 days                  │
-                    └──────────────────────────────────────────┘
-                              ▲
-                    MCP server│(optional) — drive it from any Claude client:
-                              │ run a briefing, refresh, discover/add/remove accounts
+                     ┌─────────── Cloudflare Worker ───────────┐
+  weekday cron  ──▶  │  refresh → Apify (tweet scraper)         │
+  (Mon–Fri 11 UTC)   │     ↓                                    │
+                     │   D1 (posts) ──▶ Claude (tiered top) ───▶│──▶ Discord briefing
+                     │     ↑                                    │
+                     │   prune posts > 30 days                  │
+                     └──────────────────────────────────────────┘
+                               ▲
+                     MCP server│(optional) — drive it from any Claude client:
+                               │ run a briefing, refresh, discover/add/remove accounts
 ```
 
-- **Weekly briefing.** Every Monday the Worker pulls fresh tweets from the watched accounts, has Claude pick the 5–7 highest-signal posts of the past week, and posts them to Discord. If there's nothing new, it posts a short "no new signal" heartbeat. If the run *fails*, it posts a failure alert so it never silently goes dark.
-- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekly run.
+- **Weekday briefing.** Every weekday (Mon–Fri) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Monday reaches back over the weekend. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
+- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekday run.
 - **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, or add/remove accounts from any Claude conversation.
 
 ### Example briefing
 
-A real run, picked from ~47 tweets, posted to my Discord:
+A run posted to my Discord, tiered for scanning:
 
-> **#1 — @karpathy** — Personal update: I've joined Anthropic…
-> _Major talent move with direct implications for frontier LLM R&D direction._
+> **Twitter Watcher — 2026-05-31**
+> Opus 4.8 shipped, Claude Code got dynamic workflows, and Gemini 3.5 Flash landed.
+>
+> 📌 **Don't miss**
+> 1. Opus 4.8 out — SWE-bench Pro 64.3→69.2, same price — @bcherny [↗]
+> 2. Claude Code dynamic workflows: auto-orchestration + parallel subagents — @ClaudeDevs [↗]
+> 3. Salesforce: a 231-day migration shipped in 13 days with Claude Code — @bcherny [↗]
+>
+> **Also worth a look**
+> • Gemini 3.5 Flash beats 3.1 Pro, 4× faster at half the cost — @demishassabis [↗]
 
-> **#2 — @karpathy** — Software horror: litellm PyPI supply-chain attack. `pip install litellm` was enough to exfiltrate SSH keys, cloud creds, Kubernetes configs…
-> _Active supply-chain attack — actionable security alert._
+The headline under each item is Claude's rationale — the full tweet text isn't shown, so the rationale has to stand on its own.
 
 ## Cadence
 
-It's weekly by default. To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
+It runs every weekday by default. To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
 
 ```toml
-crons = ["0 11 * * 1"]      # default — weekly, Monday 11:00 UTC
-crons = ["0 11 * * *"]      # daily 11:00 UTC
-crons = ["0 11 1 * *"]      # monthly, 1st of the month
+crons = ["0 11 * * 1-5"]    # default — weekdays, Mon–Fri 11:00 UTC
+crons = ["0 11 * * 1"]      # weekly, Monday 11:00 UTC
+crons = ["0 11 * * *"]      # daily, including weekends
 ```
 
 The cron does not fire under `wrangler dev` — use `POST /trigger` for the dev loop.
 
-If you switch to daily, you'll probably want fewer picks per briefing (a day has less signal than a week). The count is a parameter on `selectTopSignal` in `src/anthropic.ts` (`minPicks`/`maxPicks`, default 5–7) — pass `{ maxPicks: 3 }` from `runBriefing` for the daily feel.
+Each run scopes its candidate tweets to the window since the last *posted* briefing (floored at 72h so Monday covers the weekend, capped at 7 days). Pick counts are governed by the prompt (1–3 normal, up to 5 on heavy days, 0 on a quiet day → no message) and clamped by `minPicks`/`maxPicks` on `selectTopSignal` in `src/anthropic.ts` (default `0`/`5`). If you move to a weekly cadence, raise `maxPicks` — a week holds more signal than a day.
 
 ## Setup
 
@@ -126,7 +133,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/trigger` | Run a briefing now. `{ briefingId, postCount }` or `{ heartbeat: true, briefingId }`. |
+| `POST` | `/trigger` | Run a briefing now. `{ briefingId, postCount }` or `{ skipped: true, briefingId }` when nothing clears the bar. |
 | `POST` | `/api/refresh` | Pull fresh tweets from Apify and ingest into D1 (the cron does this first each run). ~15–45s. |
 | `POST` | `/api/discover` | Topic search → top accounts. Body: `{ topic, lookbackDays?, maxResults? }`. ~15–45s. |
 | `GET` | `/api/watch-targets` | List watched handles. |
@@ -141,7 +148,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | Every request 404s | Wrong `TRIGGER_TOKEN`. The Worker returns 404 (not 401) on token mismatch by design. |
 | `error code: 1101` on `/api/refresh` or `/trigger` | Unhandled exception, almost always the Apify call. Most common cause: `APIFY_ACTOR_ID` set to the store's slash form `apidojo/tweet-scraper` — the API needs the **tilde** form `apidojo~tweet-scraper`. Run `npx wrangler tail` to see the real error. |
 | Apify returns `noResults` | The `apidojo` actor blocks API access on Apify's free plan — you need a paid plan, or a usage-based actor (see `docs/apify-pricing.md`). |
-| Briefing posts "no new signal" | No unsummarized posts in D1 — run `/api/refresh` first, or check the cron ran. |
+| Briefing reports `skipped` / nothing posts | Either no unsummarized posts in the window (run `/api/refresh` first, or check the cron ran) or Claude judged nothing worth surfacing. Silent skips are expected on quiet days. |
 | A failure alert showed up in Discord | The scheduled run threw. Check `npx wrangler tail` for the actual error. |
 | `discover` takes 30+ seconds | Expected — Apify search is slow. |
 
@@ -149,7 +156,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 
 ## How it works
 
-- **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the weekly cron). Entry: `src/worker.ts`.
+- **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the weekday cron). Entry: `src/worker.ts`.
 - **Router** — `src/router.ts`, a single switch over `(method, path)`; every route 404s on token mismatch.
 - **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes summarized posts older than 30 days so D1 stays lean.
 - **Discover** — `src/discover.ts`: `Apify search → normalize → aggregate by author → Claude.suggestAccounts`.
@@ -163,7 +170,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 src/
 ├── worker.ts        # fetch + scheduled entry
 ├── router.ts        # route dispatch + token / path-secret guards
-├── briefing.ts      # weekly briefing orchestrator
+├── briefing.ts      # weekday briefing orchestrator (tiered, windowed, silent-skip)
 ├── discover.ts      # topic → accounts orchestrator
 ├── ingest.ts        # Apify refresh → normalize → upsert
 ├── db.ts            # all D1 queries (incl. prunePosts)
@@ -190,7 +197,7 @@ npm run dev         # wrangler dev (no cron — use POST /trigger)
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)
 - Apify: **$29** on the default rental actor, or **< $1** on a usage-based one ([`docs/apify-pricing.md`](./docs/apify-pricing.md))
-- Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — weekly briefings are tiny)
+- Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per weekday run)
 - Discord: **$0**
 
 So ~$1–11/mo once you move off the Apify rental floor — Apify is the only real cost.
@@ -198,11 +205,18 @@ So ~$1–11/mo once you move off the Apify rental floor — Apify is the only re
 ## Roadmap
 
 - **Usage-based Apify** — the research is done ([`docs/apify-pricing.md`](./docs/apify-pricing.md)); the migration is the next code change.
-- **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekly flow.
+- **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekday flow.
 - **More sources** — a Reddit adapter (`src/adapters/reddit.ts`) is the highest-value second source; the adapter interface is already built for it.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history
+
+### v1.1.0 — 2026-05-31
+Refined how the briefing delivers, for scannability over a flat ranked list.
+- **Weekday cadence** (Mon–Fri 11:00 UTC) instead of weekly; each run scopes candidates to a dynamic window since the last posted briefing (72h floor / 7d cap).
+- **Tiered digest**: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier on heavy days. Claude's rationale is now the standalone headline; full tweet bodies dropped.
+- **Quiet days stay silent** — the prompt may return zero picks and the run posts nothing. A quiet **Monday** is the exception: it posts a one-line liveness ping so a dead cron stays visible. Failure alerts remain.
+- Per-handle Apify pull trimmed (40→15 tweets) for the shorter window.
 
 ### v1.0.0 — 2026-05-30
 First public release. Deployed and verified end-to-end (Apify → D1 → Claude → Discord).

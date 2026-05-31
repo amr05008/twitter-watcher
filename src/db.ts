@@ -154,16 +154,54 @@ export async function upsertPost(
     .run();
 }
 
-export async function getUnsummarized(db: D1Database): Promise<PostRow[]> {
-  const result = await db
-    .prepare(
-      `SELECT id, source, source_id, target_id, author, posted_at, text, url, raw, summarized_in
-         FROM posts
-        WHERE summarized_in IS NULL
-        ORDER BY posted_at DESC`,
-    )
-    .all<PostRow>();
+export interface GetUnsummarizedOptions {
+  /**
+   * ISO 8601 lower bound on posted_at. When set, only posts at or after this
+   * timestamp are considered — used by the weekday cron to scope each run to a
+   * recent window so old, never-picked posts don't re-enter every batch.
+   * Omit (manual runs) to flush the full backlog.
+   */
+  sincePostedAt?: string;
+}
+
+export async function getUnsummarized(
+  db: D1Database,
+  opts: GetUnsummarizedOptions = {},
+): Promise<PostRow[]> {
+  const cols =
+    "id, source, source_id, target_id, author, posted_at, text, url, raw, summarized_in";
+  const stmt = opts.sincePostedAt
+    ? db
+        .prepare(
+          `SELECT ${cols} FROM posts
+            WHERE summarized_in IS NULL AND posted_at >= ?
+            ORDER BY posted_at DESC`,
+        )
+        .bind(opts.sincePostedAt)
+    : db.prepare(
+        `SELECT ${cols} FROM posts
+          WHERE summarized_in IS NULL
+          ORDER BY posted_at DESC`,
+      );
+  const result = await stmt.all<PostRow>();
   return result.results;
+}
+
+/**
+ * The most recently generated briefing, or null if none exist. Used to compute
+ * the weekday run's candidate window (back to the last *posted* briefing).
+ */
+export async function getLastBriefing(
+  db: D1Database,
+): Promise<BriefingRow | null> {
+  return db
+    .prepare(
+      `SELECT id, generated_at, post_count, output, trigger
+         FROM briefings
+        ORDER BY generated_at DESC
+        LIMIT 1`,
+    )
+    .first<BriefingRow>();
 }
 
 export async function markSummarized(

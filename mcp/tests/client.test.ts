@@ -43,15 +43,15 @@ describe("TwitterWatcherClient.runBriefing", () => {
     expect(init.headers["X-Trigger-Token"]).toBe("test-token");
   });
 
-  it("propagates heartbeat=true when there's no new signal", async () => {
+  it("propagates skipped=true when nothing clears the bar", async () => {
     const fakeFetch = makeFetch([
       {
         match: (url) => url.endsWith("/trigger"),
-        respond: ok({ briefingId: "manual-h", heartbeat: true }),
+        respond: ok({ briefingId: "manual-h", skipped: true }),
       },
     ]);
     const result = await client(fakeFetch as any).runBriefing();
-    expect(result.heartbeat).toBe(true);
+    expect(result.skipped).toBe(true);
   });
 
   it("throws on non-2xx", async () => {
