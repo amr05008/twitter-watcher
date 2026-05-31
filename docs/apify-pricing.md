@@ -3,15 +3,15 @@
 This project pulls tweets through an [Apify](https://apify.com) actor. The default
 actor, `apidojo/tweet-scraper`, is a **rental** actor — it needs the Apify Starter
 plan (**$29/mo**, which includes $29 of usage credit). You pay the $29 whether or
-not you use the credit. For a personal weekly briefing, that's almost all wasted.
+not you use the credit. For a personal weekday briefing, that's almost all wasted.
 
 This doc is the research behind switching to **usage-based** pricing. No code has
 changed yet — it's a recommendation plus the migration notes.
 
 ## What I actually use
 
-- Weekly briefing: ~8 watched handles × ~40 tweets ≈ **320 tweets/week ≈ ~1.3K/month**, plus a handful of `discover` calls.
-- If I move to daily later: ~3.6K tweets/month.
+- Weekday briefing: ~7 watched handles × ~15 tweets × 5 days ≈ **~525 tweets/week ≈ ~2.3K/month**, plus a handful of `discover` calls.
+- A 7-day cadence (including weekends) would be ~3.2K tweets/month.
 
 ## The options (May 2026)
 
@@ -24,13 +24,13 @@ changed yet — it's a recommendation plus the migration notes.
 
 ## The math
 
-At ~1.3K–3.6K tweets/month, a pay-per-result actor costs **well under $1/month** vs
+At ~2–3K tweets/month, a pay-per-result actor costs **well under $1/month** vs
 the $29 rental floor — a **30×+ saving**, with no monthly minimum.
 
 | | Rental | Pay-per-result @ $0.25/1K |
 | --- | --- | --- |
-| Weekly (~1.3K/mo) | $29 | ~$0.33 |
-| Daily (~3.6K/mo) | $29 | ~$0.90 |
+| Weekday (~2.3K/mo) | $29 | ~$0.57 |
+| 7-day (~3.2K/mo) | $29 | ~$0.80 |
 
 ## Recommendation
 
