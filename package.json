@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "predeploy": "if grep -q REPLACE_WITH_D1_ID wrangler.toml; then echo 'Set the D1 database id in wrangler.toml first — see README setup step 2' >&2; exit 1; fi",
     "deploy": "wrangler deploy",
-    "dev": "wrangler dev"
+    "dev": "wrangler dev",
+    "seed": "node scripts/seed-handles.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260426.1",

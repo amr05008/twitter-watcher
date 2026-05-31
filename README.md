@@ -80,6 +80,8 @@ If you switch to daily, you'll probably want fewer picks per briefing (a day has
    ```
    Always use `--remote`, never `--local` — the local D1 binding is a separate database the deployed Worker won't see.
 
+   `seed.sql` is a one-shot bootstrap and goes stale once you curate at runtime. For an ongoing, hand-editable watch list, use [`watch-handles.txt`](./watch-handles.txt) (one handle per line) and `npm run seed` instead — it syncs the file to D1 through the `/api/promote` route (`-- --prune` makes it a true two-way sync). Needs `WATCHER_URL` + `TRIGGER_TOKEN` in the env (or `.dev.vars`), so run it after deploy.
+
 3. **Secrets** (set with the CLI, or in the Cloudflare dashboard → your Worker → Settings → Variables → as Secret):
    ```bash
    npx wrangler secret put ANTHROPIC_API_KEY
@@ -170,6 +172,8 @@ src/
 └── adapters/        # SourceAdapter interface + twitter.ts
 prompts/             # briefing.md + discover.md (bundled at build time)
 mcp/                 # local MCP server — drive it from any Claude client
+scripts/             # seed-handles.mjs — sync watch-handles.txt → D1 via the API
+watch-handles.txt    # hand-editable watch list (source of truth for `npm run seed`)
 docs/apify-pricing.md
 tests/               # vitest — real SQL against an in-memory SQLite shim
 ```

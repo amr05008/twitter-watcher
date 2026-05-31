@@ -1,0 +1,21 @@
+# Twitter Watcher — your watch list. This file is the source of truth you edit by hand.
+#
+# One handle per line. `#` starts a comment (whole-line or inline). Blank lines ignored.
+# A leading `@` is fine — it gets stripped. Group with comments however you like.
+#
+# Apply it to the live watch list with:   npm run seed
+#   (reads this file and syncs it to the deployed Worker's D1 via /api/promote —
+#    add `-- --prune` to also remove handles that are in D1 but not in this file.)
+
+# researchers
+karpathy
+demishassabis
+simonw
+
+# indie builders / ecosystem
+trq212
+buccocapital
+
+# lab voices
+ClaudeDevs
+bcherny
