@@ -61,7 +61,7 @@ If you switch to daily, you'll probably want fewer picks per briefing (a day has
 
 ### Prerequisites
 
-- **Cloudflare Workers Paid plan** ($5/mo) — the Apify call is a synchronous 15–45s subrequest; the free tier won't sustain it.
+- **Cloudflare Workers** — the **free tier is fine**. The Apify/Claude calls take 15–45s, but that's I/O wait, which doesn't count against Workers' CPU-time limit (only active code execution does, and ours is trivial). No paid plan needed for this workload.
 - **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo) — note `APIFY_ACTOR_ID` wants its **API form with a tilde**, `apidojo~tweet-scraper`, not the store's slash form. That fixed floor is mostly wasted for personal use — see [`docs/apify-pricing.md`](./docs/apify-pricing.md) for usage-based actors that drop it to well under $1/mo.
 - **Anthropic API key** with a monthly budget cap.
 - **Discord webhook** for the channel you want briefings in (channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL).
@@ -192,12 +192,12 @@ npm run dev         # wrangler dev (no cron — use POST /trigger)
 
 ## Costs (rough monthly, single-user)
 
-- Cloudflare Workers Paid: **$5**
+- Cloudflare Workers: **$0** (free tier — this workload fits easily)
 - Apify: **$29** on the default rental actor, or **< $1** on a usage-based one ([`docs/apify-pricing.md`](./docs/apify-pricing.md))
 - Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — weekly briefings are tiny)
 - Discord: **$0**
 
-So ~$6–15/mo once you move off the Apify rental floor.
+So ~$1–11/mo once you move off the Apify rental floor — Apify is the only real cost.
 
 ## Roadmap
 
