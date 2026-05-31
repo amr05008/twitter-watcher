@@ -138,6 +138,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | Symptom | Likely cause / fix |
 | --- | --- |
 | Every request 404s | Wrong `TRIGGER_TOKEN`. The Worker returns 404 (not 401) on token mismatch by design. |
+| `error code: 1101` on `/api/refresh` or `/trigger` | Unhandled exception, almost always the Apify call. Most common cause: `APIFY_ACTOR_ID` set to the store's slash form `apidojo/tweet-scraper` — the API needs the **tilde** form `apidojo~tweet-scraper`. Run `npx wrangler tail` to see the real error. |
 | Apify returns `noResults` | The `apidojo` actor blocks API access on Apify's free plan — you need a paid plan, or a usage-based actor (see `docs/apify-pricing.md`). |
 | Briefing posts "no new signal" | No unsummarized posts in D1 — run `/api/refresh` first, or check the cron ran. |
 | A failure alert showed up in Discord | The scheduled run threw. Check `npx wrangler tail` for the actual error. |

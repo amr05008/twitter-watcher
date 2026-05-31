@@ -19,6 +19,7 @@ APIFY_WEBHOOK_SECRET=
 # Apify API token. https://console.apify.com/account/integrations
 APIFY_TOKEN=
 
-# Apify actor id for the tweet scraper, e.g. "apidojo~tweet-scraper".
+# Apify actor id for the tweet scraper. Use the API's TILDE form (apidojo~tweet-scraper),
+# NOT the store's slash form (apidojo/tweet-scraper) — the slash breaks the API path (404).
 # See docs/apify-pricing.md for cheaper usage-based alternatives.
 APIFY_ACTOR_ID=apidojo~tweet-scraper
