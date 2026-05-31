@@ -62,7 +62,7 @@ If you switch to daily, you'll probably want fewer picks per briefing (a day has
 ### Prerequisites
 
 - **Cloudflare Workers Paid plan** ($5/mo) — the Apify call is a synchronous 15–45s subrequest; the free tier won't sustain it.
-- **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo). That fixed floor is mostly wasted for personal use — see [`docs/apify-pricing.md`](./docs/apify-pricing.md) for usage-based actors that drop it to well under $1/mo.
+- **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo) — note `APIFY_ACTOR_ID` wants its **API form with a tilde**, `apidojo~tweet-scraper`, not the store's slash form. That fixed floor is mostly wasted for personal use — see [`docs/apify-pricing.md`](./docs/apify-pricing.md) for usage-based actors that drop it to well under $1/mo.
 - **Anthropic API key** with a monthly budget cap.
 - **Discord webhook** for the channel you want briefings in (channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL).
 
@@ -76,24 +76,26 @@ If you switch to daily, you'll probably want fewer picks per briefing (a day has
    npm install
    ```
 
+   `wrangler` is a local devDependency, so prefix commands with `npx` (or install it globally).
+
 2. **D1 database:**
    ```bash
-   wrangler d1 create twitter-watcher
+   npx wrangler d1 create twitter-watcher
    # paste the returned database_id into wrangler.toml
-   wrangler d1 execute twitter-watcher --remote --file schema.sql
-   wrangler d1 execute twitter-watcher --remote --file seed.sql   # edit seed.sql first — it's example handles
-   wrangler d1 execute twitter-watcher --remote --command "SELECT COUNT(*) FROM watch_targets"
+   npx wrangler d1 execute twitter-watcher --remote --file schema.sql
+   npx wrangler d1 execute twitter-watcher --remote --file seed.sql   # edit seed.sql first — it's example handles
+   npx wrangler d1 execute twitter-watcher --remote --command "SELECT COUNT(*) FROM watch_targets"
    ```
    Always use `--remote`, never `--local` — the local D1 binding is a separate database the deployed Worker won't see.
 
 3. **Secrets** (set with the CLI, or in the Cloudflare dashboard → your Worker → Settings → Variables → as Secret):
    ```bash
-   wrangler secret put ANTHROPIC_API_KEY
-   wrangler secret put DISCORD_WEBHOOK_URL
-   wrangler secret put TRIGGER_TOKEN          # openssl rand -hex 32
-   wrangler secret put APIFY_WEBHOOK_SECRET   # openssl rand -hex 32
-   wrangler secret put APIFY_TOKEN            # console.apify.com/account/integrations
-   wrangler secret put APIFY_ACTOR_ID         # e.g. apidojo~tweet-scraper
+   npx wrangler secret put ANTHROPIC_API_KEY
+   npx wrangler secret put DISCORD_WEBHOOK_URL
+   npx wrangler secret put TRIGGER_TOKEN          # openssl rand -hex 32
+   npx wrangler secret put APIFY_WEBHOOK_SECRET   # openssl rand -hex 32
+   npx wrangler secret put APIFY_TOKEN            # console.apify.com/account/integrations
+   npx wrangler secret put APIFY_ACTOR_ID         # apidojo~tweet-scraper  (tilde, not slash)
    ```
    For local dev, copy `.dev.vars.example` to `.dev.vars` and fill it in (gitignored).
 
@@ -105,7 +107,12 @@ If you switch to daily, you'll probably want fewer picks per briefing (a day has
 ## Smoke test
 
 ```bash
-# Run a briefing right now (posts to your Discord channel)
+# 1. Pull fresh tweets first (otherwise the briefing has nothing to surface).
+#    Expect {"handlesQueried":N,"ingested":M,...} — ingested > 0 confirms Apify works.
+curl -X POST -H "X-Trigger-Token: $TRIGGER_TOKEN" \
+  https://<your-worker>.workers.dev/api/refresh
+
+# 2. Run a briefing now (posts to your Discord channel)
 curl -X POST -H "X-Trigger-Token: $TRIGGER_TOKEN" \
   https://<your-worker>.workers.dev/trigger
 
@@ -198,3 +205,13 @@ So ~$6–15/mo once you move off the Apify rental floor.
 - **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekly flow.
 - **More sources** — a Reddit adapter (`src/adapters/reddit.ts`) is the highest-value second source; the adapter interface is already built for it.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
+
+## Version history
+
+### v1.0.0 — 2026-05-30
+First public release. Forked from a ManyChat hackathon project into a personal, public-ready tool, deployed and verified end-to-end (Apify → D1 → Claude → Discord).
+- Weekly Discord briefing (Mondays 11:00 UTC): refresh → top 5–7 signals via Claude → embed
+- "No new signal" heartbeat, Discord failure alerts, and D1 pruning of summarized posts older than 30 days
+- On-demand `discover` backend + local MCP server (7 tools) to drive it from any Claude client
+- Stripped the hackathon React UI; MIT licensed
+- Usage-based Apify migration researched but not yet applied — see [`docs/apify-pricing.md`](./docs/apify-pricing.md)
