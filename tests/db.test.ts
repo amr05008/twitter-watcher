@@ -161,6 +161,20 @@ describe("db", () => {
       const res = await deleteWatchTarget(db as any, { source: "twitter", handle: "ghost" });
       expect(res.removed).toBe(false);
     });
+
+    it("removes a target that still has ingested posts (FK cascade)", async () => {
+      await seedHandle("karpathy");
+      await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "a" }));
+      await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "b" }));
+
+      const res = await deleteWatchTarget(db as any, { source: "twitter", handle: "karpathy" });
+      expect(res.removed).toBe(true);
+
+      const targets = await listWatchTargets(db as any, { kind: "handle" });
+      expect(targets.length).toBe(0);
+      const posts = await db.prepare("SELECT COUNT(*) as n FROM posts").first<{ n: number }>();
+      expect(posts?.n).toBe(0);
+    });
   });
 
   describe("prunePosts", () => {

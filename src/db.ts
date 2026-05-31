@@ -119,6 +119,11 @@ export async function deleteWatchTarget(
     .bind(id)
     .first<{ id: string }>();
   if (!existing) return { id, removed: false };
+  // Remove the target's posts first: posts.target_id has a FK to watch_targets,
+  // and D1 enforces it, so deleting a target that still has ingested posts throws
+  // (FOREIGN KEY constraint failed). Purging the posts is also the behavior we
+  // want — a handle you've stopped watching shouldn't surface in future briefings.
+  await db.prepare("DELETE FROM posts WHERE target_id = ?").bind(id).run();
   await db.prepare("DELETE FROM watch_targets WHERE id = ?").bind(id).run();
   return { id, removed: true };
 }

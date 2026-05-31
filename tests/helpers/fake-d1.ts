@@ -54,6 +54,10 @@ class StatementWrapper implements FakeD1Statement {
 
 export function createFakeD1(): FakeD1 {
   const db = new Database(":memory:");
+  // Cloudflare D1 enforces foreign key constraints; better-sqlite3 defaults them
+  // OFF. Match D1 so the harness catches FK violations (e.g. deleting a
+  // watch_target that still has posts referencing it) instead of hiding them.
+  db.pragma("foreign_keys = ON");
   const schemaPath = resolve(__dirname, "../../schema.sql");
   const schema = readFileSync(schemaPath, "utf-8");
   db.exec(schema);
