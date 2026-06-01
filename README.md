@@ -61,7 +61,7 @@ Each run scopes its candidate tweets to the window since the last *posted* brief
 ### Prerequisites
 
 - **Cloudflare Workers** — the **free tier is fine**. The Apify/Claude calls take 15–45s, but that's I/O wait, which doesn't count against Workers' CPU-time limit (only active code execution does, and ours is trivial). No paid plan needed for this workload.
-- **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo) — note `APIFY_ACTOR_ID` wants its **API form with a tilde**, `apidojo~tweet-scraper`, not the store's slash form. That fixed floor is mostly wasted for personal use — see [`docs/apify-pricing.md`](./docs/apify-pricing.md) for usage-based actors that drop it to well under $1/mo.
+- **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo) — note `APIFY_ACTOR_ID` wants its **API form with a tilde**, `apidojo~tweet-scraper`, not the store's slash form. The $29 floor is mostly wasted for personal use, but switching to a usage-based actor doesn't help — Apify has no pay-as-you-go below the $29 plan ([`docs/apify-pricing.md`](./docs/apify-pricing.md) has the full analysis).
 - **Anthropic API key** with a monthly budget cap.
 - **Discord webhook** for the channel you want briefings in (channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL).
 
@@ -196,15 +196,15 @@ npm run dev         # wrangler dev (no cron — use POST /trigger)
 ## Costs (rough monthly, single-user)
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)
-- Apify: **$29** on the default rental actor, or **< $1** on a usage-based one ([`docs/apify-pricing.md`](./docs/apify-pricing.md))
+- Apify: **$29** (Starter plan — the unavoidable floor; usage-based actors don't beat it, see [`docs/apify-pricing.md`](./docs/apify-pricing.md))
 - Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per weekday run)
 - Discord: **$0**
 
-So ~$1–11/mo once you move off the Apify rental floor — Apify is the only real cost.
+So **~$30–39/mo**, almost all of it the Apify $29 floor. Actual tweet usage is ~$1/mo, so ~$28 of the Apify credit goes unspent each month — headroom for more accounts/sources, not a saving you can pocket.
 
 ## Roadmap
 
-- **Usage-based Apify** — the research is done ([`docs/apify-pricing.md`](./docs/apify-pricing.md)); the migration is the next code change.
+- ~~**Usage-based Apify**~~ — investigated and dropped (2026-06-01): Apify has no pay-as-you-go below the $29 plan, so a usage-based actor saves nothing. See [`docs/apify-pricing.md`](./docs/apify-pricing.md).
 - **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekday flow.
 - **More sources** — a Reddit adapter (`src/adapters/reddit.ts`) is the highest-value second source; the adapter interface is already built for it.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
