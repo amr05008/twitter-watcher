@@ -32,6 +32,11 @@ the platform floor is not avoidable:
 (~$1 of usage), switching actors just leaves more of the $29 credit unspent — it doesn't
 lower the bill.
 
+**Confirmed on the actual invoice (2026-06):** a single "Starter plan (monthly) $29.00"
+line (+ local tax), with **no separate actor/rental charge**. So the current
+`apidojo/tweet-scraper` adds nothing on top of the platform plan — the $29 *is* the whole
+cost, and switching actors would save exactly $0.
+
 ## What we actually use
 
 - Weekday briefing: ~7 handles × ~15 tweets × 5 days ≈ **~2.3K tweets/month**, plus a few `discover` calls.
@@ -45,7 +50,7 @@ others would need work.
 
 | Actor | Per-tweet rate | Input compat | Output compat | Notes |
 | --- | --- | --- | --- | --- |
-| `apidojo/tweet-scraper` (current) | rental (within $29 plan) | — | — | What we run today. |
+| `apidojo/tweet-scraper` (current) | no separate charge — runs within the $29 plan | — | — | What we run today. |
 | [`apidojo/twitter-scraper-lite`](https://apify.com/apidojo/twitter-scraper-lite) | event-based, ~$0.40/1K | ✅ identical (`twitterHandles`, `searchTerms`, `maxItems`, `sort`, `tweetLanguage`) | ✅ same shape; body is `text` but our `normalize()` already does `fullText ?? text` | Same vendor; would be a **secret-only swap**. 4.5★, ~27K users. |
 | [`xquik/x-tweet-scraper`](https://apify.com/xquik/x-tweet-scraper) | $0.15/1K (+1GB start fee) | ✅ keeps `twitterHandles` (but `queryType`/`lang` field-name ambiguity) | ⚠ `author.username` lowercase, `isRetweet` maybe missing, no `twitterUrl` → normalizer patch | Cheapest, but unproven (948 users, 5 reviews). |
 | [`kaitoeasyapi/...pay-per-result-cheapest`](https://apify.com/kaitoeasyapi/twitter-x-data-tweet-scraper-pay-per-result-cheapest) | $0.25/1K (→$0.18 tiered) | ❌ no batch handles — must build `from:<handle>` search queries | ✅ close (`author.userName`, `isRetweet`, `twitterUrl`) | Most battle-tested (38.4M runs); biggest migration. |
