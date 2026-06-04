@@ -61,7 +61,7 @@ Each run scopes its candidate tweets to the window since the last *posted* brief
 ### Prerequisites
 
 - **Cloudflare Workers** — the **free tier is fine**. The twitterapi.io/Claude calls take a few seconds of I/O wait, which doesn't count against Workers' CPU-time limit (only active code execution does, and ours is trivial). No paid plan needed for this workload.
-- **A [twitterapi.io](https://twitterapi.io) account + API key.** This is the tweet data source (both the timeline ingest and `discover` search). Pay-as-you-go, no subscription floor — ~$0.15/1k tweets, so this project runs ~$0.40/mo. Load a few dollars of prepaid credit and grab the key from the dashboard. (See [`docs/apify-pricing.md`](./docs/apify-pricing.md) for why this replaced Apify.)
+- **A [twitterapi.io](https://twitterapi.io) account + API key.** This is the tweet data source (both the timeline ingest and `discover` search). Pay-as-you-go, no subscription floor — ~$0.15/1k tweets, so this project runs ~$0.40/mo. Load a few dollars of prepaid credit and grab the key from the dashboard. ([`docs/data-source-notes.md`](./docs/data-source-notes.md) covers why this data source and the tradeoffs.)
 - **Anthropic API key** with a monthly budget cap.
 - **Discord webhook** for the channel you want briefings in (channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL).
 
@@ -150,6 +150,18 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 
 `npx wrangler tail` streams live Worker logs — the first place to look when something's off.
 
+## Design decisions worth stealing
+
+The portable ideas, independent of the stack. If you build your own version, these are the parts that earned their keep:
+
+- **Quiet days stay silent.** The prompt can return zero picks, and zero means no message. A digest that posts even when there's nothing to say trains you to ignore it. Padding to hit a count is the failure mode — [the prompt](./prompts/briefing.md) explicitly forbids it.
+- **Distinguish "quiet" from "dead."** Silence is ambiguous — genuinely low signal, or did the cron die? A quiet Monday posts a one-line liveness ping ("watcher's alive, N days since last signal"), and any run that *throws* posts a failure alert. Silence then always means "nothing worth saying," never "broken."
+- **The rationale is the product.** The digest shows Claude's one-line headline, not the tweet. So the prompt forces each headline to stand alone ("first benchmark showing X beats Y on agentic coding," not "interesting AI take"). The model isn't just ranking — it's writing the thing you actually read.
+- **404, not 401.** A wrong token returns 404, so the route's existence is hidden from probes. A 401 would confirm "something's here." Cheap obscurity for a public Worker with no UI.
+- **The prompt is the surface you iterate on — make that loop fast.** `prompts/briefing.md` is the real product, not the orchestration code. An [offline eval harness](./tests/eval-briefing.test.ts) runs the actual selection over a frozen batch with no Discord post or D1 write, so you can A/B prompt edits against identical input. Version the prompt, not just the code.
+- **Window candidates by last *success*, not a fixed lookback.** Each run covers the gap since the last *posted* briefing (floored so Monday reaches over the weekend, capped so a long outage doesn't dump a week's backlog). Output cadence and input window stay decoupled.
+- **Keep a source-adapter seam.** Ingest hides behind a `SourceAdapter` interface, so the briefing logic never names Twitter. Reddit/Threads/RSS can drop in without touching selection or delivery.
+
 ## How it works
 
 - **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the weekday cron). Entry: `src/worker.ts`.
@@ -177,7 +189,6 @@ prompts/             # briefing.md + discover.md (bundled at build time)
 mcp/                 # local MCP server — drive it from any Claude client
 scripts/             # seed-handles.mjs — sync watch-handles.txt → D1 via the API
 watch-handles.txt    # hand-editable watch list (source of truth for `npm run seed`)
-docs/apify-pricing.md
 tests/               # vitest — real SQL against an in-memory SQLite shim
 ```
 
@@ -208,32 +219,29 @@ It self-skips during `npm test` (gated on `RUN_EVAL`), so CI stays free. See the
 - Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per weekday run)
 - Discord: **$0**
 
-So **~$1–11/mo** with no fixed platform floor — down from ~$30–39/mo on the old Apify Starter plan ([`docs/apify-pricing.md`](./docs/apify-pricing.md) explains the switch).
+So **~$1–11/mo** with no fixed platform floor — every line item is usage-based or free.
 
 ## Roadmap
 
-- ~~**Get off the $29/mo Apify floor**~~ — done (2026-06): migrated ingest + discover to pay-as-you-go twitterapi.io (~$0.40/mo). See [`docs/apify-pricing.md`](./docs/apify-pricing.md).
 - **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekday flow.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history
 
 ### v1.2.0 — 2026-06-03
-Migrated the tweet data source off Apify to **twitterapi.io** (pay-as-you-go).
-- Cost drops from the ~$29/mo Apify Starter floor to **~$0.40/mo** usage-based — no subscription.
-- Per-handle timeline fetch (vs Apify's batch) with per-handle error isolation; `discover` search moved to twitterapi.io too.
-- Removed all Apify surface: the webhook route, the `ingest_apify_dataset` MCP tool, and the `APIFY_*` secrets. One vendor, one key (`TWITTERAPI_IO_KEY`).
+Settled the tweet data source on pay-as-you-go **twitterapi.io** (~$0.40/mo, no subscription floor).
+- Per-handle timeline fetch with per-handle error isolation, so one bad handle can't sink the whole refresh; `discover` search uses the same source.
+- One vendor, one key (`TWITTERAPI_IO_KEY`).
 
 ### v1.1.0 — 2026-05-31
 Refined how the briefing delivers, for scannability over a flat ranked list.
 - **Weekday cadence** (Mon–Fri 11:00 UTC) instead of weekly; each run scopes candidates to a dynamic window since the last posted briefing (72h floor / 7d cap).
 - **Tiered digest**: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier on heavy days. Claude's rationale is now the standalone headline; full tweet bodies dropped.
 - **Quiet days stay silent** — the prompt may return zero picks and the run posts nothing. A quiet **Monday** is the exception: it posts a one-line liveness ping so a dead cron stays visible. Failure alerts remain.
-- Per-handle Apify pull trimmed (40→15 tweets) for the shorter window.
+- Per-handle pull trimmed to 15 tweets for the shorter window.
 
 ### v1.0.0 — 2026-05-30
-First public release. Deployed and verified end-to-end (Apify → D1 → Claude → Discord).
+First public release. Deployed and verified end-to-end.
 - Weekly Discord briefing (Mondays 11:00 UTC): refresh → top 5–7 signals via Claude → embed
 - "No new signal" heartbeat, Discord failure alerts, and D1 pruning of summarized posts older than 30 days
-- On-demand `discover` backend + local MCP server (7 tools) to drive it from any Claude client
-- Usage-based Apify migration researched but not yet applied — see [`docs/apify-pricing.md`](./docs/apify-pricing.md)
+- On-demand `discover` backend + local MCP server to drive it from any Claude client
