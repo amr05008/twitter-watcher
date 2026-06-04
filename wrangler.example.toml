@@ -3,8 +3,8 @@ main = "src/worker.ts"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Public fetch surface is intentional: /trigger, /webhook/apify/<secret>, /api/discover, /api/promote
-# All routes are gated by either X-Trigger-Token (header) or a path-secret. Unmatched routes return 404.
+# Public fetch surface is intentional: /trigger, /api/refresh, /api/discover, /api/promote, /api/watch-targets
+# All routes are gated by the X-Trigger-Token header. Unmatched routes return 404.
 workers_dev = true
 preview_urls = false
 
@@ -33,6 +33,4 @@ crons = ["0 11 * * 1-5"]
 #   ANTHROPIC_API_KEY        Anthropic API key (cap monthly budget in console)
 #   DISCORD_WEBHOOK_URL      Discord webhook URL for digest delivery
 #   TRIGGER_TOKEN            Long random string for X-Trigger-Token header on /trigger, /api/*
-#   APIFY_WEBHOOK_SECRET     32+ char random string — used in /webhook/apify/<secret> path
-#   APIFY_TOKEN              Apify API token — used for /api/discover run-sync calls
-#   APIFY_ACTOR_ID           Apify tweet-scraper actor id (e.g., 'apidojo~tweet-scraper')
+#   TWITTERAPI_IO_KEY        twitterapi.io API key — tweet data source (ingest + discover)

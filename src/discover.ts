@@ -17,25 +17,25 @@ export async function runDiscover(
   fetchImpl: typeof fetch = fetch,
 ): Promise<DiscoverResponse> {
   const lookbackDays = body.lookbackDays ?? 7;
-  const maxResults = body.maxResults ?? 50;
 
-  const apifyUrl = `https://api.apify.com/v2/acts/${env.APIFY_ACTOR_ID}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
-  const apifyRes = await fetchImpl(apifyUrl, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      searchTerms: [body.topic],
-      maxItems: maxResults,
-      sort: "Latest",
-    }),
+  const searchUrl = `https://api.twitterapi.io/twitter/tweet/advanced_search?query=${encodeURIComponent(
+    body.topic,
+  )}&queryType=Latest`;
+  const searchRes = await fetchImpl(searchUrl, {
+    headers: { "X-API-Key": env.TWITTERAPI_IO_KEY },
   });
 
-  if (!apifyRes.ok) {
-    const text = await apifyRes.text().catch(() => "<unreadable>");
-    throw new Error(`Apify search failed: ${apifyRes.status} ${text}`);
+  if (!searchRes.ok) {
+    const text = await searchRes.text().catch(() => "<unreadable>");
+    throw new Error(`twitterapi.io search failed: ${searchRes.status} ${text}`);
   }
 
-  const rawTweets = (await apifyRes.json()) as unknown[];
+  // Search returns tweets at the top level; timeline nests them under data.
+  const json = (await searchRes.json()) as {
+    tweets?: unknown[];
+    data?: { tweets?: unknown[] };
+  };
+  const rawTweets = json.tweets ?? json.data?.tweets ?? [];
 
   const target: WatchTarget = {
     id: `twitter:search:${body.topic}`,
@@ -59,7 +59,7 @@ export async function runDiscover(
       // TODO: samples are first-3-encountered, not best-3. Consider ranking by topic-keyword match or length.
       if (bucket.sample.length < 3) bucket.sample.push(post.text);
     } catch {
-      // Skip malformed entries; Apify occasionally emits non-tweet items
+      // Skip malformed entries; the search can occasionally return non-tweet items
     }
   }
 

@@ -12,14 +12,6 @@ DISCORD_WEBHOOK_URL=
 # Generate with: openssl rand -hex 32
 TRIGGER_TOKEN=
 
-# 32+ char random string used in the /webhook/apify/<secret> path.
-# Generate with: openssl rand -hex 32
-APIFY_WEBHOOK_SECRET=
-
-# Apify API token. https://console.apify.com/account/integrations
-APIFY_TOKEN=
-
-# Apify actor id for the tweet scraper. Use the API's TILDE form (apidojo~tweet-scraper),
-# NOT the store's slash form (apidojo/tweet-scraper) — the slash breaks the API path (404).
-# See docs/apify-pricing.md for cheaper usage-based alternatives.
-APIFY_ACTOR_ID=apidojo~tweet-scraper
+# twitterapi.io API key — the tweet data source (timeline ingest + discover search).
+# Pay-as-you-go, ~$0.15/1k tweets. https://twitterapi.io (Dashboard → API Key)
+TWITTERAPI_IO_KEY=

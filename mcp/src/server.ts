@@ -9,7 +9,6 @@ import { TwitterWatcherClient } from "./client.js";
 
 const baseUrl = process.env.TWITTER_WATCHER_BASE_URL;
 const triggerToken = process.env.TWITTER_WATCHER_TRIGGER_TOKEN;
-const apifyWebhookSecret = process.env.TWITTER_WATCHER_APIFY_WEBHOOK_SECRET ?? "";
 
 if (!baseUrl || !triggerToken) {
   console.error(
@@ -49,7 +48,7 @@ const tools = [
   {
     name: "discover_accounts",
     description:
-      "Given a topic (e.g. 'AI agents', 'LLM evals'), runs a live Twitter search across all of Twitter, aggregates posts by author, and returns the top accounts most worth following on this topic with rationale. Synchronous; typically takes 15-45 seconds (the underlying Apify search is slow). Returns 1-3 accounts with handle, rationale, signalScore (0-1), postCount, and up to 3 sample tweet texts (samples).",
+      "Given a topic (e.g. 'AI agents', 'LLM evals'), runs a live Twitter search, aggregates posts by author, and returns the top accounts most worth following on this topic with rationale. Returns 1-3 accounts with handle, rationale, signalScore (0-1), postCount, and up to 3 sample tweet texts (samples).",
     inputSchema: {
       type: "object",
       properties: {
@@ -62,12 +61,6 @@ const tools = [
           description: "How many days of tweets to consider. Defaults to 7.",
           minimum: 1,
           maximum: 30,
-        },
-        maxResults: {
-          type: "integer",
-          description: "Cap on tweets pulled from Apify. Defaults to 50.",
-          minimum: 10,
-          maximum: 200,
         },
       },
       required: ["topic"],
@@ -119,26 +112,10 @@ const tools = [
   {
     name: "refresh_tweets",
     description:
-      "Pull the latest tweets from every account in the passive watch list (via Apify) and ingest them into the database. This is what the daily cron does automatically; call this on-demand to populate fresh tweets before running a briefing. Synchronous; typically 15-45 seconds. Returns how many tweets were ingested vs skipped.",
+      "Pull the latest tweets from every account in the passive watch list (via twitterapi.io) and ingest them into the database. This is what the weekday cron does automatically; call this on-demand to populate fresh tweets before running a briefing. Returns how many tweets were ingested vs skipped.",
     inputSchema: {
       type: "object",
       properties: {},
-      additionalProperties: false,
-    },
-  },
-  {
-    name: "ingest_apify_dataset",
-    description:
-      "Workaround for the unreliable Apify webhook: manually ingest tweets from a completed Apify run by passing its dataset ID. The Twitter Watcher worker pulls the dataset, normalizes tweets, and upserts them into D1 — same code path the webhook uses. Get the dataset ID from the Apify console: Runs → click the run → Storage → Dataset ID. Requires the Apify webhook secret to also be set in the MCP env.",
-    inputSchema: {
-      type: "object",
-      properties: {
-        datasetId: {
-          type: "string",
-          description: "Apify dataset ID from a completed actor run.",
-        },
-      },
-      required: ["datasetId"],
       additionalProperties: false,
     },
   },
@@ -231,34 +208,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           content: [
             {
               type: "text",
-              text: `Refreshed ${result.handlesQueried} watched handle(s). Ingested ${result.ingested} new tweet(s). Skipped: ${result.skippedMalformed} malformed, ${result.skippedNoTarget} from un-watched authors.`,
-            },
-          ],
-        };
-      }
-
-      case "ingest_apify_dataset": {
-        if (!apifyWebhookSecret) {
-          return {
-            content: [
-              {
-                type: "text",
-                text: "ingest_apify_dataset requires TWITTER_WATCHER_APIFY_WEBHOOK_SECRET env var. Set it in your MCP config and restart.",
-              },
-            ],
-            isError: true,
-          };
-        }
-        const a = (args ?? {}) as { datasetId: string };
-        const result = await client.ingestApifyDataset({
-          datasetId: a.datasetId,
-          webhookSecret: apifyWebhookSecret,
-        });
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Ingested ${result.ingested} tweet(s) from dataset ${result.datasetId}. Skipped: ${result.skippedMalformed} malformed, ${result.skippedNoTarget} from un-watched authors.`,
+              text: `Refreshed ${result.handlesQueried} watched handle(s). Ingested ${result.ingested} new tweet(s). Skipped: ${result.skippedMalformed} malformed tweet(s), ${result.failedHandles} handle(s) failed to fetch.`,
             },
           ],
         };

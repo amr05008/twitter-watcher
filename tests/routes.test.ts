@@ -8,9 +8,7 @@ function makeEnv(overrides: Partial<Env> = {}): Env {
     ANTHROPIC_API_KEY: "sk-test",
     DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/test",
     TRIGGER_TOKEN: "right-token",
-    APIFY_WEBHOOK_SECRET: "right-secret",
-    APIFY_TOKEN: "apify-token",
-    APIFY_ACTOR_ID: "apidojo~tweet-scraper",
+    TWITTERAPI_IO_KEY: "twapi-key",
     ...overrides,
   };
 }
@@ -32,10 +30,9 @@ function makeHandlers(overrides: Partial<RouteHandlers> = {}): RouteHandlers {
     refreshHandleIngest: vi.fn(async () => ({
       handlesQueried: 0,
       ingested: 0,
-      skippedNoTarget: 0,
+      failedHandles: 0,
       skippedMalformed: 0,
     })),
-    handleApifyWebhook: vi.fn(async () => new Response("ok", { status: 200 })),
     ...overrides,
   };
 }
@@ -73,35 +70,6 @@ describe("router /trigger", () => {
     const res = await handleRequest(req, env, handlers);
     expect(res.status).toBe(200);
     expect(handlers.runBriefing).toHaveBeenCalledWith(env, "manual");
-  });
-});
-
-describe("router /webhook/apify/<secret>", () => {
-  let env: Env;
-  let handlers: RouteHandlers;
-
-  beforeEach(() => {
-    env = makeEnv();
-    handlers = makeHandlers();
-  });
-
-  it("returns 404 on wrong path secret", async () => {
-    const req = new Request("https://w.example/webhook/apify/wrong", {
-      method: "POST",
-    });
-    const res = await handleRequest(req, env, handlers);
-    expect(res.status).toBe(404);
-    expect(handlers.handleApifyWebhook).not.toHaveBeenCalled();
-  });
-
-  it("invokes handleApifyWebhook on right path secret", async () => {
-    const req = new Request("https://w.example/webhook/apify/right-secret", {
-      method: "POST",
-      body: '{"resource":{"defaultDatasetId":"x"}}',
-    });
-    const res = await handleRequest(req, env, handlers);
-    expect(res.status).toBe(200);
-    expect(handlers.handleApifyWebhook).toHaveBeenCalledOnce();
   });
 });
 

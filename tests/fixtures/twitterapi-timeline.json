@@ -1,0 +1,743 @@
+{
+  "status": "success",
+  "code": 0,
+  "msg": "success",
+  "data": {
+    "pin_tweet": null,
+    "tweets": [
+      {
+        "type": "tweet",
+        "id": "2061930040003280905",
+        "url": "https://x.com/karpathy/status/2061930040003280905",
+        "twitterUrl": "https://twitter.com/karpathy/status/2061930040003280905",
+        "text": "RT @DKThomp: This has quietly been a miracle month in medicine. \n\nIn the last 5 weeks we’ve got news on:  \n\n- retatrutide, the triple agoni…",
+        "source": "Twitter for iPhone",
+        "retweetCount": 1824,
+        "replyCount": 177,
+        "likeCount": 11041,
+        "quoteCount": 132,
+        "viewCount": 2351282,
+        "createdAt": "Tue Jun 02 21:56:45 +0000 2026",
+        "lang": "en",
+        "bookmarkCount": 4452,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "2061930040003280905",
+        "displayTextRange": [
+          0,
+          140
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "karpathy",
+          "url": "https://x.com/karpathy",
+          "twitterUrl": "https://twitter.com/karpathy",
+          "id": "33836629",
+          "name": "Andrej Karpathy",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1296667294148382721/9Pr6XrPB_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/33836629/1407117611",
+          "description": "",
+          "location": "Stanford",
+          "followers": 2821639,
+          "following": 1094,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Tue Apr 21 06:49:15 +0000 2009",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 23731,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 864,
+          "statusesCount": 10113,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1617979122625712128"
+          ],
+          "profile_bio": {
+            "description": "I like training large deep neural nets.",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "37723353",
+              "indices": [
+                3,
+                11
+              ],
+              "name": "Derek Thompson",
+              "screen_name": "DKThomp"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": {
+          "type": "tweet",
+          "id": "2061110056293106118",
+          "url": "https://x.com/DKThomp/status/2061110056293106118",
+          "twitterUrl": "https://twitter.com/DKThomp/status/2061110056293106118",
+          "text": "This has quietly been a miracle month in medicine. \n\nIn the last 5 weeks we’ve got news on:  \n\n- retatrutide, the triple agonist GLP-1 from Lilly, basically melting fat and body-wide inflammation at record levels \n- RevMed’s new pancreatic cancer drug showing unprecedented abilities to extend life \n- small trial of a one-and-done PCSK9 gene editing therapy for slashing LDL cholesterol \n- Mayo’s AI-assisted radiology showing vastly improved cancer detection \n- this new therapy for metastatic solid tumors\n\nThis stuff is at varying levels of evidence. Retatrutide is ~100% on its way, other stuff needs more clinical trial data. But put it together and we’re maybe on the verge of majorly reducing the mortality of heart disease and cancer, the two leading causes of death in America.",
+          "source": "Twitter for iPhone",
+          "retweetCount": 1824,
+          "replyCount": 177,
+          "likeCount": 11041,
+          "quoteCount": 132,
+          "viewCount": 2351282,
+          "createdAt": "Sun May 31 15:38:25 +0000 2026",
+          "lang": "en",
+          "bookmarkCount": 4452,
+          "isReply": false,
+          "inReplyToId": null,
+          "conversationId": "2061110056293106118",
+          "displayTextRange": [
+            0,
+            273
+          ],
+          "inReplyToUserId": null,
+          "inReplyToUsername": null,
+          "author": {
+            "type": "user",
+            "userName": "DKThomp",
+            "url": "https://x.com/DKThomp",
+            "twitterUrl": "https://twitter.com/DKThomp",
+            "id": "37723353",
+            "name": "Derek Thompson",
+            "isVerified": false,
+            "isBlueVerified": true,
+            "verifiedType": null,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1605404261306679296/aq_L7W-z_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/37723353/1613836014",
+            "description": "",
+            "location": "Washington, D.C.",
+            "followers": 256786,
+            "following": 2084,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon May 04 18:41:21 +0000 2009",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {}
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 38702,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 2806,
+            "statusesCount": 22141,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": [
+              "1936051079239668202"
+            ],
+            "profile_bio": {
+              "description": "Sign up for my new newsletter! (Link below) Also: Co-author of Abundance, host of Plain English, and contributing writer at The Atlantic.",
+              "entities": {
+                "description": {},
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "derekthompson.substack.com",
+                      "expanded_url": "http://derekthompson.substack.com",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/GnWAlV1Hbi"
+                    }
+                  ]
+                }
+              }
+            },
+            "isAutomated": false,
+            "automatedBy": null
+          },
+          "extendedEntities": {},
+          "card": null,
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "quoted_tweet": {
+            "type": "tweet",
+            "id": "2060955532559581294",
+            "url": "https://x.com/cremieuxrecueil/status/2060955532559581294",
+            "twitterUrl": "https://twitter.com/cremieuxrecueil/status/2060955532559581294",
+            "text": "This is actually insane.\n\n97% of people taking the standard of care for metastatic solid tumor got worse by seven years.\n\nBut with lorlatinib, that number was only 45% in the same time!\n\nThis is an ENORMOUS jump in the quality of cancer care. https://t.co/pDQsf7SoyR",
+            "source": "Twitter for iPhone",
+            "retweetCount": 206,
+            "replyCount": 39,
+            "likeCount": 2592,
+            "quoteCount": 24,
+            "viewCount": 1830798,
+            "createdAt": "Sun May 31 05:24:24 +0000 2026",
+            "lang": "en",
+            "bookmarkCount": 875,
+            "isReply": false,
+            "inReplyToId": null,
+            "conversationId": "2060955532559581294",
+            "displayTextRange": [
+              0,
+              242
+            ],
+            "inReplyToUserId": null,
+            "inReplyToUsername": null,
+            "author": {
+              "type": "user",
+              "userName": "cremieuxrecueil",
+              "url": "https://x.com/cremieuxrecueil",
+              "twitterUrl": "https://twitter.com/cremieuxrecueil",
+              "id": "1637507099558027267",
+              "name": "Crémieux",
+              "isVerified": false,
+              "isBlueVerified": true,
+              "verifiedType": null,
+              "profilePicture": "https://pbs.twimg.com/profile_images/1637507712983375875/EQHiqVq8_normal.jpg",
+              "coverPicture": "https://pbs.twimg.com/profile_banners/1637507099558027267/1679247968",
+              "description": "",
+              "location": "Earth",
+              "followers": 312484,
+              "following": 2057,
+              "status": "",
+              "canDm": false,
+              "canMediaTag": true,
+              "createdAt": "Sun Mar 19 17:31:37 +0000 2023",
+              "entities": {
+                "description": {
+                  "urls": []
+                },
+                "url": {}
+              },
+              "fastFollowersCount": 0,
+              "favouritesCount": 318132,
+              "hasCustomTimelines": true,
+              "isTranslator": false,
+              "mediaCount": 16453,
+              "statusesCount": 71168,
+              "withheldInCountries": [],
+              "affiliatesHighlightedLabel": {},
+              "possiblySensitive": false,
+              "pinnedTweetIds": [],
+              "profile_bio": {
+                "description": "I write about genetics, 'metrics, and demographics.\n\nRead my long-form writing at https://t.co/8hgA4nNS2A.",
+                "entities": {
+                  "description": {
+                    "urls": [
+                      {
+                        "display_url": "cremieux.xyz",
+                        "expanded_url": "http://www.cremieux.xyz",
+                        "indices": [
+                          82,
+                          105
+                        ],
+                        "url": "https://t.co/8hgA4nNS2A"
+                      }
+                    ]
+                  },
+                  "url": {
+                    "urls": [
+                      {
+                        "display_url": "cremieux.xyz/subscribe",
+                        "expanded_url": "https://www.cremieux.xyz/subscribe",
+                        "indices": [
+                          0,
+                          23
+                        ],
+                        "url": "https://t.co/UFvzSpmGBI"
+                      }
+                    ]
+                  }
+                }
+              },
+              "isAutomated": false,
+              "automatedBy": null
+            },
+            "extendedEntities": {
+              "media": [
+                {
+                  "allow_download_status": {
+                    "allow_download": true
+                  },
+                  "display_url": "pic.twitter.com/pDQsf7SoyR",
+                  "expanded_url": "https://twitter.com/cremieuxrecueil/status/2060955532559581294/photo/1",
+                  "ext_master_playlist_only": [],
+                  "ext_media_availability": {
+                    "status": "Available"
+                  },
+                  "ext_playlists": [],
+                  "features": {
+                    "large": {
+                      "faces": []
+                    },
+                    "orig": {
+                      "faces": []
+                    }
+                  },
+                  "id_str": "2060955328456335366",
+                  "indices": [
+                    243,
+                    266
+                  ],
+                  "media_key": "3_2060955328456335366",
+                  "media_results": {
+                    "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAARyZ+/OqlqAGCgACHJn8IzAXAG4AAA==",
+                    "result": {
+                      "__typename": "ApiMedia",
+                      "id": "QXBpTWVkaWE6DAABCgABHJn786qWoAYKAAIcmfwjMBcAbgAA",
+                      "media_key": "3_2060955328456335366"
+                    }
+                  },
+                  "media_url_https": "https://pbs.twimg.com/media/HJn786qWoAYfWfT.png",
+                  "original_info": {
+                    "focus_rects": [
+                      {
+                        "h": 272,
+                        "w": 486,
+                        "x": 0,
+                        "y": 0
+                      },
+                      {
+                        "h": 272,
+                        "w": 272,
+                        "x": 0,
+                        "y": 0
+                      },
+                      {
+                        "h": 272,
+                        "w": 239,
+                        "x": 0,
+                        "y": 0
+                      },
+                      {
+                        "h": 272,
+                        "w": 136,
+                        "x": 12,
+                        "y": 0
+                      },
+                      {
+                        "h": 272,
+                        "w": 646,
+                        "x": 0,
+                        "y": 0
+                      }
+                    ],
+                    "height": 272,
+                    "width": 646
+                  },
+                  "sizes": {
+                    "large": {
+                      "h": 272,
+                      "w": 646
+                    }
+                  },
+                  "type": "photo",
+                  "url": "https://t.co/pDQsf7SoyR"
+                }
+              ]
+            },
+            "card": null,
+            "place": {},
+            "entities": {},
+            "quoted_tweet": {
+              "type": "tweet",
+              "id": "2060438339996532908",
+              "url": "",
+              "twitterUrl": "",
+              "text": "",
+              "source": "Twitter for iPhone",
+              "retweetCount": 0,
+              "replyCount": 0,
+              "likeCount": 0,
+              "quoteCount": 0,
+              "viewCount": 0,
+              "createdAt": "",
+              "lang": "",
+              "bookmarkCount": 0,
+              "isReply": false,
+              "inReplyToId": null,
+              "conversationId": "",
+              "displayTextRange": [],
+              "inReplyToUserId": null,
+              "inReplyToUsername": null,
+              "author": {},
+              "extendedEntities": {},
+              "card": null,
+              "place": {},
+              "entities": {},
+              "quoted_tweet": null,
+              "retweeted_tweet": null,
+              "isLimitedReply": false,
+              "communityInfo": null,
+              "article": null
+            },
+            "retweeted_tweet": null,
+            "isLimitedReply": false,
+            "communityInfo": null,
+            "article": null
+          },
+          "retweeted_tweet": null,
+          "isLimitedReply": false,
+          "communityInfo": null,
+          "article": null
+        },
+        "isLimitedReply": false,
+        "communityInfo": null,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "2061928642029158853",
+        "url": "https://x.com/karpathy/status/2061928642029158853",
+        "twitterUrl": "https://twitter.com/karpathy/status/2061928642029158853",
+        "text": "RT @trq212: https://t.co/R6exTuF7P8",
+        "source": "Twitter for iPhone",
+        "retweetCount": 1003,
+        "replyCount": 198,
+        "likeCount": 8238,
+        "quoteCount": 217,
+        "viewCount": 2175870,
+        "createdAt": "Tue Jun 02 21:51:11 +0000 2026",
+        "lang": "zxx",
+        "bookmarkCount": 19312,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "2061928642029158853",
+        "displayTextRange": [
+          0,
+          35
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "karpathy",
+          "url": "https://x.com/karpathy",
+          "twitterUrl": "https://twitter.com/karpathy",
+          "id": "33836629",
+          "name": "Andrej Karpathy",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1296667294148382721/9Pr6XrPB_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/33836629/1407117611",
+          "description": "",
+          "location": "Stanford",
+          "followers": 2821639,
+          "following": 1094,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Tue Apr 21 06:49:15 +0000 2009",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 23731,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 864,
+          "statusesCount": 10113,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1617979122625712128"
+          ],
+          "profile_bio": {
+            "description": "I like training large deep neural nets.",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "urls": [
+            {
+              "display_url": "x.com/i/article/2061…",
+              "expanded_url": "http://x.com/i/article/2061850535708483585",
+              "indices": [
+                12,
+                35
+              ],
+              "url": "https://t.co/R6exTuF7P8"
+            }
+          ],
+          "user_mentions": [
+            {
+              "id_str": "352806502",
+              "indices": [
+                3,
+                10
+              ],
+              "name": "Thariq",
+              "screen_name": "trq212"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": {
+          "type": "tweet",
+          "id": "2061907337154367865",
+          "url": "https://x.com/trq212/status/2061907337154367865",
+          "twitterUrl": "https://twitter.com/trq212/status/2061907337154367865",
+          "text": "https://t.co/R6exTuF7P8",
+          "source": "Twitter for iPhone",
+          "retweetCount": 1003,
+          "replyCount": 198,
+          "likeCount": 8238,
+          "quoteCount": 217,
+          "viewCount": 2175870,
+          "createdAt": "Tue Jun 02 20:26:32 +0000 2026",
+          "lang": "zxx",
+          "bookmarkCount": 19312,
+          "isReply": false,
+          "inReplyToId": null,
+          "conversationId": "2061907337154367865",
+          "displayTextRange": [
+            0,
+            23
+          ],
+          "inReplyToUserId": null,
+          "inReplyToUsername": null,
+          "author": {
+            "type": "user",
+            "userName": "trq212",
+            "url": "https://x.com/trq212",
+            "twitterUrl": "https://twitter.com/trq212",
+            "id": "352806502",
+            "name": "Thariq",
+            "isVerified": false,
+            "isBlueVerified": true,
+            "verifiedType": null,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1976939058741039104/r3GgzqRh_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/352806502/1777535100",
+            "description": "",
+            "location": "SF via Toronto",
+            "followers": 266966,
+            "following": 1865,
+            "status": "",
+            "canDm": true,
+            "canMediaTag": false,
+            "createdAt": "Thu Aug 11 03:16:59 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {}
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 74223,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 472,
+            "statusesCount": 5552,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": [
+              "2035372716820218141"
+            ],
+            "profile_bio": {
+              "description": "Claude Code @anthropicai.   prev YC W20, @southpkcommons, @medialab",
+              "entities": {
+                "description": {
+                  "user_mentions": [
+                    {
+                      "id_str": "",
+                      "indices": [
+                        12,
+                        24
+                      ],
+                      "name": "",
+                      "screen_name": "anthropicai"
+                    },
+                    {
+                      "id_str": "",
+                      "indices": [
+                        41,
+                        56
+                      ],
+                      "name": "",
+                      "screen_name": "southpkcommons"
+                    },
+                    {
+                      "id_str": "",
+                      "indices": [
+                        58,
+                        67
+                      ],
+                      "name": "",
+                      "screen_name": "medialab"
+                    }
+                  ]
+                },
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "thariq.io",
+                      "expanded_url": "http://thariq.io",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/t9t864dmsg"
+                    }
+                  ]
+                }
+              }
+            },
+            "isAutomated": false,
+            "automatedBy": null
+          },
+          "extendedEntities": {},
+          "card": null,
+          "place": {},
+          "entities": {
+            "urls": [
+              {
+                "display_url": "x.com/i/article/2061…",
+                "expanded_url": "http://x.com/i/article/2061850535708483585",
+                "indices": [
+                  0,
+                  23
+                ],
+                "url": "https://t.co/R6exTuF7P8"
+              }
+            ]
+          },
+          "quoted_tweet": null,
+          "retweeted_tweet": null,
+          "isLimitedReply": false,
+          "communityInfo": null,
+          "article": {
+            "title": "A harness for every task: dynamic workflows in Claude Code ",
+            "preview_text": "Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand.\nWhile the default Claude Code harness is built for coding,",
+            "cover_media_img_url": "https://pbs.twimg.com/media/HJ0q6o6aYAEM_ej.jpg"
+          }
+        },
+        "isLimitedReply": false,
+        "communityInfo": null,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "2056753169888334312",
+        "url": "https://x.com/karpathy/status/2056753169888334312",
+        "twitterUrl": "https://twitter.com/karpathy/status/2056753169888334312",
+        "text": "Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about education and plan to resume my work on it in time.",
+        "source": "Twitter for iPhone",
+        "retweetCount": 11148,
+        "replyCount": 7957,
+        "likeCount": 149530,
+        "quoteCount": 7520,
+        "viewCount": 27391653,
+        "createdAt": "Tue May 19 15:05:42 +0000 2026",
+        "lang": "en",
+        "bookmarkCount": 13978,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "2056753169888334312",
+        "displayTextRange": [
+          0,
+          270
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "karpathy",
+          "url": "https://x.com/karpathy",
+          "twitterUrl": "https://twitter.com/karpathy",
+          "id": "33836629",
+          "name": "Andrej Karpathy",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1296667294148382721/9Pr6XrPB_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/33836629/1407117611",
+          "description": "",
+          "location": "Stanford",
+          "followers": 2821639,
+          "following": 1094,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Tue Apr 21 06:49:15 +0000 2009",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 23731,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 864,
+          "statusesCount": 10113,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1617979122625712128"
+          ],
+          "profile_bio": {
+            "description": "I like training large deep neural nets.",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {},
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "communityInfo": null,
+        "article": null
+      }
+    ]
+  },
+  "has_next_page": true,
+  "next_cursor": "DAADDAABCgABHJ1ycmIaQAkKAAIcMmCI8duxgwAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUcnuNjQEAnEAoABhye42NAP9jwAAA"
+}

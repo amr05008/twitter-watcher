@@ -58,7 +58,7 @@ export interface DeleteWatchTargetResponse {
 export interface RefreshResponse {
   handlesQueried: number;
   ingested: number;
-  skippedNoTarget: number;
+  failedHandles: number;
   skippedMalformed: number;
 }
 
@@ -69,7 +69,6 @@ export interface RouteHandlers {
   listWatchTargets(env: Env): Promise<ListWatchTargetsResponse>;
   deleteWatchTarget(env: Env, body: DeleteWatchTargetRequest): Promise<DeleteWatchTargetResponse>;
   refreshHandleIngest(env: Env): Promise<RefreshResponse>;
-  handleApifyWebhook(req: Request, env: Env): Promise<Response>;
 }
 
 function tokenOk(req: Request, expected: string): boolean {
@@ -115,14 +114,6 @@ export async function handleRequest(
 ): Promise<Response> {
   const url = new URL(req.url);
   const path = url.pathname;
-
-  // Apify webhook: path-secret-gated, POST only
-  if (path.startsWith("/webhook/apify/")) {
-    if (req.method !== "POST") return notFound();
-    const secret = path.slice("/webhook/apify/".length);
-    if (secret !== env.APIFY_WEBHOOK_SECRET) return notFound();
-    return handlers.handleApifyWebhook(req, env);
-  }
 
   // /api/watch-targets supports GET (list) and DELETE (remove)
   if (path === "/api/watch-targets") {

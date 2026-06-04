@@ -2,7 +2,6 @@ import type { Env } from "./env";
 import { handleRequest, type RouteHandlers } from "./router";
 import { runBriefing } from "./briefing";
 import { runDiscover } from "./discover";
-import { twitterAdapter } from "./adapters/twitter";
 import {
   deleteWatchTarget,
   listWatchTargets,
@@ -31,8 +30,6 @@ const handlers: RouteHandlers = {
   deleteWatchTarget: (env, body) =>
     deleteWatchTarget(env.DB, { source: body.source, handle: body.handle }),
   refreshHandleIngest: (env) => refreshHandleIngest(env),
-  handleApifyWebhook: (req, env) =>
-    twitterAdapter.webhookHandler!(req, env),
 };
 
 export default {

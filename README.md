@@ -2,7 +2,7 @@
 
 I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a tight weekday briefing. No feed, no doomscroll — and on a quiet day, no message at all.
 
-It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [Apify](https://apify.com), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
+It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [twitterapi.io](https://twitterapi.io), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
 
 > **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook, and watch list. Adapt it, don't expect to clone and run it untouched.
 
@@ -10,7 +10,7 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [Ap
 
 ```
                      ┌─────────── Cloudflare Worker ───────────┐
-  weekday cron  ──▶  │  refresh → Apify (tweet scraper)         │
+  weekday cron  ──▶  │  refresh → twitterapi.io                 │
   (Mon–Fri 11 UTC)   │     ↓                                    │
                      │   D1 (posts) ──▶ Claude (tiered top) ───▶│──▶ Discord briefing
                      │     ↑                                    │
@@ -60,8 +60,8 @@ Each run scopes its candidate tweets to the window since the last *posted* brief
 
 ### Prerequisites
 
-- **Cloudflare Workers** — the **free tier is fine**. The Apify/Claude calls take 15–45s, but that's I/O wait, which doesn't count against Workers' CPU-time limit (only active code execution does, and ours is trivial). No paid plan needed for this workload.
-- **An Apify account + tweet-scraper actor.** The default is `apidojo/tweet-scraper` (Starter plan, $29/mo) — note `APIFY_ACTOR_ID` wants its **API form with a tilde**, `apidojo~tweet-scraper`, not the store's slash form. The $29 floor is mostly wasted for personal use, but switching to a usage-based actor doesn't help — Apify has no pay-as-you-go below the $29 plan ([`docs/apify-pricing.md`](./docs/apify-pricing.md) has the full analysis).
+- **Cloudflare Workers** — the **free tier is fine**. The twitterapi.io/Claude calls take a few seconds of I/O wait, which doesn't count against Workers' CPU-time limit (only active code execution does, and ours is trivial). No paid plan needed for this workload.
+- **A [twitterapi.io](https://twitterapi.io) account + API key.** This is the tweet data source (both the timeline ingest and `discover` search). Pay-as-you-go, no subscription floor — ~$0.15/1k tweets, so this project runs ~$0.40/mo. Load a few dollars of prepaid credit and grab the key from the dashboard. (See [`docs/apify-pricing.md`](./docs/apify-pricing.md) for why this replaced Apify.)
 - **Anthropic API key** with a monthly budget cap.
 - **Discord webhook** for the channel you want briefings in (channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL).
 
@@ -94,9 +94,7 @@ Each run scopes its candidate tweets to the window since the last *posted* brief
    npx wrangler secret put ANTHROPIC_API_KEY
    npx wrangler secret put DISCORD_WEBHOOK_URL
    npx wrangler secret put TRIGGER_TOKEN          # openssl rand -hex 32
-   npx wrangler secret put APIFY_WEBHOOK_SECRET   # openssl rand -hex 32
-   npx wrangler secret put APIFY_TOKEN            # console.apify.com/account/integrations
-   npx wrangler secret put APIFY_ACTOR_ID         # apidojo~tweet-scraper  (tilde, not slash)
+   npx wrangler secret put TWITTERAPI_IO_KEY      # twitterapi.io dashboard → API Key
    ```
    For local dev, copy `.dev.vars.example` to `.dev.vars` and fill it in (gitignored).
 
@@ -109,7 +107,7 @@ Each run scopes its candidate tweets to the window since the last *posted* brief
 
 ```bash
 # 1. Pull fresh tweets first (otherwise the briefing has nothing to surface).
-#    Expect {"handlesQueried":N,"ingested":M,...} — ingested > 0 confirms Apify works.
+#    Expect {"handlesQueried":N,"ingested":M,...} — ingested > 0 confirms twitterapi.io works.
 curl -X POST -H "X-Trigger-Token: $TRIGGER_TOKEN" \
   https://<your-worker>.workers.dev/api/refresh
 
@@ -134,23 +132,21 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | Method | Path | Purpose |
 | --- | --- | --- |
 | `POST` | `/trigger` | Run a briefing now. `{ briefingId, postCount }` or `{ skipped: true, briefingId }` when nothing clears the bar. |
-| `POST` | `/api/refresh` | Pull fresh tweets from Apify and ingest into D1 (the cron does this first each run). ~15–45s. |
-| `POST` | `/api/discover` | Topic search → top accounts. Body: `{ topic, lookbackDays?, maxResults? }`. ~15–45s. |
+| `POST` | `/api/refresh` | Pull fresh tweets from twitterapi.io and ingest into D1 (the cron does this first each run). |
+| `POST` | `/api/discover` | Topic search → top accounts. Body: `{ topic, lookbackDays? }`. |
 | `GET` | `/api/watch-targets` | List watched handles. |
 | `POST` | `/api/promote` | Add a handle. Body: `{ handle, source? }`. |
 | `DELETE` | `/api/watch-targets` | Remove a handle. Body: `{ handle, source? }`. |
-| `POST` | `/webhook/apify/<secret>` | Optional Apify completion webhook (path-secret-gated). Not load-bearing — `/api/refresh` covers it. |
 
 ## Troubleshooting
 
 | Symptom | Likely cause / fix |
 | --- | --- |
 | Every request 404s | Wrong `TRIGGER_TOKEN`. The Worker returns 404 (not 401) on token mismatch by design. |
-| `error code: 1101` on `/api/refresh` or `/trigger` | Unhandled exception, almost always the Apify call. Most common cause: `APIFY_ACTOR_ID` set to the store's slash form `apidojo/tweet-scraper` — the API needs the **tilde** form `apidojo~tweet-scraper`. Run `npx wrangler tail` to see the real error. |
-| Apify returns `noResults` | The `apidojo` actor blocks API access on Apify's free plan — you need a paid plan, or a usage-based actor (see `docs/apify-pricing.md`). |
+| `/api/refresh` returns `ingested: 0` | twitterapi.io key missing/invalid, out of credit, or all handle fetches failed (`failedHandles` > 0). Check `npx wrangler tail` and the twitterapi.io dashboard balance. |
+| One handle never appears | Per-handle fetch is isolated — a single bad/renamed handle is logged and skipped (`failedHandles`), the rest still ingest. Check the handle still exists on X. |
 | Briefing reports `skipped` / nothing posts | Either no unsummarized posts in the window (run `/api/refresh` first, or check the cron ran) or Claude judged nothing worth surfacing. Silent skips are expected on quiet days. |
 | A failure alert showed up in Discord | The scheduled run threw. Check `npx wrangler tail` for the actual error. |
-| `discover` takes 30+ seconds | Expected — Apify search is slow. |
 
 `npx wrangler tail` streams live Worker logs — the first place to look when something's off.
 
@@ -159,7 +155,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 - **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the weekday cron). Entry: `src/worker.ts`.
 - **Router** — `src/router.ts`, a single switch over `(method, path)`; every route 404s on token mismatch.
 - **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes summarized posts older than 30 days so D1 stays lean.
-- **Discover** — `src/discover.ts`: `Apify search → normalize → aggregate by author → Claude.suggestAccounts`.
+- **Discover** — `src/discover.ts`: `twitterapi.io search → normalize → aggregate by author → Claude.suggestAccounts`.
 - **Claude** — `src/anthropic.ts`: tool-use for strict JSON, ephemeral cache on system prompts. Ported from `inbox-watcher`.
 - **Source adapters** — `src/adapters/`. Twitter is the only one today, but the `SourceAdapter` interface means Reddit/Threads/etc. can drop in without touching the briefing logic.
 - **D1 schema** — `watch_targets`, `posts` (unique on `(source, source_id)`), `briefings`. See `schema.sql`.
@@ -172,7 +168,7 @@ src/
 ├── router.ts        # route dispatch + token / path-secret guards
 ├── briefing.ts      # weekday briefing orchestrator (tiered, windowed, silent-skip)
 ├── discover.ts      # topic → accounts orchestrator
-├── ingest.ts        # Apify refresh → normalize → upsert
+├── ingest.ts        # twitterapi.io per-handle refresh → normalize → upsert
 ├── db.ts            # all D1 queries (incl. prunePosts)
 ├── discord.ts       # embed formatter + webhook POST (incl. failure alert)
 ├── anthropic.ts     # selectTopSignal + suggestAccounts (tool-use)
@@ -196,20 +192,25 @@ npm run dev         # wrangler dev (no cron — use POST /trigger)
 ## Costs (rough monthly, single-user)
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)
-- Apify: **$29** (Starter plan — the unavoidable floor; usage-based actors don't beat it, see [`docs/apify-pricing.md`](./docs/apify-pricing.md))
+- twitterapi.io: **~$0.40** (pay-as-you-go, ~$0.15/1k tweets × ~2.3k tweets/mo — no subscription floor)
 - Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per weekday run)
 - Discord: **$0**
 
-So **~$30–39/mo**, almost all of it the Apify $29 floor. Actual tweet usage is ~$1/mo, so ~$28 of the Apify credit goes unspent each month — headroom for more accounts/sources, not a saving you can pocket.
+So **~$1–11/mo** with no fixed platform floor — down from ~$30–39/mo on the old Apify Starter plan ([`docs/apify-pricing.md`](./docs/apify-pricing.md) explains the switch).
 
 ## Roadmap
 
-- ~~**Usage-based Apify**~~ — investigated and dropped (2026-06-01): Apify has no pay-as-you-go below the $29 plan, so a usage-based actor saves nothing. See [`docs/apify-pricing.md`](./docs/apify-pricing.md).
+- ~~**Get off the $29/mo Apify floor**~~ — done (2026-06): migrated ingest + discover to pay-as-you-go twitterapi.io (~$0.40/mo). See [`docs/apify-pricing.md`](./docs/apify-pricing.md).
 - **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekday flow.
-- **More sources** — a Reddit adapter (`src/adapters/reddit.ts`) is the highest-value second source; the adapter interface is already built for it.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history
+
+### v1.2.0 — 2026-06-03
+Migrated the tweet data source off Apify to **twitterapi.io** (pay-as-you-go).
+- Cost drops from the ~$29/mo Apify Starter floor to **~$0.40/mo** usage-based — no subscription.
+- Per-handle timeline fetch (vs Apify's batch) with per-handle error isolation; `discover` search moved to twitterapi.io too.
+- Removed all Apify surface: the webhook route, the `ingest_apify_dataset` MCP tool, and the `APIFY_*` secrets. One vendor, one key (`TWITTERAPI_IO_KEY`).
 
 ### v1.1.0 — 2026-05-31
 Refined how the briefing delivers, for scannability over a flat ranked list.

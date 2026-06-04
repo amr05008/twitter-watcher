@@ -45,17 +45,10 @@ export interface DeleteResult {
   removed: boolean;
 }
 
-export interface IngestResult {
-  ingested: number;
-  skippedNoTarget: number;
-  skippedMalformed: number;
-  datasetId: string;
-}
-
 export interface RefreshResult {
   handlesQueried: number;
   ingested: number;
-  skippedNoTarget: number;
+  failedHandles: number;
   skippedMalformed: number;
 }
 
@@ -132,29 +125,5 @@ export class TwitterWatcherClient {
       handle: input.handle,
       source: input.source ?? "twitter",
     });
-  }
-
-  async ingestApifyDataset(input: {
-    datasetId: string;
-    webhookSecret: string;
-  }): Promise<IngestResult> {
-    const headers: Record<string, string> = {
-      "content-type": "application/json",
-    };
-    const res = await this.fetchImpl(
-      `${this.baseUrl}/webhook/apify/${input.webhookSecret}`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          resource: { defaultDatasetId: input.datasetId },
-        }),
-      },
-    );
-    if (!res.ok) {
-      const text = await res.text().catch(() => "<unreadable>");
-      throw new Error(`Twitter Watcher webhook → ${res.status}: ${text}`);
-    }
-    return (await res.json()) as IngestResult;
   }
 }

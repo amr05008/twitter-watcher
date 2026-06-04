@@ -6,18 +6,25 @@ import type { WatchTarget } from "./adapters/types";
 export interface IngestResult {
   handlesQueried: number;
   ingested: number;
-  skippedNoTarget: number;
+  /** Handles whose fetch failed (network/4xx/5xx) — isolated, run continues. */
+  failedHandles: number;
+  /** Individual tweets that couldn't be normalized. */
   skippedMalformed: number;
 }
 
+const TWITTERAPI_BASE = "https://api.twitterapi.io";
+
+interface TimelineResponse {
+  data?: { tweets?: unknown[] };
+  tweets?: unknown[];
+}
+
 /**
- * Pull fresh tweets for every kind='handle' watch target via Apify run-sync.
- * Normalize, upsert into D1. Does not run any scoring or briefing — just ingest.
+ * Pull fresh tweets for every kind='handle' watch target from twitterapi.io and
+ * upsert them into D1. One request per handle (twitterapi.io is per-user, not
+ * batch); a single handle failing is isolated so the rest of the run proceeds.
  *
- * Used by the daily cron (worker.scheduled) and by POST /api/refresh.
- *
- * Removes the dependency on Apify's webhook delivery, which is unreliable in
- * practice (see reference-apify-gotchas).
+ * Used by the weekday cron (worker.scheduled) and by POST /api/refresh.
  */
 export async function refreshHandleIngest(
   env: Env,
@@ -26,74 +33,61 @@ export async function refreshHandleIngest(
   const targets = await listWatchTargets(env.DB, { kind: "handle" });
 
   if (targets.length === 0) {
-    return { handlesQueried: 0, ingested: 0, skippedNoTarget: 0, skippedMalformed: 0 };
+    return { handlesQueried: 0, ingested: 0, failedHandles: 0, skippedMalformed: 0 };
   }
 
-  const handles = targets.map((t) => t.handle);
+  let ingested = 0;
+  let failedHandles = 0;
+  let skippedMalformed = 0;
 
-  const targetByHandle = new Map<string, WatchTarget>();
   for (const t of targets) {
-    targetByHandle.set(t.handle.toLowerCase(), {
+    const target: WatchTarget = {
       id: t.id,
       source: t.source,
       kind: t.kind as "handle" | "search",
       handle: t.handle,
       weight: t.weight,
       addedAt: t.addedAt,
-    });
-  }
+    };
 
-  const apifyUrl = `https://api.apify.com/v2/acts/${env.APIFY_ACTOR_ID}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
-  const apifyRes = await fetchImpl(apifyUrl, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      twitterHandles: handles,
-      // Weekday cadence: ~15 tweets/handle covers a day (plus the weekend on the
-      // Monday run, which the briefing window stretches back over). Lower if Apify
-      // volume matters (~8 ≈ cost-neutral vs the old weekly pull); higher for safety.
-      maxItems: Math.max(50, handles.length * 15),
-      sort: "Latest",
-      tweetLanguage: "en",
-    }),
-  });
-
-  if (!apifyRes.ok) {
-    const text = await apifyRes.text().catch(() => "<unreadable>");
-    throw new Error(`Apify ingest failed: ${apifyRes.status} ${text}`);
-  }
-
-  const rawTweets = (await apifyRes.json()) as unknown[];
-
-  let ingested = 0;
-  let skippedNoTarget = 0;
-  let skippedMalformed = 0;
-
-  for (const raw of rawTweets) {
     try {
-      const r = raw as { author?: { userName?: string } };
-      const author = r.author?.userName;
-      if (typeof author !== "string" || author.length === 0) {
-        skippedMalformed++;
-        continue;
+      const url = `${TWITTERAPI_BASE}/twitter/user/last_tweets?userName=${encodeURIComponent(t.handle)}`;
+      const res = await fetchImpl(url, {
+        headers: { "X-API-Key": env.TWITTERAPI_IO_KEY },
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => "<unreadable>");
+        throw new Error(`twitterapi.io ${res.status}: ${body}`);
       }
-      const target = targetByHandle.get(author.toLowerCase());
-      if (!target) {
-        skippedNoTarget++;
-        continue;
+
+      const json = (await res.json()) as TimelineResponse;
+      const tweets = json.data?.tweets ?? json.tweets ?? [];
+
+      for (const raw of tweets) {
+        try {
+          const post = twitterAdapter.normalize(raw as never, target);
+          await upsertPost(env.DB, target.id, post);
+          ingested++;
+        } catch {
+          // Non-tweet item or missing fields — skip, keep going.
+          skippedMalformed++;
+        }
       }
-      const post = twitterAdapter.normalize(raw as any, target);
-      await upsertPost(env.DB, target.id, post);
-      ingested++;
-    } catch {
-      skippedMalformed++;
+    } catch (err) {
+      // Per-handle isolation: one handle's failure (network, rate limit, bad
+      // handle) must not sink the whole run. Log and continue.
+      failedHandles++;
+      console.error(
+        `refresh: handle @${t.handle} failed:`,
+        err instanceof Error ? err.message : String(err),
+      );
     }
   }
 
   return {
-    handlesQueried: handles.length,
+    handlesQueried: targets.length,
     ingested,
-    skippedNoTarget,
+    failedHandles,
     skippedMalformed,
   };
 }

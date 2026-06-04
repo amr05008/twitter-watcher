@@ -159,37 +159,6 @@ describe("TwitterWatcherClient.removeWatchedAccount", () => {
   });
 });
 
-describe("TwitterWatcherClient.ingestApifyDataset", () => {
-  it("POSTs /webhook/apify/<secret> with dataset id in resource shape", async () => {
-    const fakeFetch = makeFetch([
-      {
-        match: (url) => url.includes("/webhook/apify/"),
-        respond: ok({
-          ingested: 25,
-          skippedNoTarget: 0,
-          skippedMalformed: 0,
-          datasetId: "abc",
-        }),
-      },
-    ]);
-    const result = await client(fakeFetch as any).ingestApifyDataset({
-      datasetId: "abc",
-      webhookSecret: "secret-xyz",
-    });
-    expect(result.ingested).toBe(25);
-
-    const [url, init] = fakeFetch.mock.calls[0] as any;
-    expect(url).toBe(
-      "https://twitter-watcher.example.dev/webhook/apify/secret-xyz",
-    );
-    expect(JSON.parse(init.body)).toEqual({
-      resource: { defaultDatasetId: "abc" },
-    });
-    // NO X-Trigger-Token on this route — it's path-secret-gated
-    expect(init.headers["X-Trigger-Token"]).toBeUndefined();
-  });
-});
-
 describe("TwitterWatcherClient.refreshTweets", () => {
   it("POSTs /api/refresh with the token header", async () => {
     const fakeFetch = makeFetch([
@@ -198,7 +167,7 @@ describe("TwitterWatcherClient.refreshTweets", () => {
         respond: ok({
           handlesQueried: 5,
           ingested: 42,
-          skippedNoTarget: 1,
+          failedHandles: 1,
           skippedMalformed: 0,
         }),
       },

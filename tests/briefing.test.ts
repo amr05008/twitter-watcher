@@ -10,9 +10,7 @@ function makeEnv(db: FakeD1): Env {
     ANTHROPIC_API_KEY: "sk-test",
     DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/test",
     TRIGGER_TOKEN: "t",
-    APIFY_WEBHOOK_SECRET: "s",
-    APIFY_TOKEN: "apify-tok",
-    APIFY_ACTOR_ID: "apidojo~tweet-scraper",
+    TWITTERAPI_IO_KEY: "twapi-key",
   };
 }
 

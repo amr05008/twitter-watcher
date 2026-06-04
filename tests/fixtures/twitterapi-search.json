@@ -1,0 +1,407 @@
+{
+  "tweets": [
+    {
+      "type": "tweet",
+      "id": "2062335834737545530",
+      "url": "https://x.com/SaraTaherSEO/status/2062335834737545530",
+      "twitterUrl": "https://twitter.com/SaraTaherSEO/status/2062335834737545530",
+      "text": "Next week's newsletter is in the works and it's all about AI Agents!\n\nLooking for a sponsor. DM to learn more. Thanks!",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 1,
+      "createdAt": "Thu Jun 04 00:49:14 +0000 2026",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "2062335834737545530",
+      "displayTextRange": [
+        0,
+        118
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "SaraTaherSEO",
+        "url": "https://x.com/SaraTaherSEO",
+        "twitterUrl": "https://twitter.com/SaraTaherSEO",
+        "id": "1255191189495713794",
+        "name": "Sara likes sunny ☀️ days!",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1998543687999995904/zW-STtgS_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1255191189495713794/1742581769",
+        "description": "",
+        "location": "Canada",
+        "followers": 1422,
+        "following": 1049,
+        "status": "",
+        "canDm": true,
+        "canMediaTag": false,
+        "createdAt": "Tue Apr 28 17:47:02 +0000 2020",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 12128,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 422,
+        "statusesCount": 2271,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1958515600981954639"
+        ],
+        "profile_bio": {
+          "description": "Not all heroes wear capes… some wear hijabs :) No spam just good vibes!\nnewsletter: https://t.co/zkZK6HrBau",
+          "entities": {
+            "description": {
+              "urls": [
+                {
+                  "display_url": "sara-taher.com",
+                  "expanded_url": "http://sara-taher.com",
+                  "indices": [
+                    84,
+                    107
+                  ],
+                  "url": "https://t.co/zkZK6HrBau"
+                }
+              ]
+            },
+            "url": {
+              "urls": [
+                {
+                  "display_url": "sara-taher.com",
+                  "expanded_url": "http://sara-taher.com",
+                  "indices": [
+                    0,
+                    23
+                  ],
+                  "url": "https://t.co/zkZK6HrBau"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {},
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "communityInfo": null,
+      "article": null
+    },
+    {
+      "type": "tweet",
+      "id": "2062335733982269932",
+      "url": "https://x.com/LukeSimpleDiv/status/2062335733982269932",
+      "twitterUrl": "https://twitter.com/LukeSimpleDiv/status/2062335733982269932",
+      "text": "@santani_virgo They have a 98% customer retention….\nThen they’re integrating AI in their products and building new AI Agents tools",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 1,
+      "createdAt": "Thu Jun 04 00:48:49 +0000 2026",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": true,
+      "inReplyToId": "2062324649384382849",
+      "conversationId": "2062180755682275587",
+      "displayTextRange": [
+        15,
+        130
+      ],
+      "inReplyToUserId": "1621973707307581440",
+      "inReplyToUsername": "santani_virgo",
+      "author": {
+        "type": "user",
+        "userName": "LukeSimpleDiv",
+        "url": "https://x.com/LukeSimpleDiv",
+        "twitterUrl": "https://twitter.com/LukeSimpleDiv",
+        "id": "1915085256488841220",
+        "name": "Luke Simple Dividends",
+        "isVerified": false,
+        "isBlueVerified": true,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/2040027211206623232/ysKS6jNM_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1915085256488841220/1780188709",
+        "description": "",
+        "location": "New York, USA",
+        "followers": 1167,
+        "following": 464,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": true,
+        "createdAt": "Wed Apr 23 16:48:27 +0000 2025",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 5566,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 735,
+        "statusesCount": 5847,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "2062130267767324898"
+        ],
+        "profile_bio": {
+          "description": "Road to 100K Portfolio 📊\n🔍 Stock Analysis 💼 Transparent Portfolio\n\n🚨 My FULL portfolio for FREE + Live trades here 👇🏻",
+          "entities": {
+            "description": {},
+            "url": {
+              "urls": [
+                {
+                  "display_url": "linktr.ee/LukeBruni",
+                  "expanded_url": "https://linktr.ee/LukeBruni",
+                  "indices": [
+                    0,
+                    23
+                  ],
+                  "url": "https://t.co/22tBPKtUBN"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1621973707307581440",
+            "indices": [
+              0,
+              14
+            ],
+            "name": "Anonymous",
+            "screen_name": "santani_virgo"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "communityInfo": null,
+      "article": null
+    },
+    {
+      "type": "tweet",
+      "id": "2062335478339076106",
+      "url": "https://x.com/NewsTongueX/status/2062335478339076106",
+      "twitterUrl": "https://twitter.com/NewsTongueX/status/2062335478339076106",
+      "text": "🔴 Meta launches AI business agent for customer service\n\nMeta released a new AI-powered business agent designed to handle customer service functions for enterprises.\n\nThe tool expands Meta's AI offerings for commercial applications, allowing businesses to deploy automated customer service agents.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 2,
+      "createdAt": "Thu Jun 04 00:47:49 +0000 2026",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "2062335478339076106",
+      "displayTextRange": [
+        0,
+        271
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "NewsTongueX",
+        "url": "https://x.com/NewsTongueX",
+        "twitterUrl": "https://twitter.com/NewsTongueX",
+        "id": "2052402572120453125",
+        "name": "NewsTongue",
+        "isVerified": false,
+        "isBlueVerified": true,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/2052405080930840576/zZaHW1wI_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/2052402572120453125/1778170375",
+        "description": "",
+        "location": "World",
+        "followers": 87,
+        "following": 7,
+        "status": "",
+        "canDm": true,
+        "canMediaTag": true,
+        "createdAt": "Thu May 07 14:58:22 +0000 2026",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 5,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 4695,
+        "statusesCount": 4719,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "2057007964628685252"
+        ],
+        "profile_bio": {
+          "description": "The Tongue of News - Your daily news feed 📰\n\nTelegram: https://t.co/TU7qbzrpE8\nYoutube: https://t.co/Mu3KqXAGF3 - (WIP)",
+          "entities": {
+            "description": {
+              "urls": [
+                {
+                  "display_url": "t.me/newstongue",
+                  "expanded_url": "http://t.me/newstongue",
+                  "indices": [
+                    55,
+                    78
+                  ],
+                  "url": "https://t.co/TU7qbzrpE8"
+                },
+                {
+                  "display_url": "youtube.com/@NewsTongueOff…",
+                  "expanded_url": "https://www.youtube.com/@NewsTongueOfficial",
+                  "indices": [
+                    88,
+                    111
+                  ],
+                  "url": "https://t.co/Mu3KqXAGF3"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.twitter.com/HFRHPpgWNL",
+            "expanded_url": "https://twitter.com/NewsTongueX/status/2062335478339076106/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              },
+              "orig": {
+                "faces": []
+              }
+            },
+            "id_str": "2062335458563014657",
+            "indices": [
+              272,
+              295
+            ],
+            "media_key": "3_2062335458563014657",
+            "media_results": {
+              "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAARye4yw/V0ABCgACHJ7jMNoWAAoAAA==",
+              "result": {
+                "__typename": "ApiMedia",
+                "id": "QXBpTWVkaWE6DAABCgABHJ7jLD9XQAEKAAIcnuMw2hYACgAA",
+                "media_key": "3_2062335458563014657"
+              }
+            },
+            "media_url_https": "https://pbs.twimg.com/media/HJ7jLD9XQAEnnr7.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 630,
+                  "w": 1125,
+                  "x": 75,
+                  "y": 0
+                },
+                {
+                  "h": 630,
+                  "w": 630,
+                  "x": 435,
+                  "y": 0
+                },
+                {
+                  "h": 630,
+                  "w": 553,
+                  "x": 474,
+                  "y": 0
+                },
+                {
+                  "h": 630,
+                  "w": 315,
+                  "x": 593,
+                  "y": 0
+                },
+                {
+                  "h": 630,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 630,
+              "width": 1200
+            },
+            "sizes": {
+              "large": {
+                "h": 630,
+                "w": 1200
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/HFRHPpgWNL"
+          }
+        ]
+      },
+      "card": null,
+      "place": {},
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": []
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "communityInfo": null,
+      "article": null
+    }
+  ],
+  "has_next_page": true,
+  "next_cursor": "DAADDAABCgABHJ7jg9UXEToKAAIcnuIEbFdQhgAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUcnuOQ70AnEAoABhye45DvP9jwAAA"
+}
