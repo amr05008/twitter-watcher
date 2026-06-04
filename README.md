@@ -144,7 +144,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | --- | --- |
 | Every request 404s | Wrong `TRIGGER_TOKEN`. The Worker returns 404 (not 401) on token mismatch by design. |
 | `/api/refresh` returns `ingested: 0` | twitterapi.io key missing/invalid, out of credit, or all handle fetches failed (`failedHandles` > 0). Check `npx wrangler tail` and the twitterapi.io dashboard balance. |
-| One handle never appears | Per-handle fetch is isolated — a single bad/renamed handle is logged and skipped (`failedHandles`), the rest still ingest. Check the handle still exists on X. |
+| One handle never appears | A renamed/suspended handle returns an empty result (HTTP 200), so it's **silently** skipped — it won't show up in `failedHandles` (that only counts network/auth/HTTP errors). If a handle stops appearing, check it still exists on X. |
 | Briefing reports `skipped` / nothing posts | Either no unsummarized posts in the window (run `/api/refresh` first, or check the cron ran) or Claude judged nothing worth surfacing. Silent skips are expected on quiet days. |
 | A failure alert showed up in Discord | The scheduled run threw. Check `npx wrangler tail` for the actual error. |
 
