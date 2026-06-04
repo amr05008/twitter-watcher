@@ -39,6 +39,7 @@ export async function refreshHandleIngest(
   let ingested = 0;
   let failedHandles = 0;
   let skippedMalformed = 0;
+  let lastError: unknown;
 
   for (const t of targets) {
     const target: WatchTarget = {
@@ -77,11 +78,24 @@ export async function refreshHandleIngest(
       // Per-handle isolation: one handle's failure (network, rate limit, bad
       // handle) must not sink the whole run. Log and continue.
       failedHandles++;
+      lastError = err;
       console.error(
         `refresh: handle @${t.handle} failed:`,
         err instanceof Error ? err.message : String(err),
       );
     }
+  }
+
+  // Total failure (every handle errored) means the source itself is down — a
+  // dead API key, an outage, twitterapi.io changing its shape. Throw so the
+  // scheduled handler can post a loud failure alert instead of going quiet.
+  // (A partial failure is left isolated — the run still surfaces what it got.)
+  if (failedHandles === targets.length) {
+    throw new Error(
+      `all ${targets.length} watched handle(s) failed to fetch from twitterapi.io (last error: ${
+        lastError instanceof Error ? lastError.message : String(lastError)
+      })`,
+    );
   }
 
   return {

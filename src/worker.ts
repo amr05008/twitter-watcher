@@ -41,15 +41,27 @@ export default {
     try {
       // Refresh first so the briefing sees fresh tweets, then brief.
       // Refresh failure must NOT block the briefing — older unsummarized posts
-      // may still be in D1 and worth surfacing.
+      // may still be in D1 and worth surfacing. But a *total* refresh failure
+      // (refreshHandleIngest throws only when every handle failed) means the
+      // data source is down — post a loud alert so it doesn't go quiet, then
+      // still continue to the briefing.
       try {
         const result = await refreshHandleIngest(env);
         console.log("scheduled refresh:", JSON.stringify(result));
       } catch (err) {
-        console.error(
-          "scheduled refresh failed (continuing to briefing):",
-          err instanceof Error ? err.message : String(err),
-        );
+        const message = err instanceof Error ? err.message : String(err);
+        console.error("scheduled refresh failed (continuing to briefing):", message);
+        try {
+          await postToDiscord(
+            env.DISCORD_WEBHOOK_URL,
+            formatError(new Date().toISOString(), `refresh failed: ${message}`),
+          );
+        } catch (alertErr) {
+          console.error(
+            "failed to post refresh failure alert to Discord:",
+            alertErr instanceof Error ? alertErr.message : String(alertErr),
+          );
+        }
       }
 
       await runBriefing(env, "cron", briefingPrompt);

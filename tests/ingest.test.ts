@@ -114,4 +114,11 @@ describe("ingest.refreshHandleIngest", () => {
     expect(result.failedHandles).toBe(1);
     expect(result.ingested).toBe(1); // somefounder still ingested
   });
+
+  it("throws when EVERY handle fails (source down → loud alert upstream)", async () => {
+    const fetchImpl = fakeTwitterApi({ failHandles: ["karpathy", "somefounder"] });
+    await expect(
+      refreshHandleIngest(makeEnv(db), fetchImpl as any),
+    ).rejects.toThrow(/all 2 watched handle\(s\) failed/);
+  });
 });
