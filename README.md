@@ -189,6 +189,18 @@ npm run typecheck   # tsc --noEmit
 npm run dev         # wrangler dev (no cron — use POST /trigger)
 ```
 
+To tune the briefing selection prompt, use the offline eval harness — it runs the real
+`selectTopSignal` over a frozen batch of posts (`tests/fixtures/briefing-batch.json`) and
+prints the picks, with no Discord post or D1 write, so you can A/B prompt edits against
+identical input:
+
+```bash
+npm run eval:briefing   # needs ANTHROPIC_API_KEY in .dev.vars; spends ~1 Sonnet call
+```
+
+It self-skips during `npm test` (gated on `RUN_EVAL`), so CI stays free. See the header of
+[`tests/eval-briefing.test.ts`](./tests/eval-briefing.test.ts) for the re-snapshot command.
+
 ## Costs (rough monthly, single-user)
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)

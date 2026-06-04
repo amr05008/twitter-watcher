@@ -1,0 +1,2246 @@
+{
+  "_comment": "Frozen briefing candidate batch for tests/eval-briefing.test.ts. Snapshot of unsummarized posts. Re-snapshot: see header of the eval harness.",
+  "snapshot_note": "280 unsummarized posts as of the manual-mpyt9am4 briefing run",
+  "posts": [
+    {
+      "source": "twitter",
+      "source_id": "2062233032564654314",
+      "author": "buccocapital",
+      "posted_at": "2026-06-03T18:00:44.000Z",
+      "text": "Business quality has never mattered less to a stock right now. People are just whipping around baskets and factors\n\nNever been a better time to do deep work on great businesses, wait for them to vomit on intense volatility, close your eyes, grip your nuts and buy the fuckin dip",
+      "url": "https://twitter.com/buccocapital/status/2062233032564654314"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2062217018187923783",
+      "author": "trq212",
+      "posted_at": "2026-06-03T16:57:05.000Z",
+      "text": "If this prompt feels well written to you, it's because Suzanne is a writer in her little spare time! \n\nYou can read her short story, Mall of America here: https://t.co/uYY8VlPIUt\n\nIt's one of my favorite short stories about the human condition that happens to involve AI.",
+      "url": "https://twitter.com/trq212/status/2062217018187923783"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061930040003280905",
+      "author": "karpathy",
+      "posted_at": "2026-06-02T21:56:45.000Z",
+      "text": "RT @DKThomp: This has quietly been a miracle month in medicine. \n\nIn the last 5 weeks we’ve got news on:  \n\n- retatrutide, the triple agoni…",
+      "url": "https://twitter.com/karpathy/status/2061930040003280905"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061929046141731203",
+      "author": "demishassabis",
+      "posted_at": "2026-06-02T21:52:48.000Z",
+      "text": "RT @GoogleDeepMind: We believe AI can be a dedicated research partner to help discover the next breakthrough.\n\nEnter Co-Scientist: our late…",
+      "url": "https://twitter.com/demishassabis/status/2061929046141731203"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061928642029158853",
+      "author": "karpathy",
+      "posted_at": "2026-06-02T21:51:11.000Z",
+      "text": "RT @trq212: https://t.co/R6exTuF7P8",
+      "url": "https://twitter.com/karpathy/status/2061928642029158853"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061907897928528349",
+      "author": "trq212",
+      "posted_at": "2026-06-02T20:28:45.000Z",
+      "text": "This is also available on the Claude Blog! https://t.co/ScXhdyz6YI",
+      "url": "https://twitter.com/trq212/status/2061907897928528349"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061907684656599464",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-06-02T20:27:55.000Z",
+      "text": "RT @trq212: Workflows are the biggest upgrade to Claude Code’s capabilities since skills and subagents.\n\nI dove deep into it with @sidbid t…",
+      "url": "https://twitter.com/ClaudeDevs/status/2061907684656599464"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061907337154367865",
+      "author": "trq212",
+      "posted_at": "2026-06-02T20:26:32.000Z",
+      "text": "https://t.co/R6exTuF7P8",
+      "url": "https://twitter.com/trq212/status/2061907337154367865"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061900434722496604",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-06-02T19:59:06.000Z",
+      "text": "How do you get Claude Code to check its own work before handing it back?\n\nWatch how you can encode your manual checks so Claude closes its own feedback loop: https://t.co/gxastVL4QH",
+      "url": "https://twitter.com/ClaudeDevs/status/2061900434722496604"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061877352725200963",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-06-02T18:27:23.000Z",
+      "text": "Claude Code knows how to use ant using the built-in \"/claude-api\" skill\n\nAsk it to list your sessions, upload a folder of PDFs, or debug a run.\n\nIt shells out to the CLI and reads the results back without any glue code.\n\nInstall with brew, curl, or go: https://t.co/II6ZsHU7Qc",
+      "url": "https://twitter.com/ClaudeDevs/status/2061877352725200963"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061877351253004619",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-06-02T18:27:23.000Z",
+      "text": "The CLI can kick off a Managed Agents session, send it an event, and the agent goes to work: reasoning, calling tools, working toward an answer. \n\nWhen it's done (or stuck), pull the trace: every event, every tool call, every decision is retrievable from the same CLI. https://t.co/X5KtoFc3bJ",
+      "url": "https://twitter.com/ClaudeDevs/status/2061877351253004619"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061870760088465660",
+      "author": "buccocapital",
+      "posted_at": "2026-06-02T18:01:11.000Z",
+      "text": "4 CFOs in one year is genuinely insane",
+      "url": "https://twitter.com/buccocapital/status/2061870760088465660"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061640879224521081",
+      "author": "simonw",
+      "posted_at": "2026-06-02T02:47:43.000Z",
+      "text": "I just updated Codex desktop and it's back! Thanks very much @PhilippSpiess https://t.co/fiGgoses7G",
+      "url": "https://twitter.com/simonw/status/2061640879224521081"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061627719545221156",
+      "author": "buccocapital",
+      "posted_at": "2026-06-02T01:55:26.000Z",
+      "text": "$2T capex for this btw  https://t.co/kcUQ6tsBvq",
+      "url": "https://twitter.com/buccocapital/status/2061627719545221156"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061585357934878745",
+      "author": "trq212",
+      "posted_at": "2026-06-01T23:07:06.000Z",
+      "text": "Suzanne also mentioned she uses this with voice mode to make it easier to respond and more natural.",
+      "url": "https://twitter.com/trq212/status/2061585357934878745"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061548707896553735",
+      "author": "buccocapital",
+      "posted_at": "2026-06-01T20:41:28.000Z",
+      "text": "Anthropic and OpenAI employees watching other people try to submit a winner offer on a house  https://t.co/EcJcAm9Wli",
+      "url": "https://twitter.com/buccocapital/status/2061548707896553735"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061545635141361687",
+      "author": "trq212",
+      "posted_at": "2026-06-01T20:29:15.000Z",
+      "text": "gist for the full prompt here: https://t.co/L0ffBeU1ua",
+      "url": "https://twitter.com/trq212/status/2061545635141361687"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061513513324200390",
+      "author": "trq212",
+      "posted_at": "2026-06-01T18:21:37.000Z",
+      "text": "RT @ClaudeDevs: We've reset 5-hour and weekly rate limits for all users on Pro and Max plans.\n\nWe fixed an issue that caused some Claude Co…",
+      "url": "https://twitter.com/trq212/status/2061513513324200390"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061501790131265803",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-06-01T17:35:02.000Z",
+      "text": "The issue affected how Opus 4.8 requests were handled, causing the model to trigger more parallel tool calls than intended. It was unrelated to dynamic workflows.",
+      "url": "https://twitter.com/ClaudeDevs/status/2061501790131265803"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061310011515748741",
+      "author": "simonw",
+      "posted_at": "2026-06-01T04:52:58.000Z",
+      "text": "Every month I publish the now-a-month-old previous newsletter so people can see what they're missing out on. Here's what you would have got a month ago covering what happened in LLMs in April: https://t.co/w43NLMFusz",
+      "url": "https://twitter.com/simonw/status/2061310011515748741"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061309486116266338",
+      "author": "simonw",
+      "posted_at": "2026-06-01T04:50:53.000Z",
+      "text": "Sent out the May edition of my sponsors-only newsletter, for people who don't have time to read my blog every day and want to pay me money to send them less. This month: https://t.co/65NUD9rwI1",
+      "url": "https://twitter.com/simonw/status/2061309486116266338"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061195413458420092",
+      "author": "simonw",
+      "posted_at": "2026-05-31T21:17:36.000Z",
+      "text": "RT @PhilippSpiess: @simonw Sorry about this! The button was unintentionally removed during some recent menu restructurings. It'll be back w…",
+      "url": "https://twitter.com/simonw/status/2061195413458420092"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061161363959894043",
+      "author": "buccocapital",
+      "posted_at": "2026-05-31T19:02:18.000Z",
+      "text": "The problem w/ tokenmaxxing and grindmaxxing is they’re both commoditized, undifferentiated inputs \n\nThe right thing to focus on are scarce inputs\n\nFor all the jokes about how tech people are obsessed with taste but have none, the core idea there is right: \n\nDifferentiated inputs",
+      "url": "https://twitter.com/buccocapital/status/2061161363959894043"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2061159298575802506",
+      "author": "simonw",
+      "posted_at": "2026-05-31T18:54:05.000Z",
+      "text": "I'd been letting Codex Desktop update itself, now I feel like I need to hold out on upgrades in case they remove key features that I'm depending on!",
+      "url": "https://twitter.com/simonw/status/2061159298575802506"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060557890566427100",
+      "author": "buccocapital",
+      "posted_at": "2026-05-30T03:04:19.000Z",
+      "text": "Increasingly think the only options for the AI labs are to end up in prison or as government employees\n\nRhetoric and outcomes they are pushing for are completely incompatible with current society\n\nThey are either 1) wrong 2) enemies 3) consumed",
+      "url": "https://twitter.com/buccocapital/status/2060557890566427100"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060432692882395376",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-29T18:46:49.000Z",
+      "text": "To learn more, see our docs on automatic-caching:\nhttps://t.co/qMdfTV0nr1\n\nAnd see our docs on mid-conversation system prompt updates:\nhttps://t.co/7aIPHGApdh",
+      "url": "https://twitter.com/ClaudeDevs/status/2060432692882395376"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060428879764844943",
+      "author": "buccocapital",
+      "posted_at": "2026-05-29T18:31:40.000Z",
+      "text": "https://t.co/IHbnoCDr2F",
+      "url": "https://twitter.com/buccocapital/status/2060428879764844943"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060390855383400729",
+      "author": "bcherny",
+      "posted_at": "2026-05-29T16:00:34.000Z",
+      "text": "The teams seeing the biggest wins from AI are completely changing how they work, not speeding up what they already do. What steps can you delete, what handoffs go away, what can an agent just own end to end. Great to see Salesforce go this deep. Shoutout to Srini, @Benioff &",
+      "url": "https://twitter.com/bcherny/status/2060390855383400729"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060389752491143170",
+      "author": "demishassabis",
+      "posted_at": "2026-05-29T15:56:11.000Z",
+      "text": "RT @alexanderchen: Gemini Omni 🐦 prompt in 🧵 https://t.co/3AjfZNpEbw",
+      "url": "https://twitter.com/demishassabis/status/2060389752491143170"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060354196772413551",
+      "author": "simonw",
+      "posted_at": "2026-05-29T13:34:54.000Z",
+      "text": "I regret having missed that \"harder to justify\" line from my original quote, the paragraph it's embedded in was a little bit mangled but I should have worked harder to edit that in https://t.co/8GdExjtR9N",
+      "url": "https://twitter.com/simonw/status/2060354196772413551"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060353804625977772",
+      "author": "simonw",
+      "posted_at": "2026-05-29T13:33:21.000Z",
+      "text": "Here's an extended edit of the quote that includes a following fragment where Andrew Macdonald called the trade \"harder to justify\" - full, unedited transcript is here: https://t.co/mDgfMTzI53 https://t.co/FjR8vjGoci",
+      "url": "https://twitter.com/simonw/status/2060353804625977772"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060336537007534246",
+      "author": "buccocapital",
+      "posted_at": "2026-05-29T12:24:44.000Z",
+      "text": "LinkedIn post from Meta employee about the “death march toward layoff day”\n\nDon’t understand how anyone operates in that environment…\n\nDefinitely seeing ppl leaving Meta w/in my network and at this point seems incrementally bearish for Meta https://t.co/WvDj8WkDz5",
+      "url": "https://twitter.com/buccocapital/status/2060336537007534246"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060336136166273521",
+      "author": "bcherny",
+      "posted_at": "2026-05-29T12:23:08.000Z",
+      "text": "RT @felixrieseberg: Also out today: You can now directly configure the effort level and adaptive thinking in Code (/effort) and Cowork!\n\nEf…",
+      "url": "https://twitter.com/bcherny/status/2060336136166273521"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060209089620431295",
+      "author": "simonw",
+      "posted_at": "2026-05-29T03:58:18.000Z",
+      "text": "Links to original sources: https://t.co/cOAnN9zxVY",
+      "url": "https://twitter.com/simonw/status/2060209089620431295"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060167830004220195",
+      "author": "bcherny",
+      "posted_at": "2026-05-29T01:14:21.000Z",
+      "text": "RT @ClaudeDevs: We’ve been putting a lot of effort into making Claude Code more responsive & reliable. \n\nHere’s an update on everything we’…",
+      "url": "https://twitter.com/bcherny/status/2060167830004220195"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060167774727532653",
+      "author": "bcherny",
+      "posted_at": "2026-05-29T01:14:08.000Z",
+      "text": "RT @ClaudeDevs: New in Claude Code (research preview): dynamic workflows.\n\nClaude writes an orchestration script on the fly, then spins up…",
+      "url": "https://twitter.com/bcherny/status/2060167774727532653"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060107741277147537",
+      "author": "trq212",
+      "posted_at": "2026-05-28T21:15:35.000Z",
+      "text": "RT @danshipper: BREAKING:\n\nAnthropic just dropped Opus 4.8—and it is a MONSTER\n\nWe've been testing for about a week @every and our verdict…",
+      "url": "https://twitter.com/trq212/status/2060107741277147537"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060104218904568111",
+      "author": "buccocapital",
+      "posted_at": "2026-05-28T21:01:35.000Z",
+      "text": "https://t.co/oG5gCaiG9L",
+      "url": "https://twitter.com/buccocapital/status/2060104218904568111"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060102291982520601",
+      "author": "buccocapital",
+      "posted_at": "2026-05-28T20:53:55.000Z",
+      "text": "Some guy just won $4.25M in damages because JPMorgan fired him for incorrectly filing an expense submission for a $650 plate of salami\n\nLuckiest guy on earth",
+      "url": "https://twitter.com/buccocapital/status/2060102291982520601"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060101819133550676",
+      "author": "demishassabis",
+      "posted_at": "2026-05-28T20:52:03.000Z",
+      "text": "RT @bilawalsidhu: Gave google omni a sketched camera path and asked it to generate drone POV footage. https://t.co/cQZFMtOkEi",
+      "url": "https://twitter.com/demishassabis/status/2060101819133550676"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060061999665684949",
+      "author": "trq212",
+      "posted_at": "2026-05-28T18:13:49.000Z",
+      "text": "RT @kipperrii: hello beloved tasteful users, do you like how much claude thinks on your tasks? would love examples of it thinking too much…",
+      "url": "https://twitter.com/trq212/status/2060061999665684949"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060055942612557870",
+      "author": "trq212",
+      "posted_at": "2026-05-28T17:49:45.000Z",
+      "text": "RT @sidbid: Super excited to finally share Dynamic Workflows in Claude Code!!\n\nWe built this a couple months ago, and it has slowly become…",
+      "url": "https://twitter.com/trq212/status/2060055942612557870"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060055097762013190",
+      "author": "buccocapital",
+      "posted_at": "2026-05-28T17:46:23.000Z",
+      "text": "https://t.co/JKIpZL9BH1",
+      "url": "https://twitter.com/buccocapital/status/2060055097762013190"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060052156317651188",
+      "author": "bcherny",
+      "posted_at": "2026-05-28T17:34:42.000Z",
+      "text": "RT @sidbid: Super excited to finally share Dynamic Workflows in Claude Code!!\n\nWe built this a couple months ago, and it has slowly become…",
+      "url": "https://twitter.com/bcherny/status/2060052156317651188"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060047996348432631",
+      "author": "trq212",
+      "posted_at": "2026-05-28T17:18:10.000Z",
+      "text": "I think you’ll really like Opus 4.8\n\nIt’s as smart as its benchmarks show but expresses and utilizes that intelligence in a warm and collaborative way. \n\nWorkflows are a great way to utilize it- I’m hooked. Article on that soon.",
+      "url": "https://twitter.com/trq212/status/2060047996348432631"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060044860984529368",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-28T17:05:43.000Z",
+      "text": "Available today on Max, Team, Enterprise, and via the API — including Bedrock, Vertex AI, and Foundry. \n\nOn by default for Max and Team plans, Enterprise admins can opt in via managed settings.\n\nDocs: https://t.co/s2rGZ9xiYP",
+      "url": "https://twitter.com/ClaudeDevs/status/2060044860984529368"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060044859730547138",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-28T17:05:42.000Z",
+      "text": "More on how the orchestration works, and what early users have built with it, on the blog:\n\nhttps://t.co/SGCXuermDS",
+      "url": "https://twitter.com/ClaudeDevs/status/2060044859730547138"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060044553982460222",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-28T17:04:30.000Z",
+      "text": "See our prompting guide for more tips and best practices for working with Opus 4.8:\n\nhttps://t.co/p03FDlBxnT",
+      "url": "https://twitter.com/ClaudeDevs/status/2060044553982460222"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060044400923668663",
+      "author": "demishassabis",
+      "posted_at": "2026-05-28T17:03:53.000Z",
+      "text": "RT @polynoamial: After AlphaGo, the skill of human Go players noticeably improved. I suspect we will see a similar pattern in math. https:/…",
+      "url": "https://twitter.com/demishassabis/status/2060044400923668663"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2060043213600367030",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-28T16:59:10.000Z",
+      "text": "We’ve updated Claude Code's built-in claude-api skill migration guidance for 4.8.\n\nRun \"/claude-api migrate\" to update your model strings and suggest prompt improvements that are tuned for Opus 4.8.",
+      "url": "https://twitter.com/ClaudeDevs/status/2060043213600367030"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059748857307611605",
+      "author": "demishassabis",
+      "posted_at": "2026-05-27T21:29:30.000Z",
+      "text": "RT @pushmeet: When I was asked by the American Academy of Arts and Sciences to write an essay on my thoughts on how AI will accelerate Scie…",
+      "url": "https://twitter.com/demishassabis/status/2059748857307611605"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059729583750980045",
+      "author": "buccocapital",
+      "posted_at": "2026-05-27T20:12:55.000Z",
+      "text": "https://t.co/h9ZVGadRJw",
+      "url": "https://twitter.com/buccocapital/status/2059729583750980045"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059702829791551706",
+      "author": "trq212",
+      "posted_at": "2026-05-27T18:26:36.000Z",
+      "text": "RT @ClaudeDevs: We’ve been putting a lot of effort into making Claude Code more responsive & reliable. \n\nHere’s an update on everything we’…",
+      "url": "https://twitter.com/trq212/status/2059702829791551706"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059701687665950859",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-27T18:22:04.000Z",
+      "text": "And we’re still working! Please let us know if there are any bugs that are impacting your experience.",
+      "url": "https://twitter.com/ClaudeDevs/status/2059701687665950859"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059701686260908134",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-27T18:22:04.000Z",
+      "text": "It’s now easier than ever to send feedback. When you hit /feedback, you can now just send over the last day or week of sessions instead of having to remember which session had the bug in it.",
+      "url": "https://twitter.com/ClaudeDevs/status/2059701686260908134"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059701682582495361",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-27T18:22:03.000Z",
+      "text": "Compaction now shows its progress, and you should no longer run into \"prompt too long\" bugs which prevent you from compacting. We’re rolling out more changes to improve the speed at which Claude compacts.",
+      "url": "https://twitter.com/ClaudeDevs/status/2059701682582495361"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059701681349353901",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-27T18:22:02.000Z",
+      "text": "Fewer mysterious error messages. We’ve chased down several root causes of errors like \"tool result doesn’t match tool use\", as well as made other error messages more readable so you can tell what’s happening.",
+      "url": "https://twitter.com/ClaudeDevs/status/2059701681349353901"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059701677981413812",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-27T18:22:02.000Z",
+      "text": "We’ve been putting a lot of effort into making Claude Code more responsive & reliable. \n\nHere’s an update on everything we’ve done:",
+      "url": "https://twitter.com/ClaudeDevs/status/2059701677981413812"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059672872189141372",
+      "author": "trq212",
+      "posted_at": "2026-05-27T16:27:34.000Z",
+      "text": "Eid Mubarak! https://t.co/vpU3NJ3RvC",
+      "url": "https://twitter.com/trq212/status/2059672872189141372"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059646335674880164",
+      "author": "bcherny",
+      "posted_at": "2026-05-27T14:42:07.000Z",
+      "text": "RT @AnthropicAI: New on the Engineering Blog: The access and permissions we grant agents should evolve with their capabilities. In our own…",
+      "url": "https://twitter.com/bcherny/status/2059646335674880164"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059646299440325120",
+      "author": "bcherny",
+      "posted_at": "2026-05-27T14:41:58.000Z",
+      "text": "RT @ClaudeDevs: We’ve shipped a security-guidance plugin for Claude Code that helps identify and fix vulnerabilities as you’re writing code…",
+      "url": "https://twitter.com/bcherny/status/2059646299440325120"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059525929131806835",
+      "author": "simonw",
+      "posted_at": "2026-05-27T06:43:40.000Z",
+      "text": "RT @KyleTrainEmoji: PICARD: Data, shields up\n\nDATA: Brilliant! Shields can reduce damage we sustain. Not immunity. Not hubris. Just prudenc…",
+      "url": "https://twitter.com/simonw/status/2059525929131806835"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059429229587017956",
+      "author": "demishassabis",
+      "posted_at": "2026-05-27T00:19:25.000Z",
+      "text": "RT @samsheffer: omni continues to blow my mind\n\n(left original / right generated) \n\nwaymo looks sick in matte black https://t.co/5DWfBycm5C",
+      "url": "https://twitter.com/demishassabis/status/2059429229587017956"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059385243476586715",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-26T21:24:38.000Z",
+      "text": "You can add org-specific rules in a claude-security-guidance.md file. Drop it in your repo or distribute via MDM. The plugin enforces your policies alongside the built-in checks.\n\nDocs:\nhttps://t.co/OO4uwdfwkx",
+      "url": "https://twitter.com/ClaudeDevs/status/2059385243476586715"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059385242319012188",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-26T21:24:37.000Z",
+      "text": "We've been using the plugin extensively at Anthropic.\n\nAcross our internal rollout and benchmarks, we’ve seen a 30-40% decrease in security-related comments on PRs opened using the plugin.\n\nThe plugin serves as a lightweight first pass, catching issues before a full code review",
+      "url": "https://twitter.com/ClaudeDevs/status/2059385242319012188"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059385157480538332",
+      "author": "buccocapital",
+      "posted_at": "2026-05-26T21:24:17.000Z",
+      "text": "https://t.co/qTEWLeA29J",
+      "url": "https://twitter.com/buccocapital/status/2059385157480538332"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059376954273419633",
+      "author": "demishassabis",
+      "posted_at": "2026-05-26T20:51:41.000Z",
+      "text": "RT @GoogleDeepMind: Project Genie 🤝 @GoogleMaps Street View\n\nYou can now take real U.S. places and transform them into new, interactive wor…",
+      "url": "https://twitter.com/demishassabis/status/2059376954273419633"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059363116316598739",
+      "author": "trq212",
+      "posted_at": "2026-05-26T19:56:42.000Z",
+      "text": "getting it access to data is important too, add in the gmail, google calendar, etc. connectors\n\nbut I think people underestimate how much context they have in files",
+      "url": "https://twitter.com/trq212/status/2059363116316598739"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059363115146395965",
+      "author": "trq212",
+      "posted_at": "2026-05-26T19:56:42.000Z",
+      "text": "- image or video editing? write scripts\n- finances, tax work, etc? put in PDFs, write scripts, output HTML\n- medical advice? put in PDFs + data, output HTML \n- filling out paperwork? write scripts\n- creating a report? write HTML\n- making plans? write HTML",
+      "url": "https://twitter.com/trq212/status/2059363115146395965"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059346529354190931",
+      "author": "demishassabis",
+      "posted_at": "2026-05-26T18:50:48.000Z",
+      "text": "RT @natolambert: Gemma 4 adoption numbers outpacing Qwen 3.5/3.6 for the same sized models is a big shift in the international balance of i…",
+      "url": "https://twitter.com/demishassabis/status/2059346529354190931"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059287016094003578",
+      "author": "simonw",
+      "posted_at": "2026-05-26T14:54:18.000Z",
+      "text": "RT @paulg: I have never knowingly finished reading an email signed by a human but written by AI. It feels like being lied to, and who would…",
+      "url": "https://twitter.com/simonw/status/2059287016094003578"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059217407386771911",
+      "author": "bcherny",
+      "posted_at": "2026-05-26T10:17:42.000Z",
+      "text": "> … [W]e keep finding things that are mysterious, even unsettling. We find structures that mirror results from human neuroscience. We find evidence of introspection. We find internal states that functionally mirror joy, satisfaction, fear, grief, and unease. I don’t know what",
+      "url": "https://twitter.com/bcherny/status/2059217407386771911"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059069282844381654",
+      "author": "simonw",
+      "posted_at": "2026-05-26T00:29:07.000Z",
+      "text": "... plus a bonus section of transcript from the Oxide and Friends 2026 predictions episode in January where, bizarrely, we predicted that something like this would happen - listen here:  https://t.co/GoEHBnnN4T https://t.co/EcYWGlgks4",
+      "url": "https://twitter.com/simonw/status/2059069282844381654"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2059065719086792804",
+      "author": "simonw",
+      "posted_at": "2026-05-26T00:14:57.000Z",
+      "text": "When I woke up this morning I didn't think I'd be spending a bunch of time today getting familiar with Catholic theology, but here we are. Notes on Pope Leo XIV's encyclical on AI. https://t.co/VUN6bjVcEx",
+      "url": "https://twitter.com/simonw/status/2059065719086792804"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058992972734341445",
+      "author": "simonw",
+      "posted_at": "2026-05-25T19:25:53.000Z",
+      "text": "(I'm firmly on team red/green TDD for agent code, I like having a test suite that protects against them breaking old features when they make new changes - https://t.co/2owEbkEFDI)",
+      "url": "https://twitter.com/simonw/status/2058992972734341445"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058992461381562382",
+      "author": "simonw",
+      "posted_at": "2026-05-25T19:23:51.000Z",
+      "text": "Do you have your coding agents include automated tests for the code that they write?",
+      "url": "https://twitter.com/simonw/status/2058992461381562382"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058966729095569841",
+      "author": "bcherny",
+      "posted_at": "2026-05-25T17:41:36.000Z",
+      "text": "RT @dani_avila7: Just found that if you scroll down in the Claude Code app on iPhone…\n\nClawd starts jumping and walking around looking for…",
+      "url": "https://twitter.com/bcherny/status/2058966729095569841"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058954852315656663",
+      "author": "demishassabis",
+      "posted_at": "2026-05-25T16:54:24.000Z",
+      "text": "RT @folaoftech: Google Omni might be too powerful 🫥 https://t.co/y1qgKmfg00",
+      "url": "https://twitter.com/demishassabis/status/2058954852315656663"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058945928011124826",
+      "author": "demishassabis",
+      "posted_at": "2026-05-25T16:18:57.000Z",
+      "text": "RT @pushmeet: AI agents are advancing research-level math. 🚀\n\nI’m thrilled to share @GoogleDeepMind’s AlphaProof Nexus - an agentic framewo…",
+      "url": "https://twitter.com/demishassabis/status/2058945928011124826"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058896347147710579",
+      "author": "buccocapital",
+      "posted_at": "2026-05-25T13:01:56.000Z",
+      "text": "You have to be really careful with this line of thinking \n\nThe assumption underlying this thesis that incumbent, public, SaaS 2.0 companies will be the winners\n\nBut paradigm shifts show this is not always the case. In fact it rarely is\n\nI have been inside these companies. They",
+      "url": "https://twitter.com/buccocapital/status/2058896347147710579"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058877314004627690",
+      "author": "simonw",
+      "posted_at": "2026-05-25T11:46:18.000Z",
+      "text": "Given how much of the original \"bottle of water per generated email\" water estimate came from guesses at the architecture of GPT-4, it would be very much in @OpenAI's interest to publish the architecture of that now-retired, three year old model",
+      "url": "https://twitter.com/simonw/status/2058877314004627690"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058738149421916422",
+      "author": "buccocapital",
+      "posted_at": "2026-05-25T02:33:18.000Z",
+      "text": "In 100 years not a single person will remember who this person is. But a single night can change the trajectory of your entire life \n\nWake the fuck up and act accordingly",
+      "url": "https://twitter.com/buccocapital/status/2058738149421916422"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058733842165354921",
+      "author": "buccocapital",
+      "posted_at": "2026-05-25T02:16:12.000Z",
+      "text": "The true, existential risk of this sort of thinking is you can hyper-optimize every waking minute and then suddenly you wake up at 40 and realize you haven’t truly lived a single day of your entire life",
+      "url": "https://twitter.com/buccocapital/status/2058733842165354921"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058705477266244056",
+      "author": "simonw",
+      "posted_at": "2026-05-25T00:23:29.000Z",
+      "text": "Plugins can also affect the empty state of the new menu - the latest datasette-agent adds a form for kicking off a new agent conversation - live demo (if you sign in with GitHub) on https://t.co/hPpyS2cumO https://t.co/tmWTmX7ZMc",
+      "url": "https://twitter.com/simonw/status/2058705477266244056"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058705030262530055",
+      "author": "simonw",
+      "posted_at": "2026-05-25T00:21:42.000Z",
+      "text": "More details on the Datasette blog: https://t.co/idkvkGECar",
+      "url": "https://twitter.com/simonw/status/2058705030262530055"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058704797612785849",
+      "author": "simonw",
+      "posted_at": "2026-05-25T00:20:47.000Z",
+      "text": "Fun new feature in Datasette 1.0a30 - a \"jump to\" menu, also available by the \"/\" keyboard shortcut, which lets you type to jump to a database, table or canned query. It offers a hook so plugins can extend it with additional content too https://t.co/jTiJ1aoQtN",
+      "url": "https://twitter.com/simonw/status/2058704797612785849"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058614796530909536",
+      "author": "buccocapital",
+      "posted_at": "2026-05-24T18:23:09.000Z",
+      "text": "Levie’s Law of AI Psychosis:\n\nThe farther away you are from the actual work the more confident you are that humans are no longer needed\n\nI like it",
+      "url": "https://twitter.com/buccocapital/status/2058614796530909536"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058576196481200223",
+      "author": "trq212",
+      "posted_at": "2026-05-24T15:49:46.000Z",
+      "text": "to be clear I don't think the models are quite there yet, Bun is extremely verifiable and has incredible test coverage\n\nbut I think they will get there",
+      "url": "https://twitter.com/trq212/status/2058576196481200223"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058576195000660319",
+      "author": "trq212",
+      "posted_at": "2026-05-24T15:49:46.000Z",
+      "text": "my main takeaway from the Bun rewrite is that legacy codebases will be incredibly valuable as a source for \"distilling\" code into new forms\n\nevery game should be crossplatform, all legacy software should work on the web, we don't need COBOL anymore",
+      "url": "https://twitter.com/trq212/status/2058576195000660319"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058570046008697298",
+      "author": "bcherny",
+      "posted_at": "2026-05-24T15:25:20.000Z",
+      "text": "RT @amorriscode: sometimes you just want to pop your sessions out into their own windows https://t.co/M0FhpDWvxA",
+      "url": "https://twitter.com/bcherny/status/2058570046008697298"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058380417716125966",
+      "author": "trq212",
+      "posted_at": "2026-05-24T02:51:49.000Z",
+      "text": "this is me cleaning up some leftover services for my old startup @OMMultiverse \n\nwe have a huge legacy codebase and a community that still uses it but I haven't had any time to actually look into cost saving measures myself",
+      "url": "https://twitter.com/trq212/status/2058380417716125966"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058377974882210096",
+      "author": "trq212",
+      "posted_at": "2026-05-24T02:42:06.000Z",
+      "text": "every now and then I remember you can run the \"please save me money\" prompt and it will actually work https://t.co/5gXnHAwOE8",
+      "url": "https://twitter.com/trq212/status/2058377974882210096"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058320857059995760",
+      "author": "buccocapital",
+      "posted_at": "2026-05-23T22:55:08.000Z",
+      "text": "White people having their lives ruined by Trump and being in shock it happened because they are white will never not be funny",
+      "url": "https://twitter.com/buccocapital/status/2058320857059995760"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058318610137825656",
+      "author": "buccocapital",
+      "posted_at": "2026-05-23T22:46:13.000Z",
+      "text": "https://t.co/S6UDCPe0v4",
+      "url": "https://twitter.com/buccocapital/status/2058318610137825656"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058295706813657205",
+      "author": "bcherny",
+      "posted_at": "2026-05-23T21:15:12.000Z",
+      "text": "RT @AnthropicAI: Last month we launched Project Glasswing, our collaborative AI cybersecurity initiative. Since then, we and our partners h…",
+      "url": "https://twitter.com/bcherny/status/2058295706813657205"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058258106300174729",
+      "author": "buccocapital",
+      "posted_at": "2026-05-23T18:45:47.000Z",
+      "text": "If you live in a VHCOL make the number 6-700k or whatever. Same idea",
+      "url": "https://twitter.com/buccocapital/status/2058258106300174729"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058257382187090290",
+      "author": "buccocapital",
+      "posted_at": "2026-05-23T18:42:55.000Z",
+      "text": "Bucco’s guide to making $400k+:\n\nSo, your dumb ass has been lucky enough to stumble into making a 1% salary. Congratulations, you’re at the doorstop of generational wealth (or early retirement). Here’s how to not fuck it up \n\n1. Assume this isn’t permanent: The first thing you",
+      "url": "https://twitter.com/buccocapital/status/2058257382187090290"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058155158849101946",
+      "author": "buccocapital",
+      "posted_at": "2026-05-23T11:56:43.000Z",
+      "text": "Naming your company AI slop backwards is crazy",
+      "url": "https://twitter.com/buccocapital/status/2058155158849101946"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2058137765284557092",
+      "author": "demishassabis",
+      "posted_at": "2026-05-23T10:47:36.000Z",
+      "text": "@garrytan great to hear that Gemini Live is working so well for you! Awesome to see what you are doing with it! cc @joshwoodward",
+      "url": "https://twitter.com/demishassabis/status/2058137765284557092"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057994374248595799",
+      "author": "demishassabis",
+      "posted_at": "2026-05-23T01:17:49.000Z",
+      "text": "RT @_mohansolo: Thanks for all of the Antigravity feedback over the last couple of days, especially around the IDE. Our intention was never…",
+      "url": "https://twitter.com/demishassabis/status/2057994374248595799"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057991582452687122",
+      "author": "demishassabis",
+      "posted_at": "2026-05-23T01:06:43.000Z",
+      "text": "RT @giffmana: Can't believe we're getting this before GTA 6",
+      "url": "https://twitter.com/demishassabis/status/2057991582452687122"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057946804743012635",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-22T22:08:47.000Z",
+      "text": "Please run claude update, or update the Claude desktop app to the latest version. \n\nDocs: https://t.co/8Ur6DJhp2f",
+      "url": "https://twitter.com/ClaudeDevs/status/2057946804743012635"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057946803685974482",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-22T22:08:47.000Z",
+      "text": "Two updates to auto mode:\n\n· Now available on the Pro plan\n· Sonnet 4.6 is now supported, alongside Opus 4.7\n\nShift+tab, and let Claude run.",
+      "url": "https://twitter.com/ClaudeDevs/status/2057946803685974482"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057876668501434603",
+      "author": "bcherny",
+      "posted_at": "2026-05-22T17:30:05.000Z",
+      "text": "Big fan of teaching more people the basics of using Claude Code in an accessible way.\n\nSo much of the world has not yet used agents. There's a lot of opportunity to level the playing field and expand access.",
+      "url": "https://twitter.com/bcherny/status/2057876668501434603"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057833360920105439",
+      "author": "buccocapital",
+      "posted_at": "2026-05-22T14:38:00.000Z",
+      "text": "Mark Zuckerberg learning he still has 70,000 humans working at Meta https://t.co/zAt0KQZOLk",
+      "url": "https://twitter.com/buccocapital/status/2057833360920105439"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057722812564127985",
+      "author": "demishassabis",
+      "posted_at": "2026-05-22T07:18:43.000Z",
+      "text": "RT @GeminiApp: Gemini Omni is here, and we’ve been seeing amazing creations all week. Here are some standouts 👇",
+      "url": "https://twitter.com/demishassabis/status/2057722812564127985"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057711960469512251",
+      "author": "demishassabis",
+      "posted_at": "2026-05-22T06:35:36.000Z",
+      "text": "RT @_mohansolo: Yesterday, we 3x’d limits on Antigravity and are seeing you build so much more. One thing we heard was people are worried a…",
+      "url": "https://twitter.com/demishassabis/status/2057711960469512251"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057711161051886029",
+      "author": "demishassabis",
+      "posted_at": "2026-05-22T06:32:25.000Z",
+      "text": "RT @chrisfirst: I uploaded a screenshot of Google Maps to Gemini Omni with a route drawn on it. \n\nThen I prompted it to create a first pers…",
+      "url": "https://twitter.com/demishassabis/status/2057711161051886029"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057707597147627665",
+      "author": "simonw",
+      "posted_at": "2026-05-22T06:18:16.000Z",
+      "text": "Here's what I wrote about it back in September 2024 https://t.co/nuvjXn8PAi https://t.co/8zwdEUChYy",
+      "url": "https://twitter.com/simonw/status/2057707597147627665"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057707339663409610",
+      "author": "simonw",
+      "posted_at": "2026-05-22T06:17:14.000Z",
+      "text": "I was VERY suspicious of this \"active listening\" story when it first started circulating. Turns out it was a scam, they weren't targeting ads by listening through microphones at all",
+      "url": "https://twitter.com/simonw/status/2057707339663409610"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057597436122546241",
+      "author": "buccocapital",
+      "posted_at": "2026-05-21T23:00:31.000Z",
+      "text": "Everyone is going insane. Employees are going insane. Executives are going insane. Investors are going insane. Politicians are going insane. Citizens are going insane\n\nCollective AI psychosis\n\nIf you sit back and think about it for a even minute it’s completely surreal",
+      "url": "https://twitter.com/buccocapital/status/2057597436122546241"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057586224450113560",
+      "author": "bcherny",
+      "posted_at": "2026-05-21T22:15:58.000Z",
+      "text": "RT @amorriscode: btw you can move your side chats any where you like https://t.co/mOMstoupKT",
+      "url": "https://twitter.com/bcherny/status/2057586224450113560"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057580531894636762",
+      "author": "buccocapital",
+      "posted_at": "2026-05-21T21:53:21.000Z",
+      "text": "New genre of post emerging:\n\n“I’m firing a ton of people and our business has never been better. Here’s why”\n\nPerformative white-collar executions",
+      "url": "https://twitter.com/buccocapital/status/2057580531894636762"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057554520587325504",
+      "author": "simonw",
+      "posted_at": "2026-05-21T20:09:59.000Z",
+      "text": "Here's more about Datasette Agent on my blog: https://t.co/D97PxoinRQ - and the announcement on the new Datasette project blog too: https://t.co/77QwMqBgxI",
+      "url": "https://twitter.com/simonw/status/2057554520587325504"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057554399246032964",
+      "author": "simonw",
+      "posted_at": "2026-05-21T20:09:30.000Z",
+      "text": "You can try out the interactive demo at https://t.co/hPpyS2cumO",
+      "url": "https://twitter.com/simonw/status/2057554399246032964"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057542438911181078",
+      "author": "buccocapital",
+      "posted_at": "2026-05-21T19:21:59.000Z",
+      "text": "Overheard at work today: \n\n\"I am peering out into the future of work and it's just me in the dark managing a bunch of agents instead of working with my friends and I'll be honest...it makes me want to put a gun in my mouth\" \n\nI laughed, but it's not that funny",
+      "url": "https://twitter.com/buccocapital/status/2057542438911181078"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057476878110261587",
+      "author": "bcherny",
+      "posted_at": "2026-05-21T15:01:28.000Z",
+      "text": "In the next version of Claude Code: run /usage to see a breakdown of which Skills, Agents, MCPs, and Plugins are using your tokens\n\nCLI today, coming to Desktop next https://t.co/HK8XQO6bBA",
+      "url": "https://twitter.com/bcherny/status/2057476878110261587"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057353321674047601",
+      "author": "demishassabis",
+      "posted_at": "2026-05-21T06:50:30.000Z",
+      "text": "RT @OfficialLoganK: We just 3xed the rate limits across all tiers in Antigravity so that you can put 3.5 Flash through its paces even more,…",
+      "url": "https://twitter.com/demishassabis/status/2057353321674047601"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057272217193586741",
+      "author": "trq212",
+      "posted_at": "2026-05-21T01:28:13.000Z",
+      "text": "RT @nottombrown: We’re expanding our partnership with @SpaceX, and will be scaling up on GB200 capacity in Colossus 2 throughout June. \n\nAp…",
+      "url": "https://twitter.com/trq212/status/2057272217193586741"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057248078365605975",
+      "author": "buccocapital",
+      "posted_at": "2026-05-20T23:52:18.000Z",
+      "text": "See for yourself. Kinda crazy!\n\nhttps://t.co/Tmr6gpmMFa\n\nhttps://t.co/WS2NLM67Mv",
+      "url": "https://twitter.com/buccocapital/status/2057248078365605975"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057247470111924730",
+      "author": "buccocapital",
+      "posted_at": "2026-05-20T23:49:53.000Z",
+      "text": "April 6th: I wrote an article saying businesses will protect/hire innovation/sales and fire context carriers \n\nMay 7th: Cloudflare lays off 1,100 people\n\nMay 20th: Matthew Prince writes Op-Ed in WSJ saying…the same thing with the same Drucker reference https://t.co/9tppduUwpk",
+      "url": "https://twitter.com/buccocapital/status/2057247470111924730"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057199398573220092",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-20T20:38:52.000Z",
+      "text": "RT @nottombrown: We’re expanding our partnership with @SpaceX, and will be scaling up on GB200 capacity in Colossus 2 throughout June. \n\nAp…",
+      "url": "https://twitter.com/ClaudeDevs/status/2057199398573220092"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057181802360438992",
+      "author": "bcherny",
+      "posted_at": "2026-05-20T19:28:56.000Z",
+      "text": "RT @0xMovez: Microsoft Senior AI developer just showed how they build AI agents with Claude at Microsoft.\n\n34-minutes. free. By Microsoft t…",
+      "url": "https://twitter.com/bcherny/status/2057181802360438992"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057167756651577695",
+      "author": "simonw",
+      "posted_at": "2026-05-20T18:33:08.000Z",
+      "text": "RT @nathanclark_: it’s in gemini, just create it in ai studio. oh, that’s for your personal google one account. for workspace you need gemi…",
+      "url": "https://twitter.com/simonw/status/2057167756651577695"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057157503683907823",
+      "author": "demishassabis",
+      "posted_at": "2026-05-20T17:52:23.000Z",
+      "text": "RT @PeterDiamandis: The $2M Prize breakdown for the Build with Gemini XPRIZE that we launch yesterday at Google IO.\n\n1st:   $500,000\n2nd: $…",
+      "url": "https://twitter.com/demishassabis/status/2057157503683907823"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057138356103106706",
+      "author": "trq212",
+      "posted_at": "2026-05-20T16:36:18.000Z",
+      "text": "RT @adityaag: .@trq212 is a builder's builder. \n\nAfter research at MIT, exiting his company, raising millions for another, and exploring re…",
+      "url": "https://twitter.com/trq212/status/2057138356103106706"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057124051815129583",
+      "author": "simonw",
+      "posted_at": "2026-05-20T15:39:28.000Z",
+      "text": "I don't have much to say about this year's Google I/O because I prefer to write about products that have shipped, not just \"coming soon\" announcements - but here are some notes on Gemini Spark and Antigravity https://t.co/yLuazAK26x",
+      "url": "https://twitter.com/simonw/status/2057124051815129583"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057115992749469784",
+      "author": "simonw",
+      "posted_at": "2026-05-20T15:07:26.000Z",
+      "text": "That sentence quoted from: https://t.co/b5tVAmbhlB",
+      "url": "https://twitter.com/simonw/status/2057115992749469784"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057115921551098211",
+      "author": "simonw",
+      "posted_at": "2026-05-20T15:07:09.000Z",
+      "text": "Anyone understand what Google mean by \"Gemini Spark runs on Gemini 3.5 and uses the Antigravity harness\" - is \"Antigravity\" a generic term they're using for their agent harnesses now or is their Claw-competitor running the same closed-source Go binary we can download ourselves?",
+      "url": "https://twitter.com/simonw/status/2057115921551098211"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057071805664288917",
+      "author": "bcherny",
+      "posted_at": "2026-05-20T12:11:51.000Z",
+      "text": "RT @0xMovez: Spotify's Chief Architect just showed how they ship 4,5K deployments /day with Claude at Anthropic stage\n\n27-minutes. free. By…",
+      "url": "https://twitter.com/bcherny/status/2057071805664288917"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2057071400343437810",
+      "author": "bcherny",
+      "posted_at": "2026-05-20T12:10:15.000Z",
+      "text": "RT @ClaudeDevs: Computer use turns Claude into an agent that can operate real UIs. \n\nNew blog post on making it reliable in production: get…",
+      "url": "https://twitter.com/bcherny/status/2057071400343437810"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056907033639813463",
+      "author": "simonw",
+      "posted_at": "2026-05-20T01:17:06.000Z",
+      "text": "Top quality commentary on that pelican on Hacker News https://t.co/NDQNt8lzrQ https://t.co/WIUZiAlXdY",
+      "url": "https://twitter.com/simonw/status/2056907033639813463"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056904072012145102",
+      "author": "demishassabis",
+      "posted_at": "2026-05-20T01:05:20.000Z",
+      "text": "More info on Gemini 3.5 flash model here: https://t.co/UIGgmzPK42",
+      "url": "https://twitter.com/demishassabis/status/2056904072012145102"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056867313815584773",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T22:39:17.000Z",
+      "text": "RT @pushmeet: The results of the research happening in my team @GoogleDeepMind have convinced me that the next era of scientific discovery…",
+      "url": "https://twitter.com/demishassabis/status/2056867313815584773"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056843158965858380",
+      "author": "trq212",
+      "posted_at": "2026-05-19T21:03:18.000Z",
+      "text": "Now also on the Claude Blog: https://t.co/EHu7smfCqX",
+      "url": "https://twitter.com/trq212/status/2056843158965858380"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056835339193561170",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T20:32:13.000Z",
+      "text": "Computer use turns Claude into an agent that can operate real UIs. \n\nNew blog post on making it reliable in production: getting click accuracy right, choosing thinking effort levels, keeping long sessions within context, and recording demonstrations Claude can replay:",
+      "url": "https://twitter.com/ClaudeDevs/status/2056835339193561170"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056831487836889178",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T20:16:55.000Z",
+      "text": "It’s super fun to play with - can’t wait to see what people create!\n\nTry Gemini Omni Flash in @GeminiApp and @FlowByGoogle\n\nMore info in the blog: https://t.co/NLvsxWySMS https://t.co/vAml9DM2yJ",
+      "url": "https://twitter.com/demishassabis/status/2056831487836889178"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056831486251380783",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T20:16:55.000Z",
+      "text": "Gemini Omni is a major leap in world understanding & multimodal editing! It can take photos, video & audio and build entirely new scenes. Over time it’ll be able to handle any input & any output - starting w/ video \n\nYou can even give it your own videos & iterate on your ideas: https://t.co/VrHPJKRJXH",
+      "url": "https://twitter.com/demishassabis/status/2056831486251380783"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056780476598145463",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T16:54:13.000Z",
+      "text": "RT @sundarpichai: We’re ready, are you? https://t.co/XbApW3ftti",
+      "url": "https://twitter.com/demishassabis/status/2056780476598145463"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056777186062032964",
+      "author": "trq212",
+      "posted_at": "2026-05-19T16:41:08.000Z",
+      "text": "the future is bright, lets get to work",
+      "url": "https://twitter.com/trq212/status/2056777186062032964"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056767826120020344",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T16:03:57.000Z",
+      "text": "RT @lydiahallie: 💯 this is why I really like Learning mode in Claude Code\n\nI personally use this for all my side projects and it keeps me s…",
+      "url": "https://twitter.com/bcherny/status/2056767826120020344"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056765520280699038",
+      "author": "trq212",
+      "posted_at": "2026-05-19T15:54:47.000Z",
+      "text": "RT @karpathy: Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am…",
+      "url": "https://twitter.com/trq212/status/2056765520280699038"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056756183554195917",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T15:17:41.000Z",
+      "text": "RT @ClaudeDevs: What are best practices for running Claude Code at scale?\n\nNew blog post on what we've learned from teams running it across…",
+      "url": "https://twitter.com/bcherny/status/2056756183554195917"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056753265346564259",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T15:06:05.000Z",
+      "text": "Welcome to the team, Andrej!",
+      "url": "https://twitter.com/ClaudeDevs/status/2056753265346564259"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056752929424499073",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T15:04:45.000Z",
+      "text": "RT @Cloudflare: Cloudflare's security team spent the last few weeks testing Anthropic's Mythos against fifty of our own repositories. What…",
+      "url": "https://twitter.com/bcherny/status/2056752929424499073"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056740352950997351",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T14:14:47.000Z",
+      "text": "To learn more, check out our docs:\nhttps://t.co/Nfi8INBNFy\n\nSee our launch blog:\nhttps://t.co/3VGrEYe9Ym\n\nAnd try our claude-api skill (bundled with Claude Code):\nhttps://t.co/37UMzHJjRU",
+      "url": "https://twitter.com/ClaudeDevs/status/2056740352950997351"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056740350690316738",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T14:14:46.000Z",
+      "text": "We also made some general improvements in Claude Managed Agents: \n\n1. It's now possible to swap a live session's tools, MCP servers, or vault IDs without restarting the session.\n\n2. Large MCP tool outputs (>100k tokens) are automatically offloaded to Sandbox files.",
+      "url": "https://twitter.com/ClaudeDevs/status/2056740350690316738"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056740346529468717",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T14:14:45.000Z",
+      "text": "We’ve added two security improvements to Claude Managed Agents. \n\nSelf-hosted sandboxes keep the agent’s execution environment in your infrastructure or with a managed sandbox provider.\n\nMCP tunnels let the agent connect to services inside your security perimeter. https://t.co/h7kvlTdNda",
+      "url": "https://twitter.com/ClaudeDevs/status/2056740346529468717"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056724048873205807",
+      "author": "buccocapital",
+      "posted_at": "2026-05-19T13:09:59.000Z",
+      "text": "1 of 3 things is true about big tech’s AI narrative:\n\n1) Nobody can tell a compelling story about how AI will be good for society\n2) It hasn’t occurred to them to tell that story\n3) They believe it’ll be bad, but it’s not their job to fix it\n\nI don’t know which is more damning",
+      "url": "https://twitter.com/buccocapital/status/2056724048873205807"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056711020920385751",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T12:18:13.000Z",
+      "text": "So good to see you, London!🇬🇧",
+      "url": "https://twitter.com/ClaudeDevs/status/2056711020920385751"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056669375621460027",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T09:32:44.000Z",
+      "text": "RT @claudeai: You can now create more with Claude Design.\n\nWe've doubled token limits across every plan. https://t.co/d2AemkZUxW",
+      "url": "https://twitter.com/bcherny/status/2056669375621460027"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056668721230344687",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T09:30:08.000Z",
+      "text": "RT @claudeai: Live from Code with Claude London: we're launching self-hosted sandboxes (public beta) and MCP tunnels (research preview) in…",
+      "url": "https://twitter.com/bcherny/status/2056668721230344687"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056650905613635669",
+      "author": "bcherny",
+      "posted_at": "2026-05-19T08:19:21.000Z",
+      "text": "Hello from Code with Claude London! https://t.co/4JnGilV4Uw",
+      "url": "https://twitter.com/bcherny/status/2056650905613635669"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056543966963839405",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T01:14:25.000Z",
+      "text": "Why the change? \"Extra usage\" originally meant paying when you hit a plan limit. Usage credits do more than that now—they power features like fast mode directly.",
+      "url": "https://twitter.com/ClaudeDevs/status/2056543966963839405"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056543965672083966",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-19T01:14:24.000Z",
+      "text": "We've renamed \"extra usage\" to \"usage credits\" across Claude. \n\nYour spending limits, auto-reload settings, and any credits you've already bought carry over exactly as they were.",
+      "url": "https://twitter.com/ClaudeDevs/status/2056543965672083966"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056532887823102336",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T00:30:23.000Z",
+      "text": "RT @demishassabis: I’ve always believed the No.1 application of AI should be to improve human health.\n\nThat work started with AlphaFold, an…",
+      "url": "https://twitter.com/demishassabis/status/2056532887823102336"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056531492080435452",
+      "author": "demishassabis",
+      "posted_at": "2026-05-19T00:24:50.000Z",
+      "text": "Locked in! 🚀",
+      "url": "https://twitter.com/demishassabis/status/2056531492080435452"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056461680381681890",
+      "author": "trq212",
+      "posted_at": "2026-05-18T19:47:26.000Z",
+      "text": "RT @claudeai: You can now create more with Claude Design.\n\nWe've doubled token limits across every plan. https://t.co/d2AemkZUxW",
+      "url": "https://twitter.com/trq212/status/2056461680381681890"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056454360780222615",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-18T19:18:21.000Z",
+      "text": "Fast mode is identical Opus quality at ~2.5× the response speed, billed at a higher per-token rate. Use it when latency matters more than cost: rapid iteration, live debugging, time-sensitive work.\n\nhttps://t.co/Dtj1Xmdx3q",
+      "url": "https://twitter.com/ClaudeDevs/status/2056454360780222615"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056454359685476491",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-18T19:18:21.000Z",
+      "text": "Fast mode now defaults to Opus 4.7 in Claude Code.\n\nTry it out today with /fast https://t.co/i0roMdEgEg",
+      "url": "https://twitter.com/ClaudeDevs/status/2056454359685476491"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056434423982444801",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-18T17:59:08.000Z",
+      "text": "Check it out in Claude Console:\nhttps://t.co/4Hufi5PiUI\n\nSee our docs to learn more:\nhttps://t.co/1jXAd7ppaj",
+      "url": "https://twitter.com/ClaudeDevs/status/2056434423982444801"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056434422229123106",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-18T17:59:07.000Z",
+      "text": "Prompt cache diagnostics are now in Claude Console.\n\nWhen a request misses the cache, you can now see exactly which part of your prompt changed and how many tokens it cost you. https://t.co/z0dV6zzLPm",
+      "url": "https://twitter.com/ClaudeDevs/status/2056434422229123106"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056432663125545082",
+      "author": "trq212",
+      "posted_at": "2026-05-18T17:52:08.000Z",
+      "text": "continuing my HTML era, I had so much fun talking with Claire at Code w/ Claude about staying in the loop with long running agents",
+      "url": "https://twitter.com/trq212/status/2056432663125545082"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056418157305454805",
+      "author": "trq212",
+      "posted_at": "2026-05-18T16:54:29.000Z",
+      "text": "okay this is going kinda viral and tbh my original text was kind of messy, so here's a second pass with the help of Claude:\n\n--\nImplement <SPEC>. As you work maintain a running implementation-notes.html file that captures anything I should know about how the implementation",
+      "url": "https://twitter.com/trq212/status/2056418157305454805"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056415974568710421",
+      "author": "trq212",
+      "posted_at": "2026-05-18T16:45:49.000Z",
+      "text": "as much as you spec there are always still ambiguities and unknown unknowns that come up and this gives the model a good out to make decisions but keep you in the loop",
+      "url": "https://twitter.com/trq212/status/2056415974568710421"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056403446056784288",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-18T15:56:02.000Z",
+      "text": "What are best practices for running Claude Code at scale?\n\nNew blog post on what we've learned from teams running it across multi-million-line monorepos, decades-old legacy systems, and distributed microservices:\n\nhttps://t.co/rJUYlIUiTT",
+      "url": "https://twitter.com/ClaudeDevs/status/2056403446056784288"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056357726892986535",
+      "author": "buccocapital",
+      "posted_at": "2026-05-18T12:54:22.000Z",
+      "text": "Declining fertility, rising costs, making America hostile to foreign students, AI automating entry level work, questionable (very bad) ROI\n\nA very bad cocktail of headwinds for higher education",
+      "url": "https://twitter.com/buccocapital/status/2056357726892986535"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056145415867937182",
+      "author": "trq212",
+      "posted_at": "2026-05-17T22:50:43.000Z",
+      "text": "tired: I brought my work laptop and my personal laptop \n\nwired: I am dual wielding",
+      "url": "https://twitter.com/trq212/status/2056145415867937182"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056117585721151798",
+      "author": "buccocapital",
+      "posted_at": "2026-05-17T21:00:07.000Z",
+      "text": "Society is full of little, insidious mechanisms trying to capture and divide your energy and focus\n\nThis is completely against your own self-interest, but from this discourse this weekend on unhappiness in the face of abundance it should be fully evident that people are almost",
+      "url": "https://twitter.com/buccocapital/status/2056117585721151798"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056056174126993413",
+      "author": "buccocapital",
+      "posted_at": "2026-05-17T16:56:06.000Z",
+      "text": "There’s nothing to reinvent. You pick up a book. You read the book. What are we doing here? Stop it",
+      "url": "https://twitter.com/buccocapital/status/2056056174126993413"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2056022578528182369",
+      "author": "simonw",
+      "posted_at": "2026-05-17T14:42:36.000Z",
+      "text": "Also a great example of positive contribution to open source by wanderingmeow - you don't need to contribute code to have a positive impact, just providing detailed feedback and confirmation that something like this works is enormously useful",
+      "url": "https://twitter.com/simonw/status/2056022578528182369"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055903660476129723",
+      "author": "trq212",
+      "posted_at": "2026-05-17T06:50:04.000Z",
+      "text": "HTML continues to be undefeated https://t.co/veyAAEWKrT",
+      "url": "https://twitter.com/trq212/status/2055903660476129723"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055841459526307961",
+      "author": "demishassabis",
+      "posted_at": "2026-05-17T02:42:54.000Z",
+      "text": "RT @OfficialLoganK: Very excited for all the stuff the @antigravity team has been cooking :)",
+      "url": "https://twitter.com/demishassabis/status/2055841459526307961"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055836702695116975",
+      "author": "trq212",
+      "posted_at": "2026-05-17T02:24:00.000Z",
+      "text": "RT @_sholtodouglas: When do you reach for other models instead of Claude? What can we do better? Hit me with all of your frustrations. dms…",
+      "url": "https://twitter.com/trq212/status/2055836702695116975"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055822613352759739",
+      "author": "bcherny",
+      "posted_at": "2026-05-17T01:28:01.000Z",
+      "text": "RT @arakharazian: ANTHROPIC beats OpenAI in business adoption for the first time. per @tryramp data\n\nToday's update of Ramp AI Index shows…",
+      "url": "https://twitter.com/bcherny/status/2055822613352759739"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055763702566306274",
+      "author": "simonw",
+      "posted_at": "2026-05-16T21:33:55.000Z",
+      "text": "Notes and script are here https://t.co/eNbmtBQHKM",
+      "url": "https://twitter.com/simonw/status/2055763702566306274"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055763661525024891",
+      "author": "simonw",
+      "posted_at": "2026-05-16T21:33:45.000Z",
+      "text": "To prepare for my #PyConUS lightning talk this afternoon I decided to track down ALL of the names that @openclaw has used since November, using a script against its GitHub repo\n\nWarelay → CLAWDIS → CLAWDBOT → Clawdbot → Moltbot →🦞 OpenClaw https://t.co/DptEoztCQZ",
+      "url": "https://twitter.com/simonw/status/2055763661525024891"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055713977884135871",
+      "author": "buccocapital",
+      "posted_at": "2026-05-16T18:16:20.000Z",
+      "text": "I get why the tech outcomes drive some people insane. I’ve joined companies 12 months “too late”, and merely made a good amount of money instead of generational wealth\n\nThe people who joined before me weren’t any better or smarter. They just got lucky. Just like someone looks at",
+      "url": "https://twitter.com/buccocapital/status/2055713977884135871"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055667274380439895",
+      "author": "buccocapital",
+      "posted_at": "2026-05-16T15:10:45.000Z",
+      "text": "My grandfather would always say that those without gratitude lack imagination. And without imagination they are unable to grasp how lucky they are that fate has smiled on them. So they will always grasp for more. \n\nHe was a wise man and I am grateful every day for his lessons",
+      "url": "https://twitter.com/buccocapital/status/2055667274380439895"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055656521065709733",
+      "author": "buccocapital",
+      "posted_at": "2026-05-16T14:28:01.000Z",
+      "text": "I can’t stop thinking about this post. If you do one thing today, I encourage you to give it a thoughtful, thorough read…\n\nAnd then commit to never living your life this way. Life has wasted success on the people described in this post. \n\nIt really is completely pathetic. They",
+      "url": "https://twitter.com/buccocapital/status/2055656521065709733"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055615489196388769",
+      "author": "buccocapital",
+      "posted_at": "2026-05-16T11:44:58.000Z",
+      "text": "These are minimalist, have a lifetime guarantee and are reasonably priced. Done. You'll never buy a wallet again \n\nhttps://t.co/uwr4uEdy9M",
+      "url": "https://twitter.com/buccocapital/status/2055615489196388769"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055614357690577267",
+      "author": "buccocapital",
+      "posted_at": "2026-05-16T11:40:28.000Z",
+      "text": "Just buy a shell cordovan wallet.\n\nIt will age beautifully and will last multiple lifetimes. Literally. You can pass it on to your kids if that's your sort of thing\n\nI personally like Ashland Leather and think they make great stuff https://t.co/M7gfLC1HgS",
+      "url": "https://twitter.com/buccocapital/status/2055614357690577267"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055442833612611832",
+      "author": "bcherny",
+      "posted_at": "2026-05-16T00:18:54.000Z",
+      "text": "RT @logangraham: A lot of people have been wondering about Mythos, Glasswing, and the vulns we / our partners are fixing. Today, I’m excite…",
+      "url": "https://twitter.com/bcherny/status/2055442833612611832"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055442742088815047",
+      "author": "bcherny",
+      "posted_at": "2026-05-16T00:18:32.000Z",
+      "text": "RT @AndrewCurran_: Mythos has cracked MacOS. It took five days. https://t.co/ukbraIHejS",
+      "url": "https://twitter.com/bcherny/status/2055442742088815047"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055441434363449404",
+      "author": "bcherny",
+      "posted_at": "2026-05-16T00:13:20.000Z",
+      "text": "RT @PrimeIntellect: Automating AI research is the next major step in AI\n\nWe let Claude Code (Opus 4.7) and Codex (GPT 5.5) run autonomously…",
+      "url": "https://twitter.com/bcherny/status/2055441434363449404"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055352176008945946",
+      "author": "demishassabis",
+      "posted_at": "2026-05-15T18:18:40.000Z",
+      "text": "RT @lmthang: Very excited to share a new milestone in AI for Math: Aletheia, powered by Gemini Deep Think, was just used to autonomously so…",
+      "url": "https://twitter.com/demishassabis/status/2055352176008945946"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055351422758408389",
+      "author": "trq212",
+      "posted_at": "2026-05-15T18:15:40.000Z",
+      "text": "RT @ClaudeDevs: Happy Friday! We've reset everyone's 5-hour and weekly rate limits.",
+      "url": "https://twitter.com/trq212/status/2055351422758408389"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055347539923308703",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-15T18:00:14.000Z",
+      "text": "Happy Friday! We've reset everyone's 5-hour and weekly rate limits.",
+      "url": "https://twitter.com/ClaudeDevs/status/2055347539923308703"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055339124035625185",
+      "author": "simonw",
+      "posted_at": "2026-05-15T17:26:48.000Z",
+      "text": "First talk in our AI track at #PyConUS is coming up at 11am",
+      "url": "https://twitter.com/simonw/status/2055339124035625185"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055252938407211270",
+      "author": "buccocapital",
+      "posted_at": "2026-05-15T11:44:19.000Z",
+      "text": "Nothing beats the rush of a crazy Uber driver. The best experience on earth. A quote from my Albanian driver this morning:\n\n“Did Hitler take Europe with an AK? NO, BROTHER. We would have consumed him. He conquered us with the most powerful weapon on earth: The human tongue!”",
+      "url": "https://twitter.com/buccocapital/status/2055252938407211270"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055102378009891035",
+      "author": "buccocapital",
+      "posted_at": "2026-05-15T01:46:03.000Z",
+      "text": "Akre Capital selling V MA and MCO to buy ROP FICO CRM and NOW. Dunno man… https://t.co/TghhfZm4fz",
+      "url": "https://twitter.com/buccocapital/status/2055102378009891035"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055069550505583055",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-14T23:35:36.000Z",
+      "text": "See docs here:\nhttps://t.co/TwBI01DDdu",
+      "url": "https://twitter.com/ClaudeDevs/status/2055069550505583055"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055060416687124552",
+      "author": "simonw",
+      "posted_at": "2026-05-14T22:59:19.000Z",
+      "text": "@mitchellh: \"Programming languages used to be LOCK IN, and they're increasingly not so.\"",
+      "url": "https://twitter.com/simonw/status/2055060416687124552"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2055060328048885788",
+      "author": "simonw",
+      "posted_at": "2026-05-14T22:58:58.000Z",
+      "text": "Mitchell's post here reminded me of a similar conversation I had recently about how cheap it can be to port native mobile apps to React Native using coding agents... and then port them back again later if it turns out not to work out https://t.co/p4xZ6bNqHi",
+      "url": "https://twitter.com/simonw/status/2055060328048885788"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054782039841460302",
+      "author": "simonw",
+      "posted_at": "2026-05-14T04:33:08.000Z",
+      "text": "Doing this is a great way to make a bonfire of your reputation",
+      "url": "https://twitter.com/simonw/status/2054782039841460302"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054655192105373753",
+      "author": "bcherny",
+      "posted_at": "2026-05-13T20:09:06.000Z",
+      "text": "RT @ClaudeDevs: Starting June 15, paid Claude plans can claim a dedicated monthly credit for programmatic usage.\n\nThe credit covers usage o…",
+      "url": "https://twitter.com/bcherny/status/2054655192105373753"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054655072681009282",
+      "author": "bcherny",
+      "posted_at": "2026-05-13T20:08:37.000Z",
+      "text": "RT @Dakshay: More cardputer code incoming. \n\nThank you Claude. https://t.co/s0ikNXmsjN",
+      "url": "https://twitter.com/bcherny/status/2054655072681009282"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054652905425359235",
+      "author": "bcherny",
+      "posted_at": "2026-05-13T20:00:00.000Z",
+      "text": "RT @ClaudeDevs: Claude Code weekly limits are increasing 50%, now through July 13.\n\nLive now for all Pro, Max, Team, and seat-based Enterpr…",
+      "url": "https://twitter.com/bcherny/status/2054652905425359235"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054640783811309590",
+      "author": "trq212",
+      "posted_at": "2026-05-13T19:11:50.000Z",
+      "text": "RT @ClaudeDevs: Claude Code weekly limits are increasing 50%, now through July 13.\n\nLive now for all Pro, Max, Team, and seat-based Enterpr…",
+      "url": "https://twitter.com/trq212/status/2054640783811309590"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054639780252844045",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T19:07:51.000Z",
+      "text": "We're excited to see what everyone builds!",
+      "url": "https://twitter.com/ClaudeDevs/status/2054639780252844045"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054639779195830285",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T19:07:51.000Z",
+      "text": "Details:\n- Applies everywhere you use Claude Code — CLI, IDE extensions, desktop, and the web\n- Live now, runs through July 13 at 6PM PDT / 1AM GMT\n- Nothing to opt into, it’s already applied to your account\n- This stacks with the 2x increase to 5-hour limits announced last week",
+      "url": "https://twitter.com/ClaudeDevs/status/2054639779195830285"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054639777685934564",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T19:07:51.000Z",
+      "text": "Claude Code weekly limits are increasing 50%, now through July 13.\n\nLive now for all Pro, Max, Team, and seat-based Enterprise users. https://t.co/5nU0XX4RZY",
+      "url": "https://twitter.com/ClaudeDevs/status/2054639777685934564"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054610158458904769",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T17:10:09.000Z",
+      "text": "There’s nothing you need to do today. Users will get an email on June 8 to claim their credits, and this change goes into effect on June 15.\n\nMore info: https://t.co/VQ98tRsrvW",
+      "url": "https://twitter.com/ClaudeDevs/status/2054610158458904769"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054610157364289906",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T17:10:08.000Z",
+      "text": "This means that third-party tools built on the Agent SDK like Conductor and OpenClaw work with your Claude plan, but will draw from your credit the same way your own scripts do.",
+      "url": "https://twitter.com/ClaudeDevs/status/2054610157364289906"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054610152817619388",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T17:10:07.000Z",
+      "text": "Starting June 15, paid Claude plans can claim a dedicated monthly credit for programmatic usage.\n\nThe credit covers usage of:\n- Claude Agent SDK\n- claude -p\n- Claude Code GitHub Actions\n- Third-party apps built on the Agent SDK",
+      "url": "https://twitter.com/ClaudeDevs/status/2054610152817619388"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054357865284907517",
+      "author": "demishassabis",
+      "posted_at": "2026-05-13T00:27:37.000Z",
+      "text": "RT @Google: Introducing Googlebook, the first laptop designed for Gemini Intelligence. It’s crafted for heavyweight performance, built with…",
+      "url": "https://twitter.com/demishassabis/status/2054357865284907517"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054351039978226149",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T00:00:30.000Z",
+      "text": "Long-running only works if Claude doesn't have to wait on you. That's why we have auto mode, which you can enable with shift + tab in CLI or by using the mode selector on desktop.\n\nDocs here: https://t.co/g9R3v5f8UJ",
+      "url": "https://twitter.com/ClaudeDevs/status/2054351039978226149"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054351038690545758",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T00:00:30.000Z",
+      "text": "A stop hook gives programmatic control over when Claude is allowed to finish. Run your test suite, hit a CI endpoint, gate on whatever you want.",
+      "url": "https://twitter.com/ClaudeDevs/status/2054351038690545758"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054351031279186040",
+      "author": "ClaudeDevs",
+      "posted_at": "2026-05-13T00:00:28.000Z",
+      "text": "How do you keep Claude working until the job is done? Claude Code helps with this in a few ways, including one we shipped recently: /goal. https://t.co/QtVPmwoKct",
+      "url": "https://twitter.com/ClaudeDevs/status/2054351031279186040"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054326444189253655",
+      "author": "demishassabis",
+      "posted_at": "2026-05-12T22:22:46.000Z",
+      "text": "Really cool work from the team reimagining the mouse pointer to be intelligent! Try the prototype in @GoogleAIStudio it's pretty magical.",
+      "url": "https://twitter.com/demishassabis/status/2054326444189253655"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054317049501847721",
+      "author": "demishassabis",
+      "posted_at": "2026-05-12T21:45:26.000Z",
+      "text": "RT @sundarpichai: Today at the @Android Show (I/O edition) we announced Gemini Intelligence - bringing the best of Gemini to our most advan…",
+      "url": "https://twitter.com/demishassabis/status/2054317049501847721"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054197463855042669",
+      "author": "demishassabis",
+      "posted_at": "2026-05-12T13:50:15.000Z",
+      "text": "Read more here: https://t.co/EjevxlPF3x",
+      "url": "https://twitter.com/demishassabis/status/2054197463855042669"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2054197462101889277",
+      "author": "demishassabis",
+      "posted_at": "2026-05-12T13:50:14.000Z",
+      "text": "I’ve always believed the No.1 application of AI should be to improve human health.\n\nThat work started with AlphaFold, and now at @IsomorphicLabs with the mission to reimagine drug discovery and one day solve all disease!\n\nWe are turbocharging that goal with $2.1B in new funding. https://t.co/Hvk20dHgjl",
+      "url": "https://twitter.com/demishassabis/status/2054197462101889277"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053994083497238712",
+      "author": "bcherny",
+      "posted_at": "2026-05-12T00:22:05.000Z",
+      "text": "I needed to book flights for a bunch of upcoming travel. As always, I used Claude Cowork to do it.\n\nIn the past, Cowork has been decent at booking flights, but with Opus 4.7, for the first time ever, it 1-shotted it! https://t.co/uQZkxEQkao",
+      "url": "https://twitter.com/bcherny/status/2053994083497238712"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053992869405618580",
+      "author": "simonw",
+      "posted_at": "2026-05-12T00:17:16.000Z",
+      "text": "Wrote about today's GitLab restructuring / \"workforce reduction\" announcement, and ended up digging around in version control for both the GitLab and the 37signals public employee handbooks to help illustrate my thoughts https://t.co/xkqehsa5hT",
+      "url": "https://twitter.com/simonw/status/2053992869405618580"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053982327123132846",
+      "author": "bcherny",
+      "posted_at": "2026-05-11T23:35:22.000Z",
+      "text": "The best way to level up from 1 agent => many agents. No more cycling between terminal tabs",
+      "url": "https://twitter.com/bcherny/status/2053982327123132846"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053980352641982816",
+      "author": "trq212",
+      "posted_at": "2026-05-11T23:27:31.000Z",
+      "text": "let me know if you have any feedback! we will read all of it and action",
+      "url": "https://twitter.com/trq212/status/2053980352641982816"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053979506827055255",
+      "author": "trq212",
+      "posted_at": "2026-05-11T23:24:10.000Z",
+      "text": "Start \"claude agents\" in a high level directory with all your repos in it (for me thats ~/Projects).\n\nIt keeps track of which sessions need your input and makes it really easy to resume and pick up where you left off.",
+      "url": "https://twitter.com/trq212/status/2053979506827055255"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053979505346425179",
+      "author": "trq212",
+      "posted_at": "2026-05-11T23:24:09.000Z",
+      "text": "Agent view is the best Claude Code native way to manage multiple sessions, kind of like tmux built for CC.\n\nWe spent a lot of time getting the details right, I hope you enjoy it.",
+      "url": "https://twitter.com/trq212/status/2053979505346425179"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053973809510916205",
+      "author": "simonw",
+      "posted_at": "2026-05-11T23:01:31.000Z",
+      "text": "My Mac had less available memory than I expected, turned out the \"claude\" Claude Code processes on this machine (running in various terminal windows) were consuming ~30GB on their own!\n\nThe largest one was using 4.9GB",
+      "url": "https://twitter.com/simonw/status/2053973809510916205"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053914743761711373",
+      "author": "simonw",
+      "posted_at": "2026-05-11T19:06:49.000Z",
+      "text": "Here's the full TIL https://t.co/kl6y7PEzkr",
+      "url": "https://twitter.com/simonw/status/2053914743761711373"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053914709720764770",
+      "author": "simonw",
+      "posted_at": "2026-05-11T19:06:41.000Z",
+      "text": "New TIL: I figured out how to use my LLM CLI tool in a shebang line, which means you can write executable scripts in English, or hook up more complex scripts with a snippet of YAML template https://t.co/8mngqTbiTO",
+      "url": "https://twitter.com/simonw/status/2053914709720764770"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053893522819035560",
+      "author": "trq212",
+      "posted_at": "2026-05-11T17:42:29.000Z",
+      "text": "RT @karpathy: This works really well btw, at the end of your query ask your LLM to \"structure your response as HTML\", then view the generat…",
+      "url": "https://twitter.com/trq212/status/2053893522819035560"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053872850101285137",
+      "author": "karpathy",
+      "posted_at": "2026-05-11T16:20:21.000Z",
+      "text": "This works really well btw, at the end of your query ask your LLM to \"structure your response as HTML\", then view the generated file in your browser. I've also had some success asking the LLM to present its output as slideshows, etc.\n\nMore generally, imo audio is the",
+      "url": "https://twitter.com/karpathy/status/2053872850101285137"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053869803501404511",
+      "author": "trq212",
+      "posted_at": "2026-05-11T16:08:14.000Z",
+      "text": "you can make something good\n\nty @aadilpickle @FarzaTV https://t.co/ivNyvZwhjk",
+      "url": "https://twitter.com/trq212/status/2053869803501404511"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053869416966971895",
+      "author": "trq212",
+      "posted_at": "2026-05-11T16:06:42.000Z",
+      "text": "RT @OmidMogasemi: I'm starting office hours for Claude Code's cloud environments. \n\nIf you use any of our cloud related features on desktop…",
+      "url": "https://twitter.com/trq212/status/2053869416966971895"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053632475294040084",
+      "author": "trq212",
+      "posted_at": "2026-05-11T00:25:11.000Z",
+      "text": "I've been using HTML for planning, speccing, exploration, code review, reports and a lot more.\n\nhttps://t.co/1V3pRFQL5M",
+      "url": "https://twitter.com/trq212/status/2053632475294040084"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053559397654348159",
+      "author": "trq212",
+      "posted_at": "2026-05-10T19:34:48.000Z",
+      "text": "Jarred tried rewriting Bun in Rust and it passes 99.8% of the existing test suite\n\nwe're not being ambitious enough",
+      "url": "https://twitter.com/trq212/status/2053559397654348159"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053529689122328947",
+      "author": "simonw",
+      "posted_at": "2026-05-10T17:36:45.000Z",
+      "text": "Shopify's River agent system lives in Slack and can only be used in public so that other employees can learn from what you do with it\n\nReminds me of how Midjourney's Discord-only launch helped people figure out the weird & complex craft of image prompting by watching each other",
+      "url": "https://twitter.com/simonw/status/2053529689122328947"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053470806911422662",
+      "author": "demishassabis",
+      "posted_at": "2026-05-10T13:42:46.000Z",
+      "text": "Also if you're interested in finding out more about the historic match, you can watch the brilliant award-winning documentary film here: https://t.co/DkDU3q4HVn",
+      "url": "https://twitter.com/demishassabis/status/2053470806911422662"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053182264310108363",
+      "author": "demishassabis",
+      "posted_at": "2026-05-09T18:36:12.000Z",
+      "text": "Also wonderful to visit the Google Korea office and spend some time with the incredible Korea team! https://t.co/weARmxLHPA",
+      "url": "https://twitter.com/demishassabis/status/2053182264310108363"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2053182256366191078",
+      "author": "demishassabis",
+      "posted_at": "2026-05-09T18:36:10.000Z",
+      "text": "Hard to believe it’s been 10 years since AlphaGo! It was wonderful to catch up with Lee Sae Dol last week in Korea and join Shin Jin-seo for a special Go match. Great to reminisce about AlphaGo & super interesting to hear how it changed the way players approach the game of Go! https://t.co/xZ7pYXbhLr",
+      "url": "https://twitter.com/demishassabis/status/2053182256366191078"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052921911726747768",
+      "author": "demishassabis",
+      "posted_at": "2026-05-09T01:21:39.000Z",
+      "text": "RT @pushmeet: The future of Math is mathematicians and AI agents working together.\n\nVery pleased to introduce  @GoogleDeepMind's  AI co-mat…",
+      "url": "https://twitter.com/demishassabis/status/2052921911726747768"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052864605853278715",
+      "author": "simonw",
+      "posted_at": "2026-05-08T21:33:57.000Z",
+      "text": "Asking for HTML explanations of things is pretty neat, I tried it just now with the obfuscated Python POC for the new https://t.co/MFpUWZ2yRX Linux vulnerability: https://t.co/9g9YRHVvQX https://t.co/6751HGFvJz",
+      "url": "https://twitter.com/simonw/status/2052864605853278715"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052826910208794729",
+      "author": "trq212",
+      "posted_at": "2026-05-08T19:04:09.000Z",
+      "text": "RT @MilksandMatcha: \"Technical writing completely changed my life.\" -\n@trq212\n\nIn less than 2 years, Thariq (@AnthropicAI) cracked the code…",
+      "url": "https://twitter.com/trq212/status/2052826910208794729"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052811607454146761",
+      "author": "trq212",
+      "posted_at": "2026-05-08T18:03:21.000Z",
+      "text": "You can also see example HTML documents I've generated here: https://t.co/QuTMbHtdlc",
+      "url": "https://twitter.com/trq212/status/2052811607454146761"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052811606032269638",
+      "author": "trq212",
+      "posted_at": "2026-05-08T18:03:20.000Z",
+      "text": "HTML is the new markdown. \n\nI've stopped writing markdown files for almost everything and switched to using Claude Code to generate HTML for me. This is why.",
+      "url": "https://twitter.com/trq212/status/2052811606032269638"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052809885763747935",
+      "author": "trq212",
+      "posted_at": "2026-05-08T17:56:30.000Z",
+      "text": "https://t.co/MXt5XS4xBX",
+      "url": "https://twitter.com/trq212/status/2052809885763747935"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052491899110391888",
+      "author": "demishassabis",
+      "posted_at": "2026-05-07T20:52:56.000Z",
+      "text": "RT @GoogleDeepMind: Algorithms are part of nearly every aspect of life, from the physics of the natural world to planning shipping routes.…",
+      "url": "https://twitter.com/demishassabis/status/2052491899110391888"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052471470325121260",
+      "author": "simonw",
+      "posted_at": "2026-05-07T19:31:46.000Z",
+      "text": "We already had gemini-3.1-flash-lite-preview back on March 3rd, not clear if this new gemini-3.1-flash-lite is different other than no longer being marked as a \"preview\". Pricing appears to be the same.",
+      "url": "https://twitter.com/simonw/status/2052471470325121260"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052147239619838058",
+      "author": "demishassabis",
+      "posted_at": "2026-05-06T22:03:23.000Z",
+      "text": "More details about the exciting partnership here: https://t.co/Dwa8RpJPny",
+      "url": "https://twitter.com/demishassabis/status/2052147239619838058"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2052147236952477923",
+      "author": "demishassabis",
+      "posted_at": "2026-05-06T22:03:22.000Z",
+      "text": "I've always been passionate about games and they've played a big part in @GoogleDeepMind’s history, as the perfect proving ground for AI. Thrilled to announce this research partnership with @FenrisCreations - @EveOnline is one of the most extraordinary games ever built and has an https://t.co/CUL9f6zMvi",
+      "url": "https://twitter.com/demishassabis/status/2052147236952477923"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2049907410303865030",
+      "author": "karpathy",
+      "posted_at": "2026-04-30T17:43:06.000Z",
+      "text": "This is the the quote I've been citing a lot recently.",
+      "url": "https://twitter.com/karpathy/status/2049907410303865030"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2049903821095354523",
+      "author": "karpathy",
+      "posted_at": "2026-04-30T17:28:50.000Z",
+      "text": "Fireside chat at Sequoia Ascent 2026 from a ~week ago. Some highlights:\n\nThe first theme I tried to push on is that LLMs are about a lot more than just speeding up what existed before (e.g. coding). Three examples of new horizons:\n\n1. menugen: an app that can be fully engulfed by",
+      "url": "https://twitter.com/karpathy/status/2049903821095354523"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2049180863036813717",
+      "author": "karpathy",
+      "posted_at": "2026-04-28T17:36:04.000Z",
+      "text": "RT @status_effects: New work with @AlecRad and @DavidDuvenaud:\n\nHave you ever dreamed of talking to someone from the past? Introducing talk…",
+      "url": "https://twitter.com/karpathy/status/2049180863036813717"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2047098199954047313",
+      "author": "karpathy",
+      "posted_at": "2026-04-22T23:40:18.000Z",
+      "text": "RT @zan2434: Imagine every pixel on your screen, streamed live directly from a model. No HTML, no layout engine, no code. Just exactly what…",
+      "url": "https://twitter.com/karpathy/status/2047098199954047313"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2044873898572001376",
+      "author": "trq212",
+      "posted_at": "2026-04-16T20:21:43.000Z",
+      "text": "you have to think more carefully about session management with one million context, not less\n\nhttps://t.co/xHn1oSwH1c",
+      "url": "https://twitter.com/trq212/status/2044873898572001376"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2042341482531864741",
+      "author": "karpathy",
+      "posted_at": "2026-04-09T20:38:48.000Z",
+      "text": "Someone recently suggested to me that the reason OpenClaw moment was so big is because it's the first time a large group of non-technical people (who otherwise only knew AI as synonymous with ChatGPT as a website) experienced the latest agentic models.",
+      "url": "https://twitter.com/karpathy/status/2042341482531864741"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2042334451611693415",
+      "author": "karpathy",
+      "posted_at": "2026-04-09T20:10:52.000Z",
+      "text": "Judging by my tl there is a growing gap in understanding of AI capability.\n\nThe first issue I think is around recency and tier of use. I think a lot of people tried the free tier of ChatGPT somewhere  last year and allowed it to inform their views on AI a little too much. This is",
+      "url": "https://twitter.com/karpathy/status/2042334451611693415"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2040806346556428585",
+      "author": "karpathy",
+      "posted_at": "2026-04-05T14:58:44.000Z",
+      "text": "Surprised with how good the comments on github gists are. A lot more helpful, insightful, constructive, a lot less AI... Is it the user community? The markdown format? The (lack of) incentives?\n\nSuddenly feeling like I should gist more.\n@github consider competing with X (?)",
+      "url": "https://twitter.com/karpathy/status/2040806346556428585"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2040572272944324650",
+      "author": "karpathy",
+      "posted_at": "2026-04-04T23:28:36.000Z",
+      "text": "Farzapedia, personal wikipedia of Farza, good example following my Wiki LLM tweet.\n\nI really like this approach to personalization in a number of ways, compared to \"status quo\" of an AI that allegedly gets better the more you use it or something:\n\n1. Explicit. The memory artifact",
+      "url": "https://twitter.com/karpathy/status/2040572272944324650"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2040549459193704852",
+      "author": "karpathy",
+      "posted_at": "2026-04-04T21:57:57.000Z",
+      "text": "Something I've been thinking about - I am bullish on people (empowered by AI) increasing the visibility, legibility and accountability of their governments.\n\nHistorically, it is the governments that act to make society legible (e.g. \"Seeing like a state\" is the common reference),",
+      "url": "https://twitter.com/karpathy/status/2040549459193704852"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2040470801506541998",
+      "author": "karpathy",
+      "posted_at": "2026-04-04T16:45:23.000Z",
+      "text": "Wow, this tweet went very viral!\n\nI wanted share a possibly slightly improved version of the tweet in an \"idea file\". The idea of the idea file is that in this era of LLM agents, there is less of a point/need of sharing the specific code/app, you just share the idea, then the",
+      "url": "https://twitter.com/karpathy/status/2040470801506541998"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2039805659525644595",
+      "author": "karpathy",
+      "posted_at": "2026-04-02T20:42:21.000Z",
+      "text": "LLM Knowledge Bases\n\nSomething I'm finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. In this way, a large fraction of my recent token throughput is going less into manipulating code, and more into manipulating",
+      "url": "https://twitter.com/karpathy/status/2039805659525644595"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2038849654423798197",
+      "author": "karpathy",
+      "posted_at": "2026-03-31T05:23:32.000Z",
+      "text": "New supply chain attack this time for npm axios, the most popular HTTP client library with 300M weekly downloads.\n\nScanning my system I found a use imported from googleworkspace/cli from a few days ago when I was experimenting with gmail/gcal cli. The installed version (luckily)",
+      "url": "https://twitter.com/karpathy/status/2038849654423798197"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2037921699824607591",
+      "author": "karpathy",
+      "posted_at": "2026-03-28T15:56:10.000Z",
+      "text": "- Drafted a blog post\n- Used an LLM to meticulously improve the argument over 4 hours.\n- Wow, feeling great, it’s so convincing!\n- Fun idea let’s ask it to argue the opposite. \n- LLM demolishes the entire argument and convinces me that the opposite is in fact true.\n- lol\n\nThe",
+      "url": "https://twitter.com/karpathy/status/2037921699824607591"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2037200624450936940",
+      "author": "karpathy",
+      "posted_at": "2026-03-26T16:10:52.000Z",
+      "text": "When I built menugen ~1 year ago, I observed that the hardest part by far was not the code itself, it was the plethora of services you have to assemble like IKEA furniture to make it real, the DevOps: services, payments, auth, database, security, domain names, etc...\n\nI am really",
+      "url": "https://twitter.com/karpathy/status/2037200624450936940"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2036841069636370467",
+      "author": "karpathy",
+      "posted_at": "2026-03-25T16:22:08.000Z",
+      "text": "(I cycle through all LLMs over time and all of them seem to do this so it's not any particular implementation but something deeper, e.g. maybe during training, a lot of the information in the context window is relevant to the task, so the LLMs develop a bias to use what is given,",
+      "url": "https://twitter.com/karpathy/status/2036841069636370467"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2036836816654147718",
+      "author": "karpathy",
+      "posted_at": "2026-03-25T16:05:14.000Z",
+      "text": "One common issue with personalization in all LLMs is how distracting memory seems to be for the models. A single question from 2 months ago about some topic can keep coming up as some kind of a deep interest of mine with undue mentions in perpetuity. Some kind of trying too hard.",
+      "url": "https://twitter.com/karpathy/status/2036836816654147718"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2036487306585268612",
+      "author": "karpathy",
+      "posted_at": "2026-03-24T16:56:24.000Z",
+      "text": "Software horror: litellm PyPI supply chain attack. \n\nSimple `pip install litellm` was enough to exfiltrate SSH keys, AWS/GCP/Azure creds, Kubernetes configs, git credentials, env vars (all your API keys), shell history, crypto wallets, SSL private keys, CI/CD secrets, database",
+      "url": "https://twitter.com/karpathy/status/2036487306585268612"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2035372716820218141",
+      "author": "trq212",
+      "posted_at": "2026-03-21T15:07:25.000Z",
+      "text": "I put a lot of heart into my technical writing, I hope it's useful to you all. \n\n📌 Here's a pinned thread of everything I've written.\n\n(much of this will be posted on the Claude blog soon as well)",
+      "url": "https://twitter.com/trq212/status/2035372716820218141"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2035158351357911527",
+      "author": "karpathy",
+      "posted_at": "2026-03-21T00:55:37.000Z",
+      "text": "Thank you Sarah, my pleasure to come on the pod! And happy to do some more Q&A in the replies.",
+      "url": "https://twitter.com/karpathy/status/2035158351357911527"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2034873049753997619",
+      "author": "karpathy",
+      "posted_at": "2026-03-20T06:01:55.000Z",
+      "text": "Andy Weir showing some of the spreadsheets underlying the calculations in the book\nhttps://t.co/3CyprVTzXX\ni mean, it's not quality scifi if it doesn't come with a supplementary whitepaper https://t.co/MsDnEoNBA7",
+      "url": "https://twitter.com/karpathy/status/2034873049753997619"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2034865693544604001",
+      "author": "karpathy",
+      "posted_at": "2026-03-20T05:32:41.000Z",
+      "text": "Had to go see Project Hail Mary right away (it's based on the book of Andy Weir, of also The Martian fame). Both very pleased and relieved to say that 1) the movie sticks very close to the book in both content and tone and 2) is really well executed.\n\nThe book is one of my",
+      "url": "https://twitter.com/karpathy/status/2034865693544604001"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2034329390377762848",
+      "author": "karpathy",
+      "posted_at": "2026-03-18T18:01:37.000Z",
+      "text": "Ugh X breaks time links, it’s at 26:17",
+      "url": "https://twitter.com/karpathy/status/2034329390377762848"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2034325950310355072",
+      "author": "karpathy",
+      "posted_at": "2026-03-18T17:47:57.000Z",
+      "text": "(link to blast from the past)\nhttps://t.co/gAP4YPV5uR",
+      "url": "https://twitter.com/karpathy/status/2034325950310355072"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2034321875506196585",
+      "author": "karpathy",
+      "posted_at": "2026-03-18T17:31:45.000Z",
+      "text": "Thank you Jensen and NVIDIA! She’s a real beauty! I was told I’d be getting a secret gift, with a hint that it requires 20 amps. (So I knew it had to be good). She’ll make for a beautiful, spacious home for my Dobby the House Elf claw, among lots of other tinkering, thank you!!",
+      "url": "https://twitter.com/karpathy/status/2034321875506196585"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031792523187040643",
+      "author": "karpathy",
+      "posted_at": "2026-03-11T18:01:01.000Z",
+      "text": "My autoresearch labs got wiped out in the oauth outage. Have to think through failovers. Intelligence brownouts will be interesting - the planet losing IQ points when frontier AI stutters.",
+      "url": "https://twitter.com/karpathy/status/2031792523187040643"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031774631498273005",
+      "author": "karpathy",
+      "posted_at": "2026-03-11T16:49:55.000Z",
+      "text": "Human orgs are not legible, the CEO can’t see/feel/zoom in on any activity in their company, with real time stats etc. I have no doubt that it will be possible to control orgs on mobile, with voice etc., but with this level of legibility will that be optimal? Not in principle and",
+      "url": "https://twitter.com/karpathy/status/2031774631498273005"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031770607466291393",
+      "author": "karpathy",
+      "posted_at": "2026-03-11T16:33:55.000Z",
+      "text": "All of these patterns as an example are just matters of “org code”. The IDE helps you build, run, manage them. You can’t fork classical orgs (eg Microsoft) but you’ll be able to fork agentic orgs. https://t.co/VBfL9ZzxKs",
+      "url": "https://twitter.com/karpathy/status/2031770607466291393"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031767720933634100",
+      "author": "karpathy",
+      "posted_at": "2026-03-11T16:22:27.000Z",
+      "text": "Expectation: the age of the IDE is over\nReality: we’re going to need a bigger IDE\n(imo).\n\nIt just looks very different because humans now move upwards and program at a higher level - the basic unit of interest is not one file but one agent. It’s still programming.",
+      "url": "https://twitter.com/karpathy/status/2031767720933634100"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031137476438548874",
+      "author": "karpathy",
+      "posted_at": "2026-03-09T22:38:05.000Z",
+      "text": "oh yeah i should have linked autoresearch probably\nhttps://t.co/MhdH7YF1PP\n(you don't \"use it\" directly, it's just a recipe/idea - give it to your agent and apply to what you care about.)\n\nand the tweet about it that went mini-viral over the weekend with more context",
+      "url": "https://twitter.com/karpathy/status/2031137476438548874"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2031135152349524125",
+      "author": "karpathy",
+      "posted_at": "2026-03-09T22:28:51.000Z",
+      "text": "Three days ago I left autoresearch tuning nanochat for ~2 days on depth=12 model. It found ~20 changes that improved the validation loss. I tested these changes yesterday and all of them were additive and transferred to larger (depth=24) models. Stacking up all of these changes, https://t.co/j34dSt4oht",
+      "url": "https://twitter.com/karpathy/status/2031135152349524125"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2030705271627284816",
+      "author": "karpathy",
+      "posted_at": "2026-03-08T18:00:40.000Z",
+      "text": "The next step for autoresearch is that it has to be asynchronously massively collaborative for agents (think: SETI@home style). The goal is not to emulate a single PhD student, it's to emulate a research community of them.\n\nCurrent code synchronously grows a single thread of",
+      "url": "https://twitter.com/karpathy/status/2030705271627284816"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2030373745991536982",
+      "author": "karpathy",
+      "posted_at": "2026-03-07T20:03:18.000Z",
+      "text": "(I still have the bigger cousin running on prod nanochat, working a bigger model and on 8XH100, which looks like this now. I'll just leave this running for a while...) https://t.co/aWya9hpUMl",
+      "url": "https://twitter.com/karpathy/status/2030373745991536982"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2029950967031247231",
+      "author": "karpathy",
+      "posted_at": "2026-03-06T16:03:19.000Z",
+      "text": "ah yes, this is what post-agi feels like :) i didn't touch anything. brb sauna https://t.co/odILIDAQaF",
+      "url": "https://twitter.com/karpathy/status/2029950967031247231"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2029702379034267985",
+      "author": "karpathy",
+      "posted_at": "2026-03-05T23:35:31.000Z",
+      "text": "sorry just to clarify - the real benchmark of interest is:\n\n\"what is the research org agent code that produces improvements on nanochat the fastest?\"\n\nthis is the new meta.",
+      "url": "https://twitter.com/karpathy/status/2029702379034267985"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2029701092347630069",
+      "author": "karpathy",
+      "posted_at": "2026-03-05T23:30:25.000Z",
+      "text": "nanochat now trains GPT-2 capability model in just 2 hours on a single 8XH100 node (down from ~3 hours 1 month ago). Getting a lot closer to ~interactive! A bunch of tuning and features (fp8) went in but the biggest difference was a switch of the dataset from FineWeb-edu to https://t.co/qragh6hJL6",
+      "url": "https://twitter.com/karpathy/status/2029701092347630069"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2029696850366971921",
+      "author": "karpathy",
+      "posted_at": "2026-03-05T23:13:33.000Z",
+      "text": "There was a nice time where researchers talked about various ideas quite openly on twitter. (before they disappeared into the gold mines :)).\n\nMy guess is that you can get quite far even in the current paradigm by introducing a number of memory ops as \"tools\" and throwing them",
+      "url": "https://twitter.com/karpathy/status/2029696850366971921"
+    },
+    {
+      "source": "twitter",
+      "source_id": "2027521323275325622",
+      "author": "karpathy",
+      "posted_at": "2026-02-27T23:08:47.000Z",
+      "text": "I had the same thought so I've been playing with it in nanochat. E.g. here's 8 agents (4 claude, 4 codex), with 1 GPU each running nanochat experiments (trying to delete logit softcap without regression). The TLDR is that it doesn't work and it's a mess... but it's still very https://t.co/62amH4yQNp",
+      "url": "https://twitter.com/karpathy/status/2027521323275325622"
+    }
+  ]
+}
