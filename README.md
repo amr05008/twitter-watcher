@@ -1,10 +1,10 @@
 # Twitter Watcher
 
-I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a tight weekday briefing. No feed, no doomscroll — and on a quiet day, no message at all.
+I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a short, concise weekday briefing. 
 
 It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [twitterapi.io](https://twitterapi.io), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
 
-> **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook, and watch list. Adapt it, don't expect to clone and run it untouched.
+> **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook (or whatever other channel), and watch list. Adapt it, don't expect to clone and run it untouched.
 
 ## What it does
 
@@ -150,17 +150,16 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 
 `npx wrangler tail` streams live Worker logs — the first place to look when something's off.
 
-## Design decisions worth stealing
+## The good stuff worth copying 
 
-The portable ideas, independent of the stack. If you build your own version, these are the parts that earned their keep:
+If you build your own version, these are the parts I would include: 
 
-- **Quiet days stay silent.** The prompt can return zero picks, and zero means no message. A digest that posts even when there's nothing to say trains you to ignore it. Padding to hit a count is the failure mode — [the prompt](./prompts/briefing.md) explicitly forbids it.
-- **Distinguish "quiet" from "dead."** Silence is ambiguous — genuinely low signal, or did the cron die? A quiet Monday posts a one-line liveness ping ("watcher's alive, N days since last signal"), and any run that *throws* posts a failure alert. Silence then always means "nothing worth saying," never "broken."
-- **The rationale is the product.** The digest shows Claude's one-line headline, not the tweet. So the prompt forces each headline to stand alone ("first benchmark showing X beats Y on agentic coding," not "interesting AI take"). The model isn't just ranking — it's writing the thing you actually read.
+- **The rationale is the product.** The digest shows Claude's one-line headline, not the tweet. So the prompt forces each headline to stand alone ("first benchmark showing X beats Y on agentic coding," not "interesting AI take"). The model isn't just ranking, it's writing the thing you actually read. A link is provided to the actual tweets if you want to dig in and see more. 
+- **The prompt is the surface you iterate on so make that loop fast.** An [offline eval harness](./tests/eval-briefing.test.ts) runs the actual selection over a frozen batch of posts with no Discord post or D1 write, so you can A/B prompt edits against identical input. Version the prompt, not just the code.
+- **Pay-per-use is better than paying for what you don't need** I originally built this with Apify on the $29 per month plan, swapped it out with twitterapi.io as you can load up credits and just pay per use. Much more cost efficient setup thus far. 
+- **Distinguish "quiet" from "dead."** Silence is ambiguous. A quiet Monday posts a one-line liveness ping ("watcher's alive, N days since last signal"), and any run that *throws* posts a failure alert. Silence then always means "nothing worth saying," never "broken."
 - **404, not 401.** A wrong token returns 404, so the route's existence is hidden from probes. A 401 would confirm "something's here." Cheap obscurity for a public Worker with no UI.
-- **The prompt is the surface you iterate on — make that loop fast.** `prompts/briefing.md` is the real product, not the orchestration code. An [offline eval harness](./tests/eval-briefing.test.ts) runs the actual selection over a frozen batch with no Discord post or D1 write, so you can A/B prompt edits against identical input. Version the prompt, not just the code.
 - **Window candidates by last *success*, not a fixed lookback.** Each run covers the gap since the last *posted* briefing (floored so Monday reaches over the weekend, capped so a long outage doesn't dump a week's backlog). Output cadence and input window stay decoupled.
-- **Keep a source-adapter seam.** Ingest hides behind a `SourceAdapter` interface, so the briefing logic never names Twitter. Reddit/Threads/RSS can drop in without touching selection or delivery.
 
 ## How it works
 
