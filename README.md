@@ -27,18 +27,9 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [tw
 
 ### Example briefing
 
-A run posted to my Discord, tiered for scanning:
+A real run posted to my Discord, tiered for scanning:
 
-> **Twitter Watcher — 2026-05-31**
-> Opus 4.8 shipped, Claude Code got dynamic workflows, and Gemini 3.5 Flash landed.
->
-> 📌 **Don't miss**
-> 1. Opus 4.8 out — SWE-bench Pro 64.3→69.2, same price — @bcherny [↗]
-> 2. Claude Code dynamic workflows: auto-orchestration + parallel subagents — @ClaudeDevs [↗]
-> 3. Salesforce: a 231-day migration shipped in 13 days with Claude Code — @bcherny [↗]
->
-> **Also worth a look**
-> • Gemini 3.5 Flash beats 3.1 Pro, 4× faster at half the cost — @demishassabis [↗]
+![A Twitter Watcher briefing in Discord: a one-line lead summarizing the day, a numbered "Don't miss" tier of 1–3 must-reads, and an "Also worth a look" tier, each item a one-line headline with a link to the source tweet.](./docs/briefing-example.png)
 
 The headline under each item is Claude's rationale — the full tweet text isn't shown, so the rationale has to stand on its own.
 
