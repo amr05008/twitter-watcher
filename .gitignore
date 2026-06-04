@@ -8,3 +8,4 @@ wrangler.toml
 coverage/
 .env.local
 .superpowers/
+.claude/sessions/
