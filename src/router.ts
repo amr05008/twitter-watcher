@@ -1,4 +1,21 @@
 import type { Env } from "./env";
+import type {
+  AccountFollowingRequest,
+  AccountFollowingResponse,
+  AccountTweetsRequest,
+  AccountTweetsResponse,
+  SearchTweetsRequest,
+  SearchTweetsResponse,
+} from "./explore";
+
+export type {
+  AccountFollowingRequest,
+  AccountFollowingResponse,
+  AccountTweetsRequest,
+  AccountTweetsResponse,
+  SearchTweetsRequest,
+  SearchTweetsResponse,
+};
 
 export interface DiscoverRequest {
   topic: string;
@@ -69,6 +86,9 @@ export interface RouteHandlers {
   listWatchTargets(env: Env): Promise<ListWatchTargetsResponse>;
   deleteWatchTarget(env: Env, body: DeleteWatchTargetRequest): Promise<DeleteWatchTargetResponse>;
   refreshHandleIngest(env: Env): Promise<RefreshResponse>;
+  searchTweets(env: Env, body: SearchTweetsRequest): Promise<SearchTweetsResponse>;
+  getAccountTweets(env: Env, body: AccountTweetsRequest): Promise<AccountTweetsResponse>;
+  getAccountFollowing(env: Env, body: AccountFollowingRequest): Promise<AccountFollowingResponse>;
 }
 
 function tokenOk(req: Request, expected: string): boolean {
@@ -162,6 +182,48 @@ export async function handleRequest(
       topic: body.topic,
       ...(typeof body.lookbackDays === "number" && { lookbackDays: body.lookbackDays }),
       ...(typeof body.maxResults === "number" && { maxResults: body.maxResults }),
+    });
+    return jsonResponse(result);
+  }
+
+  if (path === "/api/search-tweets") {
+    if (!tokenOk(req, env.TRIGGER_TOKEN)) return notFound();
+    const body = await parseJsonBody<Partial<SearchTweetsRequest>>(req);
+    if (!body || typeof body.query !== "string" || body.query.length === 0) {
+      return badRequest("missing required field 'query'");
+    }
+    const result = await handlers.searchTweets(env, {
+      query: body.query,
+      ...(body.queryType === "Top" || body.queryType === "Latest"
+        ? { queryType: body.queryType }
+        : {}),
+      ...(typeof body.maxTweets === "number" && { maxTweets: body.maxTweets }),
+    });
+    return jsonResponse(result);
+  }
+
+  if (path === "/api/account-tweets") {
+    if (!tokenOk(req, env.TRIGGER_TOKEN)) return notFound();
+    const body = await parseJsonBody<Partial<AccountTweetsRequest>>(req);
+    if (!body || typeof body.handle !== "string" || body.handle.length === 0) {
+      return badRequest("missing required field 'handle'");
+    }
+    const result = await handlers.getAccountTweets(env, {
+      handle: body.handle,
+      ...(typeof body.maxTweets === "number" && { maxTweets: body.maxTweets }),
+    });
+    return jsonResponse(result);
+  }
+
+  if (path === "/api/account-following") {
+    if (!tokenOk(req, env.TRIGGER_TOKEN)) return notFound();
+    const body = await parseJsonBody<Partial<AccountFollowingRequest>>(req);
+    if (!body || typeof body.handle !== "string" || body.handle.length === 0) {
+      return badRequest("missing required field 'handle'");
+    }
+    const result = await handlers.getAccountFollowing(env, {
+      handle: body.handle,
+      ...(typeof body.maxAccounts === "number" && { maxAccounts: body.maxAccounts }),
     });
     return jsonResponse(result);
   }

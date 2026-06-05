@@ -33,6 +33,25 @@ function makeHandlers(overrides: Partial<RouteHandlers> = {}): RouteHandlers {
       failedHandles: 0,
       skippedMalformed: 0,
     })),
+    searchTweets: vi.fn(async () => ({
+      query: "x",
+      queryType: "Latest" as const,
+      fetched: 0,
+      hasMore: false,
+      tweets: [],
+    })),
+    getAccountTweets: vi.fn(async () => ({
+      handle: "x",
+      fetched: 0,
+      hasMore: false,
+      tweets: [],
+    })),
+    getAccountFollowing: vi.fn(async () => ({
+      handle: "x",
+      fetched: 0,
+      hasMore: false,
+      accounts: [],
+    })),
     ...overrides,
   };
 }
@@ -300,6 +319,116 @@ describe("router /api/watch-targets DELETE", () => {
     });
     const res = await handleRequest(req, env, handlers);
     expect(res.status).toBe(404);
+  });
+});
+
+describe("router /api/search-tweets", () => {
+  let env: Env;
+  let handlers: RouteHandlers;
+
+  beforeEach(() => {
+    env = makeEnv();
+    handlers = makeHandlers();
+  });
+
+  it("returns 404 on wrong token", async () => {
+    const req = new Request("https://w.example/api/search-tweets", {
+      method: "POST",
+      headers: { "x-trigger-token": "wrong" },
+      body: JSON.stringify({ query: "ai painting" }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(404);
+    expect(handlers.searchTweets).not.toHaveBeenCalled();
+  });
+
+  it("invokes searchTweets with parsed body on right token", async () => {
+    const req = new Request("https://w.example/api/search-tweets", {
+      method: "POST",
+      headers: {
+        "x-trigger-token": "right-token",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ query: "ai painting", queryType: "Top", maxTweets: 50 }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(200);
+    expect(handlers.searchTweets).toHaveBeenCalledWith(env, {
+      query: "ai painting",
+      queryType: "Top",
+      maxTweets: 50,
+    });
+  });
+
+  it("returns 400 when body is missing query", async () => {
+    const req = new Request("https://w.example/api/search-tweets", {
+      method: "POST",
+      headers: {
+        "x-trigger-token": "right-token",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ maxTweets: 50 }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(400);
+    expect(handlers.searchTweets).not.toHaveBeenCalled();
+  });
+});
+
+describe("router /api/account-tweets & /api/account-following", () => {
+  let env: Env;
+  let handlers: RouteHandlers;
+
+  beforeEach(() => {
+    env = makeEnv();
+    handlers = makeHandlers();
+  });
+
+  it("invokes getAccountTweets with parsed body", async () => {
+    const req = new Request("https://w.example/api/account-tweets", {
+      method: "POST",
+      headers: {
+        "x-trigger-token": "right-token",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ handle: "karpathy", maxTweets: 200 }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(200);
+    expect(handlers.getAccountTweets).toHaveBeenCalledWith(env, {
+      handle: "karpathy",
+      maxTweets: 200,
+    });
+  });
+
+  it("invokes getAccountFollowing with parsed body", async () => {
+    const req = new Request("https://w.example/api/account-following", {
+      method: "POST",
+      headers: {
+        "x-trigger-token": "right-token",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ handle: "karpathy" }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(200);
+    expect(handlers.getAccountFollowing).toHaveBeenCalledWith(env, {
+      handle: "karpathy",
+    });
+  });
+
+  it("returns 400 when account route is missing handle", async () => {
+    const req = new Request("https://w.example/api/account-tweets", {
+      method: "POST",
+      headers: {
+        "x-trigger-token": "right-token",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ maxTweets: 50 }),
+    });
+    const res = await handleRequest(req, env, handlers);
+    expect(res.status).toBe(400);
+    expect(handlers.getAccountTweets).not.toHaveBeenCalled();
   });
 });
 

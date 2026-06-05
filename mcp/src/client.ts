@@ -26,6 +26,54 @@ export interface DiscoverResult {
   }>;
 }
 
+export interface ExploreTweet {
+  id: string;
+  author: string;
+  authorName: string | null;
+  authorFollowers: number | null;
+  text: string;
+  url: string;
+  createdAt: string;
+  likeCount: number | null;
+  retweetCount: number | null;
+  replyCount: number | null;
+  viewCount: number | null;
+  isReply: boolean;
+  isRetweet: boolean;
+}
+
+export interface ExploreAccount {
+  userName: string;
+  name: string | null;
+  followers: number | null;
+  following: number | null;
+  description: string | null;
+  location: string | null;
+  statusesCount: number | null;
+}
+
+export interface SearchTweetsResult {
+  query: string;
+  queryType: "Latest" | "Top";
+  fetched: number;
+  hasMore: boolean;
+  tweets: ExploreTweet[];
+}
+
+export interface AccountTweetsResult {
+  handle: string;
+  fetched: number;
+  hasMore: boolean;
+  tweets: ExploreTweet[];
+}
+
+export interface AccountFollowingResult {
+  handle: string;
+  fetched: number;
+  hasMore: boolean;
+  accounts: ExploreAccount[];
+}
+
 export interface WatchTarget {
   id: string;
   source: string;
@@ -101,6 +149,28 @@ export class TwitterWatcherClient {
     maxResults?: number;
   }): Promise<DiscoverResult> {
     return this.request<DiscoverResult>("POST", "/api/discover", input);
+  }
+
+  async searchTweets(input: {
+    query: string;
+    queryType?: "Latest" | "Top";
+    maxTweets?: number;
+  }): Promise<SearchTweetsResult> {
+    return this.request<SearchTweetsResult>("POST", "/api/search-tweets", input);
+  }
+
+  async getAccountTweets(input: {
+    handle: string;
+    maxTweets?: number;
+  }): Promise<AccountTweetsResult> {
+    return this.request<AccountTweetsResult>("POST", "/api/account-tweets", input);
+  }
+
+  async getAccountFollowing(input: {
+    handle: string;
+    maxAccounts?: number;
+  }): Promise<AccountFollowingResult> {
+    return this.request<AccountFollowingResult>("POST", "/api/account-following", input);
   }
 
   async listWatchedAccounts(): Promise<{ targets: WatchTarget[] }> {

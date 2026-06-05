@@ -9,6 +9,9 @@ Once installed, you can ask Claude things like:
 | `run_briefing` | *"Run my Twitter Watcher briefing."* |
 | `refresh_tweets` | *"Refresh my watched tweets."* |
 | `discover_accounts` | *"Find the top accounts discussing AI agents."* |
+| `search_tweets` | *"Pull recent tweets about AI agents so we can read them."* |
+| `get_account_tweets` | *"Show me what @karpathy has been posting."* |
+| `get_account_following` | *"Who does @karpathy follow?"* |
 | `list_watched_accounts` | *"What Twitter accounts am I watching?"* |
 | `add_watched_account` | *"Add @karpathy to my watch list."* |
 | `remove_watched_account` | *"Stop watching @sama."* |
@@ -21,10 +24,33 @@ Composable — Claude chains them automatically: *"Pull fresh tweets and run my 
 | --- | --- |
 | `run_briefing` | Run a briefing now. Posts the day's tiered top signals to Discord, or reports skipped if nothing clears the bar. |
 | `refresh_tweets` | Pull fresh tweets for every watched handle from twitterapi.io into D1. |
-| `discover_accounts` | Topic search → top accounts. |
+| `discover_accounts` | Topic search → Claude distills the top accounts (server-side). |
 | `list_watched_accounts` | Show the current watch list. |
 | `add_watched_account` | Add a handle to the watch list. |
 | `remove_watched_account` | Remove a handle. |
+
+### Exploration tools (raw data into the session)
+
+These three return **raw tweets/accounts straight into the conversation** — no server-side
+distillation — so you and Claude can read the real text and pair on themes. Read-only; they never
+touch D1 or the briefing pipeline.
+
+| Tool | What it does |
+| --- | --- |
+| `search_tweets` | Paginated advanced search. `query` takes Twitter syntax (`OR`, quotes, `from:`, `-filter:replies`, `-filter:retweets`). `queryType` Latest\|Top. Default 150 tweets, max 1000. |
+| `get_account_tweets` | Raw recent tweets for any handle (not just watched ones). Default 150, max 1000. |
+| `get_account_following` | The accounts a handle follows, with bios + follower counts — the backbone for "accounts similar to @X". Default 200, max 1000. |
+
+**"Accounts similar to @someone"** is composed in-session: `get_account_following` (curated
+peers) + `get_account_tweets` (derive their themes) + `search_tweets` (who else posts on those
+themes) → Claude synthesizes a shortlist → `add_watched_account` for keepers.
+
+**Advanced-search gotchas** (learned the hard way — twitterapi.io fails *silently* on these):
+- The `min_faves:` operator makes the search return **zero** results. Don't use it; over-pull
+  (`queryType: "Top"`, larger `maxTweets`) and filter by the returned `likeCount` in-session.
+- **Over-long queries return zero** too. Keep each parenthesised `OR` group to ~6 terms.
+- Ambiguous single words pull unrelated meanings (e.g. a common-noun trade term can surface
+  unrelated art/hobby tweets) — add context terms to disambiguate.
 
 ## Install
 

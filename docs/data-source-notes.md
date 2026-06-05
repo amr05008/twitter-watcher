@@ -17,6 +17,32 @@ so it was chosen against a few hard requirements:
 - **A clean fit for the data already normalized.** `GET /twitter/user/last_tweets?userName=<handle>`
   returns `id`, `text`, `url`, `createdAt`, `author.userName` — the exact fields the ingest
   path maps — and advanced search covers `discover`.
+
+## Endpoints in use
+
+| Endpoint | Used by | Notes |
+| --- | --- | --- |
+| `GET /twitter/user/last_tweets` | `ingest` (watched-account refresh), `explore.getAccountTweets` (any handle, paginated) | Tweets nest under `data.tweets`. |
+| `GET /twitter/tweet/advanced_search` | `discover` (one page → Claude), `explore.searchTweets` (paginated raw) | Full Twitter query syntax; `queryType=Latest\|Top`; tweets top-level under `tweets`. |
+| `GET /twitter/user/followings` | `explore.getAccountFollowing` | `pageSize` 20–200; returns userName/name/followers/description. |
+
+The `explore.*` calls (added for interactive Claude Code sessions) all go through
+`src/twitterapi.ts`, which centralizes the `X-API-Key` header and cursor pagination
+(`has_next_page` / `next_cursor`). They're read-only and pull a larger swath of raw data
+(default 150 / cap 1000 items per call); the briefing pipeline is untouched.
+
+### advanced_search quirks (silent failures)
+
+twitterapi.io's `advanced_search` fails *quietly* — it returns an empty `tweets` array rather
+than an error — in two cases we hit:
+
+- The **`min_faves:` operator** zeroes out results (verified: identical query returned 30 without
+  it, 0 with `min_faves:5`). Filter by the returned engagement counts in-session instead.
+- **Over-long queries** zero out too (a ~7×9-term two-group query returned 0; ~3×4 and ~7×7
+  worked). Keep `OR` groups small.
+
+Plain `OR`, parentheses, quoted phrases, `from:`, and `-filter:replies`/`-filter:retweets` all
+work as expected.
 - **A real operator.** A registered LLC, ~18 months live, with a public track record
   (~21K users / >99% success rate on its marketplace presence). Small and pseudonymous, but
   not vaporware.

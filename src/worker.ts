@@ -9,6 +9,7 @@ import {
   upsertWatchTarget,
 } from "./db";
 import { refreshHandleIngest } from "./ingest";
+import { getAccountFollowing, getAccountTweets, searchTweets } from "./explore";
 import { formatError, postToDiscord } from "./discord";
 
 import briefingPrompt from "../prompts/briefing.md";
@@ -30,6 +31,9 @@ const handlers: RouteHandlers = {
   deleteWatchTarget: (env, body) =>
     deleteWatchTarget(env.DB, { source: body.source, handle: body.handle }),
   refreshHandleIngest: (env) => refreshHandleIngest(env),
+  searchTweets: (env, body) => searchTweets(env, body),
+  getAccountTweets: (env, body) => getAccountTweets(env, body),
+  getAccountFollowing: (env, body) => getAccountFollowing(env, body),
 };
 
 export default {

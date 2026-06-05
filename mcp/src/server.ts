@@ -68,6 +68,78 @@ const tools = [
     },
   },
   {
+    name: "search_tweets",
+    description:
+      "Search Twitter and return the RAW matching tweets (text + engagement + author) into this session for direct reading/analysis — not a server-side summary. Use for exploring how people talk about a topic. The query accepts Twitter advanced-search syntax: parentheses, OR, quoted phrases, from:user, -filter:replies, -filter:retweets. Paginates under the hood up to maxTweets. IMPORTANT: keep queries short (a handful of OR terms per group) and do NOT use the min_faves: operator — both cause the search to silently return zero results; instead over-pull and filter by the returned likeCount in-session. Example query: '(\"LLM eval\" OR \"AI agent\") (benchmark OR framework) -filter:replies'.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: {
+          type: "string",
+          description:
+            "Twitter advanced-search query string (supports OR, parentheses, quotes, from:, -filter:replies, min_faves:, since_time:/until_time:).",
+        },
+        queryType: {
+          type: "string",
+          enum: ["Latest", "Top"],
+          description: "'Latest' (chronological, default) or 'Top' (most engaged).",
+        },
+        maxTweets: {
+          type: "integer",
+          description: "Max tweets to pull across pages. Default 150, max 1000.",
+          minimum: 1,
+          maximum: 1000,
+        },
+      },
+      required: ["query"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "get_account_tweets",
+    description:
+      "Pull the RAW recent tweets (text + engagement) for ANY handle (not just watched accounts) into this session. Use to read what a seed account actually posts — e.g. to derive its themes/vocabulary before finding similar accounts. Pass the handle without '@'. Paginates up to maxTweets.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        handle: {
+          type: "string",
+          description: "Twitter handle without the '@' prefix (e.g. 'karpathy').",
+        },
+        maxTweets: {
+          type: "integer",
+          description: "Max tweets to pull across pages. Default 150, max 1000.",
+          minimum: 1,
+          maximum: 1000,
+        },
+      },
+      required: ["handle"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "get_account_following",
+    description:
+      "List the accounts a given handle follows, with bios and follower counts — the curated-peer signal for 'accounts similar to @X'. Returns raw account data for in-session filtering. Pass the handle without '@'. Paginates up to maxAccounts.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        handle: {
+          type: "string",
+          description: "Twitter handle without the '@' prefix (e.g. 'karpathy').",
+        },
+        maxAccounts: {
+          type: "integer",
+          description: "Max accounts to pull across pages. Default 200, max 1000.",
+          minimum: 1,
+          maximum: 1000,
+        },
+      },
+      required: ["handle"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "list_watched_accounts",
     description:
       "List the Twitter accounts currently in the passive watch list. These are the accounts whose tweets are pulled daily for the briefing.",
@@ -149,6 +221,34 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           maxResults?: number;
         };
         const result = await client.discoverAccounts(a);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "search_tweets": {
+        const a = (args ?? {}) as {
+          query: string;
+          queryType?: "Latest" | "Top";
+          maxTweets?: number;
+        };
+        const result = await client.searchTweets(a);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "get_account_tweets": {
+        const a = (args ?? {}) as { handle: string; maxTweets?: number };
+        const result = await client.getAccountTweets(a);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "get_account_following": {
+        const a = (args ?? {}) as { handle: string; maxAccounts?: number };
+        const result = await client.getAccountFollowing(a);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
