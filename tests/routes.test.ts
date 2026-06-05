@@ -335,7 +335,7 @@ describe("router /api/search-tweets", () => {
     const req = new Request("https://w.example/api/search-tweets", {
       method: "POST",
       headers: { "x-trigger-token": "wrong" },
-      body: JSON.stringify({ query: "ai painting" }),
+      body: JSON.stringify({ query: "ai agents" }),
     });
     const res = await handleRequest(req, env, handlers);
     expect(res.status).toBe(404);
@@ -349,12 +349,12 @@ describe("router /api/search-tweets", () => {
         "x-trigger-token": "right-token",
         "content-type": "application/json",
       },
-      body: JSON.stringify({ query: "ai painting", queryType: "Top", maxTweets: 50 }),
+      body: JSON.stringify({ query: "ai agents", queryType: "Top", maxTweets: 50 }),
     });
     const res = await handleRequest(req, env, handlers);
     expect(res.status).toBe(200);
     expect(handlers.searchTweets).toHaveBeenCalledWith(env, {
-      query: "ai painting",
+      query: "ai agents",
       queryType: "Top",
       maxTweets: 50,
     });

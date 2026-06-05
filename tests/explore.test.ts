@@ -51,11 +51,11 @@ function pagedFetch(match: string, pages: unknown[]) {
 describe("explore.searchTweets", () => {
   it("hits advanced_search with the API key + queryType and maps engagement fields", async () => {
     const fetchImpl = pagedFetch("/twitter/tweet/advanced_search", [
-      { tweets: [tweet("sweatystartup", "1", "hire a GC, use AI for quotes")], has_next_page: false },
+      { tweets: [tweet("karpathy", "1", "a sample tweet")], has_next_page: false },
     ]);
     const res = await searchTweets(
       makeEnv(),
-      { query: "(painter OR contractor) (AI OR ChatGPT)", queryType: "Top" },
+      { query: "(LLM OR AI) (eval OR agent)", queryType: "Top" },
       fetchImpl as any,
     );
 
@@ -63,8 +63,8 @@ describe("explore.searchTweets", () => {
     expect(res.fetched).toBe(1);
     expect(res.hasMore).toBe(false);
     const t = res.tweets[0]!;
-    expect(t.author).toBe("sweatystartup");
-    expect(t.authorName).toBe("sweatystartup display");
+    expect(t.author).toBe("karpathy");
+    expect(t.authorName).toBe("karpathy display");
     expect(t.authorFollowers).toBe(1234);
     expect(t.likeCount).toBe(10);
     expect(t.viewCount).toBe(999);
@@ -108,14 +108,14 @@ describe("explore.searchTweets", () => {
 describe("explore.getAccountTweets", () => {
   it("hits last_tweets and reads tweets nested under data.tweets", async () => {
     const fetchImpl = pagedFetch("/twitter/user/last_tweets", [
-      { data: { tweets: [tweet("sweatystartup", "1", "blue collar take")], has_next_page: false } },
+      { data: { tweets: [tweet("karpathy", "1", "a sample tweet")], has_next_page: false } },
     ]);
-    const res = await getAccountTweets(makeEnv(), { handle: "sweatystartup" }, fetchImpl as any);
+    const res = await getAccountTweets(makeEnv(), { handle: "karpathy" }, fetchImpl as any);
 
-    expect(res.handle).toBe("sweatystartup");
+    expect(res.handle).toBe("karpathy");
     expect(res.fetched).toBe(1);
-    expect(res.tweets[0]!.text).toBe("blue collar take");
-    expect(fetchImpl.mock.calls[0]![0]).toContain("userName=sweatystartup");
+    expect(res.tweets[0]!.text).toBe("a sample tweet");
+    expect(fetchImpl.mock.calls[0]![0]).toContain("userName=karpathy");
   });
 
   it("flags retweets via retweeted_tweet", async () => {
@@ -132,7 +132,7 @@ describe("explore.getAccountFollowing", () => {
     const fetchImpl = pagedFetch("/twitter/user/followings", [
       {
         followings: [
-          { userName: "peer1", name: "Peer One", followers: 5000, description: "house painter" },
+          { userName: "peer1", name: "Peer One", followers: 5000, description: "indie hacker" },
         ],
         has_next_page: true,
         next_cursor: "F1",
@@ -146,13 +146,13 @@ describe("explore.getAccountFollowing", () => {
     ]);
     const res = await getAccountFollowing(
       makeEnv(),
-      { handle: "sweatystartup", maxAccounts: 50 },
+      { handle: "karpathy", maxAccounts: 50 },
       fetchImpl as any,
     );
 
     expect(res.fetched).toBe(2);
     expect(res.hasMore).toBe(false);
-    expect(res.accounts[0]).toMatchObject({ userName: "peer1", followers: 5000, description: "house painter" });
+    expect(res.accounts[0]).toMatchObject({ userName: "peer1", followers: 5000, description: "indie hacker" });
     expect(fetchImpl.mock.calls[0]![0]).toContain("pageSize=200");
     expect(fetchImpl.mock.calls[1]![0]).toContain("cursor=F1");
   });
@@ -168,11 +168,11 @@ describe("explore.getAccountFollowing", () => {
     ]);
     const res = await getAccountFollowing(
       makeEnv(),
-      { handle: "@sweatystartup" },
+      { handle: "@karpathy" },
       fetchImpl as any,
     );
-    expect(res.handle).toBe("sweatystartup");
-    expect(fetchImpl.mock.calls[0]![0]).toContain("userName=sweatystartup");
+    expect(res.handle).toBe("karpathy");
+    expect(fetchImpl.mock.calls[0]![0]).toContain("userName=karpathy");
     expect(fetchImpl.mock.calls[0]![0]).not.toContain("%40");
     expect(res.accounts[0]!.followers).toBe(5000);
     expect(res.accounts[0]!.statusesCount).toBe(42);

@@ -168,7 +168,7 @@ function toExploreAccount(raw: unknown): ExploreAccount {
   };
 }
 
-/** Drop a leading '@' so pasted handles like "@sweatystartup" still resolve. */
+/** Drop a leading '@' so pasted handles like "@karpathy" still resolve. */
 function normalizeHandle(handle: string): string {
   return handle.replace(/^@+/, "");
 }
