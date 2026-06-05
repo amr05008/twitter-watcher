@@ -23,7 +23,7 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [tw
 
 - **Weekday briefing.** Every weekday (Mon–Fri) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Monday reaches back over the weekend. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
 - **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekday run.
-- **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, or add/remove accounts from any Claude conversation.
+- **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, add/remove accounts, or pull raw tweets/accounts for ad-hoc research, from any Claude conversation.
 
 ### Example briefing
 
@@ -125,6 +125,9 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | `POST` | `/trigger` | Run a briefing now. `{ briefingId, postCount }` or `{ skipped: true, briefingId }` when nothing clears the bar. |
 | `POST` | `/api/refresh` | Pull fresh tweets from twitterapi.io and ingest into D1 (the cron does this first each run). |
 | `POST` | `/api/discover` | Topic search → top accounts. Body: `{ topic, lookbackDays? }`. |
+| `POST` | `/api/search-tweets` | Paginated advanced search → raw tweets. Body: `{ query, queryType?, maxTweets? }`. |
+| `POST` | `/api/account-tweets` | Raw recent tweets for any handle. Body: `{ handle, maxTweets? }`. |
+| `POST` | `/api/account-following` | Accounts a handle follows (bios + follower counts). Body: `{ handle, maxAccounts? }`. |
 | `GET` | `/api/watch-targets` | List watched handles. |
 | `POST` | `/api/promote` | Add a handle. Body: `{ handle, source? }`. |
 | `DELETE` | `/api/watch-targets` | Remove a handle. Body: `{ handle, source? }`. |
@@ -171,6 +174,8 @@ src/
 ├── briefing.ts      # weekday briefing orchestrator (tiered, windowed, silent-skip)
 ├── discover.ts      # topic → accounts orchestrator
 ├── ingest.ts        # twitterapi.io per-handle refresh → normalize → upsert
+├── explore.ts       # raw-tweet/account exploration primitives (read-only; not part of cron)
+├── twitterapi.ts    # shared twitterapi.io client + cursor pagination
 ├── db.ts            # all D1 queries (incl. prunePosts)
 ├── discord.ts       # embed formatter + webhook POST (incl. failure alert)
 ├── anthropic.ts     # selectTopSignal + suggestAccounts (tool-use)
@@ -213,10 +218,15 @@ So **~$1–11/mo** with no fixed platform floor — every line item is usage-bas
 
 ## Roadmap
 
-- **"Accounts like my seed list"** — use the discover backend to suggest accounts similar to the ones I already watch, and fold that into the weekday flow.
+- **"Accounts like my seed list"** — partially here: the MCP `get_account_following` + `search_tweets` exploration tools surface similar accounts interactively (pull who a seed follows, see who posts on a topic). Still TODO: fold this into the weekday flow automatically.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history
+
+### v1.3.0 — 2026-06-05
+Added on-demand **exploration tools** to the MCP server for interactive research, separate from the weekday briefing.
+- Three read-only Worker routes + MCP tools — `search_tweets` (paginated advanced search), `get_account_tweets` (any handle), `get_account_following` (curated-peer signal) — that return **raw** tweets/accounts into a Claude session for direct analysis, not a server-side summary.
+- Shared `src/twitterapi.ts` client (`X-API-Key` + cursor pagination), reused by all three. Read-only — never touches D1, so the briefing pipeline is untouched.
 
 ### v1.2.0 — 2026-06-03
 Settled the tweet data source on pay-as-you-go **twitterapi.io** (~$0.40/mo, no subscription floor).
