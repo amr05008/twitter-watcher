@@ -23,11 +23,13 @@ binding = "DB"
 database_name = "twitter-watcher"
 database_id = "REPLACE_WITH_D1_ID"
 
-# Weekday briefing — Mon–Fri 11:00 UTC ≈ 06:00–07:00 ET (accept DST drift).
-# Each run covers the window since the last posted briefing (Monday reaches back
-# over the weekend). To revert to weekly, change this to "0 11 * * 1".
+# Briefing — Sun–Fri 10:00 UTC ≈ 05:00–06:00 ET (accept DST drift). Skips Saturday.
+# Each run covers the window since the last posted briefing (Sunday reaches back
+# over Saturday). To revert to weekly, change this to "0 10 * * MON".
+# Named days on purpose: Cloudflare numbers days 1=Sun..7=Sat (NOT Unix 0=Sun..6=Sat),
+# so a numeric range like "1-5" silently means Sun–Thu here.
 [triggers]
-crons = ["0 11 * * 1-5"]
+crons = ["0 10 * * SUN-FRI"]
 
 # Secrets — set via `wrangler secret put` (NOT defined here):
 #   ANTHROPIC_API_KEY        Anthropic API key (cap monthly budget in console)

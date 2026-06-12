@@ -184,7 +184,7 @@ const tools = [
   {
     name: "refresh_tweets",
     description:
-      "Pull the latest tweets from every account in the passive watch list (via twitterapi.io) and ingest them into the database. This is what the weekday cron does automatically; call this on-demand to populate fresh tweets before running a briefing. Returns how many tweets were ingested vs skipped.",
+      "Pull the latest tweets from every account in the passive watch list (via twitterapi.io) and ingest them into the database. This is what the daily cron does automatically; call this on-demand to populate fresh tweets before running a briefing. Returns how many tweets were ingested vs skipped.",
     inputSchema: {
       type: "object",
       properties: {},
