@@ -27,7 +27,7 @@ function newBriefingId(trigger: "cron" | "manual"): string {
 }
 
 /**
- * Lower bound on posted_at for the weekday cron's candidate batch. Defaults to
+ * Lower bound on posted_at for the daily cron's candidate batch. Defaults to
  * the last posted briefing's time, clamped to [now−7d, now−72h]. Because quiet
  * days skip without inserting a briefing, this self-heals: the window stretches
  * back to the last *posted* briefing, so nothing accumulated over quiet days is

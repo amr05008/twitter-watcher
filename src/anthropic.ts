@@ -103,7 +103,7 @@ export async function selectTopSignal(
   fetchImpl: FetchLike = fetch,
   opts: SelectTopSignalOptions = {},
 ): Promise<SignalSelection> {
-  // Weekday default: 1–3 is the norm, up to 5 on heavy days, and 0 is valid so
+  // Daily default: 1–3 is the norm, up to 5 on heavy days, and 0 is valid so
   // the prompt's quality gate can keep a quiet day silent. Clamp to batch size.
   const maxPicks = Math.max(1, Math.min(opts.maxPicks ?? 5, posts.length));
   const minPicks = Math.max(0, Math.min(opts.minPicks ?? 0, maxPicks));

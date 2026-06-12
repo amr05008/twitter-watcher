@@ -1,6 +1,6 @@
 # Twitter Watcher
 
-I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a short, concise weekday briefing. 
+I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a short, concise daily briefing. 
 
 It's a Cloudflare Worker on a cron. Every run (Sun–Fri) it pulls fresh tweets from [twitterapi.io](https://twitterapi.io), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
 
@@ -10,7 +10,7 @@ It's a Cloudflare Worker on a cron. Every run (Sun–Fri) it pulls fresh tweets 
 
 ```
                      ┌─────────── Cloudflare Worker ───────────┐
-  weekday cron  ──▶  │  refresh → twitterapi.io                 │
+  daily cron    ──▶  │  refresh → twitterapi.io                 │
   (Sun–Fri 10 UTC)   │     ↓                                    │
                      │   D1 (posts) ──▶ Claude (tiered top) ───▶│──▶ Discord briefing
                      │     ↑                                    │
@@ -22,7 +22,7 @@ It's a Cloudflare Worker on a cron. Every run (Sun–Fri) it pulls fresh tweets 
 ```
 
 - **Briefing.** Every run (Sun–Fri, skips Saturday) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Sunday reaches back over Saturday. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
-- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekday run.
+- **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the scheduled run.
 - **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, add/remove accounts, or pull raw tweets/accounts for ad-hoc research, from any Claude conversation.
 
 ### Example briefing
@@ -38,10 +38,12 @@ The headline under each item is Claude's rationale — the full tweet text isn't
 It runs Sun–Fri by default (skips Saturday). To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
 
 ```toml
-crons = ["0 10 * * 0-5"]    # default — Sun–Fri 10:00 UTC (~6am ET summer), skips Saturday
-crons = ["0 10 * * 1-5"]    # weekdays only, Mon–Fri
-crons = ["0 10 * * *"]      # daily, including weekends
+crons = ["0 10 * * SUN-FRI"]    # default — Sun–Fri 10:00 UTC (~6am ET summer), skips Saturday
+crons = ["0 10 * * MON-FRI"]    # weekdays only, Mon–Fri
+crons = ["0 10 * * *"]          # daily, including weekends
 ```
+
+Use named days, not numbers: Cloudflare numbers days of week **1=Sun..7=Sat**, unlike Unix cron (0=Sun..6=Sat) — a numeric `1-5` here silently means Sun–Thu, not Mon–Fri.
 
 The cron does not fire under `wrangler dev` — use `POST /trigger` for the dev loop.
 
@@ -157,7 +159,7 @@ If you build your own version, these are the parts I would include:
 
 ## How it works
 
-- **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the weekday cron). Entry: `src/worker.ts`.
+- **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the daily cron). Entry: `src/worker.ts`.
 - **Router** — `src/router.ts`, a single switch over `(method, path)`; every route 404s on token mismatch.
 - **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes summarized posts older than 30 days so D1 stays lean.
 - **Discover** — `src/discover.ts`: `twitterapi.io search → normalize → aggregate by author → Claude.suggestAccounts`.
@@ -171,7 +173,7 @@ If you build your own version, these are the parts I would include:
 src/
 ├── worker.ts        # fetch + scheduled entry
 ├── router.ts        # route dispatch + token / path-secret guards
-├── briefing.ts      # weekday briefing orchestrator (tiered, windowed, silent-skip)
+├── briefing.ts      # daily briefing orchestrator (tiered, windowed, silent-skip)
 ├── discover.ts      # topic → accounts orchestrator
 ├── ingest.ts        # twitterapi.io per-handle refresh → normalize → upsert
 ├── explore.ts       # raw-tweet/account exploration primitives (read-only; not part of cron)
@@ -211,14 +213,14 @@ It self-skips during `npm test` (gated on `RUN_EVAL`), so CI stays free. See the
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)
 - twitterapi.io: **~$0.40** (pay-as-you-go, ~$0.15/1k tweets × ~2.3k tweets/mo — no subscription floor)
-- Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per weekday run)
+- Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per scheduled run)
 - Discord: **$0**
 
 So **~$1–11/mo** with no fixed platform floor — every line item is usage-based or free.
 
 ## Roadmap
 
-- **"Accounts like my seed list"** — partially here: the MCP `get_account_following` + `search_tweets` exploration tools surface similar accounts interactively (pull who a seed follows, see who posts on a topic). Still TODO: fold this into the weekday flow automatically.
+- **"Accounts like my seed list"** — partially here: the MCP `get_account_following` + `search_tweets` exploration tools surface similar accounts interactively (pull who a seed follows, see who posts on a topic). Still TODO: fold this into the scheduled flow automatically.
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history

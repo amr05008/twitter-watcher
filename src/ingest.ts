@@ -24,7 +24,7 @@ interface TimelineResponse {
  * upsert them into D1. One request per handle (twitterapi.io is per-user, not
  * batch); a single handle failing is isolated so the rest of the run proceeds.
  *
- * Used by the weekday cron (worker.scheduled) and by POST /api/refresh.
+ * Used by the daily cron (worker.scheduled) and by POST /api/refresh.
  */
 export async function refreshHandleIngest(
   env: Env,

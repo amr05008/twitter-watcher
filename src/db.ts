@@ -157,7 +157,7 @@ export async function upsertPost(
 export interface GetUnsummarizedOptions {
   /**
    * ISO 8601 lower bound on posted_at. When set, only posts at or after this
-   * timestamp are considered — used by the weekday cron to scope each run to a
+   * timestamp are considered — used by the daily cron to scope each run to a
    * recent window so old, never-picked posts don't re-enter every batch.
    * Omit (manual runs) to flush the full backlog.
    */
@@ -189,7 +189,7 @@ export async function getUnsummarized(
 
 /**
  * The most recently generated briefing, or null if none exist. Used to compute
- * the weekday run's candidate window (back to the last *posted* briefing).
+ * the daily run's candidate window (back to the last *posted* briefing).
  */
 export async function getLastBriefing(
   db: D1Database,
