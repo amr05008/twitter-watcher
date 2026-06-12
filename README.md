@@ -11,7 +11,7 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [tw
 ```
                      ┌─────────── Cloudflare Worker ───────────┐
   weekday cron  ──▶  │  refresh → twitterapi.io                 │
-  (Mon–Fri 11 UTC)   │     ↓                                    │
+  (Mon–Fri 10 UTC)   │     ↓                                    │
                      │   D1 (posts) ──▶ Claude (tiered top) ───▶│──▶ Discord briefing
                      │     ↑                                    │
                      │   prune posts > 30 days                  │
@@ -38,9 +38,9 @@ The headline under each item is Claude's rationale — the full tweet text isn't
 It runs every weekday by default. To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
 
 ```toml
-crons = ["0 11 * * 1-5"]    # default — weekdays, Mon–Fri 11:00 UTC
-crons = ["0 11 * * 1"]      # weekly, Monday 11:00 UTC
-crons = ["0 11 * * *"]      # daily, including weekends
+crons = ["0 10 * * 1-5"]    # default — weekdays, Mon–Fri 10:00 UTC
+crons = ["0 10 * * 1"]      # weekly, Monday 10:00 UTC
+crons = ["0 10 * * *"]      # daily, including weekends
 ```
 
 The cron does not fire under `wrangler dev` — use `POST /trigger` for the dev loop.

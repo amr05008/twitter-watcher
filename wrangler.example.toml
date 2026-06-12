@@ -23,11 +23,11 @@ binding = "DB"
 database_name = "twitter-watcher"
 database_id = "REPLACE_WITH_D1_ID"
 
-# Weekday briefing — Mon–Fri 11:00 UTC ≈ 06:00–07:00 ET (accept DST drift).
+# Weekday briefing — Mon–Fri 10:00 UTC ≈ 05:00–06:00 ET (accept DST drift).
 # Each run covers the window since the last posted briefing (Monday reaches back
-# over the weekend). To revert to weekly, change this to "0 11 * * 1".
+# over the weekend). To revert to weekly, change this to "0 10 * * 1".
 [triggers]
-crons = ["0 11 * * 1-5"]
+crons = ["0 10 * * 1-5"]
 
 # Secrets — set via `wrangler secret put` (NOT defined here):
 #   ANTHROPIC_API_KEY        Anthropic API key (cap monthly budget in console)
