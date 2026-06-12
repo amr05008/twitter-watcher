@@ -2,7 +2,7 @@
 
 I want the signal from Twitter without being on Twitter. So this watches a small set of hand-picked accounts for me, has Claude pick the handful of posts actually worth reading, and drops them into a Discord channel as a short, concise weekday briefing. 
 
-It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [twitterapi.io](https://twitterapi.io), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
+It's a Cloudflare Worker on a cron. Every run (Sun–Fri) it pulls fresh tweets from [twitterapi.io](https://twitterapi.io), stores them in D1, asks Claude Sonnet for the day's top signals, and posts a tiered Discord embed. If nothing clears the bar, it stays silent. That's the whole thing.
 
 > **This is my personal setup, shared as a reference.** The architecture transfers directly to anyone who wants the same "Twitter signal without Twitter" pipeline, but the setup below assumes you'll swap in your own Cloudflare account, D1 database, Anthropic key, Discord webhook (or whatever other channel), and watch list. Adapt it, don't expect to clone and run it untouched.
 
@@ -11,7 +11,7 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [tw
 ```
                      ┌─────────── Cloudflare Worker ───────────┐
   weekday cron  ──▶  │  refresh → twitterapi.io                 │
-  (Mon–Fri 10 UTC)   │     ↓                                    │
+  (Sun–Fri 10 UTC)   │     ↓                                    │
                      │   D1 (posts) ──▶ Claude (tiered top) ───▶│──▶ Discord briefing
                      │     ↑                                    │
                      │   prune posts > 30 days                  │
@@ -21,7 +21,7 @@ It's a Cloudflare Worker on a cron. Every weekday it pulls fresh tweets from [tw
                                │ run a briefing, refresh, discover/add/remove accounts
 ```
 
-- **Weekday briefing.** Every weekday (Mon–Fri) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Monday reaches back over the weekend. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
+- **Briefing.** Every run (Sun–Fri, skips Saturday) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Sunday reaches back over Saturday. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
 - **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the weekday run.
 - **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, add/remove accounts, or pull raw tweets/accounts for ad-hoc research, from any Claude conversation.
 
@@ -35,11 +35,11 @@ The headline under each item is Claude's rationale — the full tweet text isn't
 
 ## Cadence
 
-It runs every weekday by default. To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
+It runs Sun–Fri by default (skips Saturday). To change it, edit `wrangler.toml` `[triggers].crons` and `npm run deploy`:
 
 ```toml
-crons = ["0 10 * * 1-5"]    # default — weekdays, Mon–Fri 10:00 UTC
-crons = ["0 10 * * 1"]      # weekly, Monday 10:00 UTC
+crons = ["0 10 * * 0-5"]    # default — Sun–Fri 10:00 UTC (~6am ET summer), skips Saturday
+crons = ["0 10 * * 1-5"]    # weekdays only, Mon–Fri
 crons = ["0 10 * * *"]      # daily, including weekends
 ```
 
