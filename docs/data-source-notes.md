@@ -4,6 +4,14 @@ The tweet data source is [twitterapi.io](https://twitterapi.io) — pay-as-you-g
 ~$0.40/mo at this project's volume (~2,300 tweets/month at ~$0.15/1k tweets). This doc
 records why, so the choice isn't re-litigated.
 
+**Official X API comparison (confirmed 2026-06-30).** Moving the same ~2,300 tweets/mo to
+the official X API (pay-per-use, $0.005/read) would cost **~$11.50/mo — ~29×** — for zero
+functional change. The official path is only *required* if this becomes a resold,
+multi-tenant product (X ToS bars reselling scraped data); for the current single-user feed
+the ToS trigger doesn't apply, so twitterapi.io stays. If it ever does go paid, cost scales
+per user: ~100 users ≈ $1,150/mo, and ~870 users hits the 2M-read/mo pay-per-use cap and the
+~$42k/mo Enterprise floor — that cliff, not the $11.50, is the monetization go/no-go.
+
 ## Selection criteria
 
 The data source is the one external dependency with real recurring cost and real fragility,
