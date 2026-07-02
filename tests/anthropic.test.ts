@@ -6,10 +6,11 @@ import {
   type AnthropicAuthorAggregate,
 } from "../src/anthropic";
 
-function fakeFetchOk(toolName: string, toolInput: unknown) {
+function fakeFetchOk(toolName: string, toolInput: unknown, stopReason = "tool_use") {
   return vi.fn(async () =>
     new Response(
       JSON.stringify({
+        stop_reason: stopReason,
         content: [
           {
             type: "tool_use",
@@ -64,6 +65,49 @@ describe("anthropic.selectTopSignal", () => {
     expect((init as any).headers["x-api-key"]).toBe("sk-test");
   });
 
+  it("requests strict tool use with thinking disabled (Sonnet 5 contract)", async () => {
+    const fakeFetch = fakeFetchOk("select_top_signal", { lead: "", picks: [] });
+    await selectTopSignal(posts, env, "sys", fakeFetch as any);
+    const body = JSON.parse(((fakeFetch.mock.calls as any[])[0][1] as any).body);
+    expect(body.model).toBe("claude-sonnet-5");
+    // Sonnet 5 runs adaptive thinking when the field is omitted; this task ran
+    // thinking-off on Sonnet 4.6 and must stay that way (quality + token budget).
+    expect(body.thinking).toEqual({ type: "disabled" });
+    // strict:true is what guarantees picks arrives as a real array — without it
+    // Sonnet 5 has been observed returning picks as a JSON-encoded string.
+    expect(body.tools[0].strict).toBe(true);
+    expect(body.tools[0].input_schema.additionalProperties).toBe(false);
+    // Constraints unsupported under strict must not be present.
+    const schema = JSON.stringify(body.tools[0].input_schema);
+    expect(schema).not.toContain("minItems");
+    expect(schema).not.toContain("maxLength");
+  });
+
+  it("clamps picks to maxPicks (schema can no longer enforce it under strict)", async () => {
+    const seven = Array.from({ length: 7 }, (_, i) => ({
+      rank: i + 1,
+      postIndex: (i % 2) + 1,
+      rationale: `pick ${i + 1}`,
+    }));
+    const fakeFetch = fakeFetchOk("select_top_signal", { lead: "big day", picks: seven });
+    const { picks } = await selectTopSignal(posts, env, "sys", fakeFetch as any);
+    // maxPicks is also clamped to the batch size (2 posts here), so the 7
+    // returned picks reduce to the top 2 by rank.
+    expect(picks.length).toBe(2);
+    expect(picks.map((p) => p.rank)).toEqual([1, 2]);
+  });
+
+  it("throws when the response is truncated (stop_reason max_tokens, not silent)", async () => {
+    const fakeFetch = fakeFetchOk(
+      "select_top_signal",
+      { lead: "", picks: [] },
+      "max_tokens",
+    );
+    await expect(
+      selectTopSignal(posts, env, "sys", fakeFetch as any),
+    ).rejects.toThrow(/max_tokens/);
+  });
+
   it("formats input as a numbered list with [source] prefix", async () => {
     const fakeFetch = fakeFetchOk("select_top_signal", {
       picks: [
@@ -109,13 +153,12 @@ describe("anthropic.selectTopSignal", () => {
   });
 
   it("allows an empty picks array (quiet-day quality gate)", async () => {
-    const fakeFetch = fakeFetchOk("select_top_signal", { picks: [] });
+    // Under strict, lead is a required field — the prompt says empty string on
+    // quiet days, and selectTopSignal must map that back to undefined.
+    const fakeFetch = fakeFetchOk("select_top_signal", { lead: "", picks: [] });
     const result = await selectTopSignal(posts, env, "sys", fakeFetch as any);
     expect(result.picks).toEqual([]);
     expect(result.lead).toBeUndefined();
-    // minItems is 0 so the tool schema permits returning nothing.
-    const body = JSON.parse(((fakeFetch.mock.calls as any[])[0][1] as any).body);
-    expect(body.tools[0].input_schema.properties.picks.minItems).toBe(0);
   });
 
   it("throws on non-OK responses (no silent fallback for signal pipeline)", async () => {

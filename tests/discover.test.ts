@@ -33,6 +33,7 @@ function fakeFetch(routes: { searchResults: unknown[]; anthropicAccounts: any[] 
     if (typeof url === "string" && url.includes("anthropic.com")) {
       return new Response(
         JSON.stringify({
+          stop_reason: "tool_use",
           content: [
             { type: "tool_use", name: "suggest_accounts", input: { accounts: routes.anthropicAccounts } },
           ],

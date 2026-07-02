@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            mcp/package-lock.json
+
+      - name: Worker — install, test, typecheck
+        run: |
+          npm ci
+          npm test            # eval-briefing self-skips without RUN_EVAL — no tokens spent
+          npm run typecheck
+
+      - name: MCP server — install, test, typecheck
+        working-directory: mcp
+        run: |
+          npm ci
+          npm test
+          npm run typecheck

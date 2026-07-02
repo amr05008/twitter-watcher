@@ -22,6 +22,7 @@ function fakeFetch(opts: { anthropicPicks: any[]; lead?: string }) {
     if (typeof url === "string" && url.includes("anthropic.com")) {
       return new Response(
         JSON.stringify({
+          stop_reason: "tool_use",
           content: [
             {
               type: "tool_use",

@@ -226,32 +226,34 @@ describe("db", () => {
       const old = "2020-01-01T00:00:00.000Z";
       const recent = new Date().toISOString();
 
-      // old + summarized → should be pruned
+      // old + summarized → pruned
       await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "old-sum", timestamp: old }));
-      // old + NOT summarized → kept (may still be briefed)
+      // old + NOT summarized → pruned too (can never re-enter the cron window)
       await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "old-unsum", timestamp: old }));
       // recent + summarized → kept (inside the window)
       await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "recent-sum", timestamp: recent }));
+      // recent + NOT summarized → kept (still a briefing candidate)
+      await upsertPost(db as any, "twitter:handle:karpathy", makePost({ sourceId: "recent-unsum", timestamp: recent }));
 
       await markSummarized(db as any, ["twitter:old-sum", "twitter:recent-sum"], "2020-01-02");
     });
 
-    it("deletes only summarized posts older than the window and returns the count", async () => {
+    it("deletes all posts older than the window and returns the count", async () => {
       const removed = await prunePosts(db as any, 30);
-      expect(removed).toBe(1);
+      expect(removed).toBe(2);
 
       const ids = (await db
         .prepare("SELECT id FROM posts ORDER BY id")
         .all<{ id: string }>()).results.map((r) => r.id);
-      expect(ids).toEqual(["twitter:old-unsum", "twitter:recent-sum"]);
+      expect(ids).toEqual(["twitter:recent-sum", "twitter:recent-unsum"]);
     });
 
-    it("never prunes unsummarized posts even when old", async () => {
-      await prunePosts(db as any, 0); // window of 0 days → everything summarized is "old"
-      const survivor = await db
-        .prepare("SELECT id FROM posts WHERE summarized_in IS NULL")
-        .first<{ id: string }>();
-      expect(survivor?.id).toBe("twitter:old-unsum");
+    it("prunes old unsummarized posts but keeps recent ones", async () => {
+      await prunePosts(db as any, 30);
+      const unsummarized = (await db
+        .prepare("SELECT id FROM posts WHERE summarized_in IS NULL ORDER BY id")
+        .all<{ id: string }>()).results.map((r) => r.id);
+      expect(unsummarized).toEqual(["twitter:recent-unsum"]);
     });
   });
 

@@ -161,7 +161,7 @@ If you build your own version, these are the parts I would include:
 
 - **One Worker, two handlers** — `fetch` (HTTP routes) and `scheduled` (the daily cron). Entry: `src/worker.ts`.
 - **Router** — `src/router.ts`, a single switch over `(method, path)`; every route 404s on token mismatch.
-- **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes summarized posts older than 30 days so D1 stays lean.
+- **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes posts older than 30 days (summarized or not — the 7-day candidate window means older posts can never be briefed again) so D1 stays lean.
 - **Discover** — `src/discover.ts`: `twitterapi.io search → normalize → aggregate by author → Claude.suggestAccounts`.
 - **Claude** — `src/anthropic.ts`: tool-use for strict JSON, ephemeral cache on system prompts. Ported from `inbox-watcher`.
 - **Source adapters** — `src/adapters/`. Twitter is the only one today, but the `SourceAdapter` interface means Reddit/Threads/etc. can drop in without touching the briefing logic.
@@ -213,7 +213,7 @@ It self-skips during `npm test` (gated on `RUN_EVAL`), so CI stays free. See the
 
 - Cloudflare Workers: **$0** (free tier — this workload fits easily)
 - twitterapi.io: **~$0.40** (pay-as-you-go, ~$0.15/1k tweets × ~2.3k tweets/mo — no subscription floor)
-- Anthropic: **$1–10** (Sonnet 4.6, tool-use, ephemeral cache — one small tool call per scheduled run)
+- Anthropic: **$1–10** (Sonnet 5, strict tool-use, ephemeral cache — one small tool call per scheduled run)
 - Discord: **$0**
 
 So **~$1–11/mo** with no fixed platform floor — every line item is usage-based or free.
@@ -224,6 +224,12 @@ So **~$1–11/mo** with no fixed platform floor — every line item is usage-bas
 - **Per-account weights** — the `weight` column exists but the prompt doesn't use it yet.
 
 ## Version history
+
+### v1.4.0 — 2026-07-02
+Migrated the briefing model to **Claude Sonnet 5** with strict tool use.
+- A naive model-ID swap regressed selection to zero picks (Sonnet 5 defaults to adaptive thinking when `thinking` is omitted) and could return malformed tool input; fixed with `thinking: disabled`, `strict: true` tool schemas, and a loud `stop_reason` guard. Validated old-vs-new on the frozen eval batch (`npm run eval:briefing`).
+- Pruning now drops **all** posts older than 30 days (previously summarized-only, so unpicked posts accumulated forever and bloated manual-trigger batches).
+- Added GitHub Actions CI — tests + typecheck for the Worker and the MCP server on every push/PR.
 
 ### v1.3.0 — 2026-06-05
 Added on-demand **exploration tools** to the MCP server for interactive research, separate from the weekday briefing.

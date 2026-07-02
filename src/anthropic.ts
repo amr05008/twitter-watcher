@@ -1,4 +1,4 @@
-const MODEL = "claude-sonnet-4-6";
+const MODEL = "claude-sonnet-5";
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 
 export interface AnthropicPostInput {
@@ -29,6 +29,7 @@ export interface AccountSuggestion {
 }
 
 interface AnthropicResponse {
+  stop_reason?: string;
   content?: Array<{ type: string; name?: string; input?: unknown }>;
 }
 
@@ -55,6 +56,14 @@ async function callTool<T>(
   }
 
   const data = (await res.json()) as AnthropicResponse;
+  // With forced tool_choice the only healthy stop is tool_use. Anything else
+  // (max_tokens = truncated tool input, refusal, …) must fail loudly — a
+  // truncated input can parse as valid-looking garbage.
+  if (data.stop_reason !== "tool_use") {
+    throw new Error(
+      `Anthropic response stopped with "${data.stop_reason}" instead of tool_use`,
+    );
+  }
   const tool = data.content?.find((b) => b.type === "tool_use");
   if (!tool || tool.input == null) {
     throw new Error("Anthropic response missing tool_use block");
@@ -110,33 +119,47 @@ export async function selectTopSignal(
   const body = {
     model: MODEL,
     max_tokens: 1024,
+    // Sonnet 5 runs adaptive thinking when this field is omitted (4.6 ran
+    // thinking-off). Keep it off: it matches the tuned behavior, and thinking
+    // would eat into max_tokens ahead of the tool call.
+    thinking: { type: "disabled" },
     system: [
       { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
     ],
+    // strict guarantees the tool input validates against the schema — without
+    // it Sonnet 5 has returned `picks` as a JSON-encoded string. Strict mode
+    // rejects minItems/maxItems/maxLength/minimum, so those bounds live in the
+    // description (and maxPicks is clamped below).
     tools: [
       {
         name: "select_top_signal",
-        description: `Select the top ${minPicks}–${maxPicks} highest-signal posts from the batch (return none if nothing clears the bar).`,
+        description:
+          `Select the top ${minPicks}–${maxPicks} highest-signal posts from the batch ` +
+          `(return an empty picks array if nothing clears the bar). ` +
+          `lead: one sentence (≤160 chars) summarizing the day's signal, empty string when picks is empty. ` +
+          `Each pick: rank (1 = most important, ≤${maxPicks}), postIndex (the post's number in the batch), ` +
+          `rationale (standalone headline, ≤200 chars).`,
+        strict: true,
         input_schema: {
           type: "object",
           properties: {
-            lead: { type: "string", maxLength: 160 },
+            lead: { type: "string" },
             picks: {
               type: "array",
-              minItems: minPicks,
-              maxItems: maxPicks,
               items: {
                 type: "object",
                 properties: {
-                  rank: { type: "integer", minimum: 1, maximum: maxPicks },
+                  rank: { type: "integer" },
                   postIndex: { type: "integer" },
-                  rationale: { type: "string", maxLength: 200 },
+                  rationale: { type: "string" },
                 },
                 required: ["rank", "postIndex", "rationale"],
+                additionalProperties: false,
               },
             },
           },
-          required: ["picks"],
+          required: ["lead", "picks"],
+          additionalProperties: false,
         },
       },
     ],
@@ -149,7 +172,10 @@ export async function selectTopSignal(
     env.ANTHROPIC_API_KEY,
     fetchImpl,
   );
-  return { lead: result.lead, picks: result.picks ?? [] };
+  const picks = [...(result.picks ?? [])]
+    .sort((a, b) => a.rank - b.rank)
+    .slice(0, maxPicks);
+  return { lead: result.lead || undefined, picks };
 }
 
 export async function suggestAccounts(
@@ -163,6 +189,7 @@ export async function suggestAccounts(
   const body = {
     model: MODEL,
     max_tokens: 1024,
+    thinking: { type: "disabled" },
     system: [
       { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
     ],
@@ -170,26 +197,28 @@ export async function suggestAccounts(
       {
         name: "suggest_accounts",
         description:
-          "Identify the top 3 accounts worth following for ongoing signal on a topic.",
+          "Identify the top 1–3 accounts worth following for ongoing signal on a topic. " +
+          "Each account: handle, rationale (≤200 chars), signalScore (0–1).",
+        strict: true,
         input_schema: {
           type: "object",
           properties: {
             accounts: {
               type: "array",
-              minItems: 1,
-              maxItems: 3,
               items: {
                 type: "object",
                 properties: {
                   handle: { type: "string" },
-                  rationale: { type: "string", maxLength: 200 },
-                  signalScore: { type: "number", minimum: 0, maximum: 1 },
+                  rationale: { type: "string" },
+                  signalScore: { type: "number" },
                 },
                 required: ["handle", "rationale", "signalScore"],
+                additionalProperties: false,
               },
             },
           },
           required: ["accounts"],
+          additionalProperties: false,
         },
       },
     ],
@@ -207,5 +236,6 @@ export async function suggestAccounts(
     env.ANTHROPIC_API_KEY,
     fetchImpl,
   );
-  return result.accounts;
+  // Strict mode can't express maxItems — enforce the documented top-3 here.
+  return (result.accounts ?? []).slice(0, 3);
 }

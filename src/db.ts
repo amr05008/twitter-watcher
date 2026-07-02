@@ -240,9 +240,11 @@ export async function insertBriefing(
 }
 
 /**
- * Delete already-summarized posts older than `olderThanDays`. Keeps the posts
- * table lean for a long-running, set-and-forget tool. Unsummarized posts are
- * never pruned (they may still be briefed). Briefings are retained as history.
+ * Delete posts older than `olderThanDays`, summarized or not. Keeps the posts
+ * table lean for a long-running, set-and-forget tool: the cron's candidate
+ * window is capped at 7 days, so an unsummarized post this old can never be
+ * briefed again — keeping it only bloats D1 and the manual-trigger backlog.
+ * Briefings are retained as history.
  *
  * Returns the number of rows removed.
  */
@@ -253,8 +255,7 @@ export async function prunePosts(
   const result = await db
     .prepare(
       `DELETE FROM posts
-        WHERE summarized_in IS NOT NULL
-          AND posted_at < datetime('now', ?)`,
+        WHERE posted_at < datetime('now', ?)`,
     )
     .bind(`-${olderThanDays} days`)
     .run();

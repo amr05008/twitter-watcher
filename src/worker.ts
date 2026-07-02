@@ -70,7 +70,9 @@ export default {
 
       await runBriefing(env, "cron", briefingPrompt);
 
-      // Keep D1 lean: drop summarized posts older than 30 days. Best-effort —
+      // Keep D1 lean: drop posts older than 30 days (summarized or not — the
+      // 7-day cron window means old unsummarized posts can never be briefed
+      // again, they'd only bloat the manual-trigger backlog). Best-effort —
       // a prune failure should not mask a successful briefing.
       try {
         const removed = await prunePosts(env.DB, 30);

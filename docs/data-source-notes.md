@@ -25,6 +25,9 @@ so it was chosen against a few hard requirements:
 - **A clean fit for the data already normalized.** `GET /twitter/user/last_tweets?userName=<handle>`
   returns `id`, `text`, `url`, `createdAt`, `author.userName` — the exact fields the ingest
   path maps — and advanced search covers `discover`.
+- **A real operator.** A registered LLC, ~18 months live, with a public track record
+  (~21K users / >99% success rate on its marketplace presence). Small and pseudonymous, but
+  not vaporware.
 
 ## Endpoints in use
 
@@ -51,9 +54,6 @@ than an error — in two cases we hit:
 
 Plain `OR`, parentheses, quoted phrases, `from:`, and `-filter:replies`/`-filter:retweets` all
 work as expected.
-- **A real operator.** A registered LLC, ~18 months live, with a public track record
-  (~21K users / >99% success rate on its marketplace presence). Small and pseudonymous, but
-  not vaporware.
 
 ## The tradeoff
 
