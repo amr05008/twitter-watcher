@@ -161,13 +161,116 @@ describe("anthropic.selectTopSignal", () => {
     expect(result.lead).toBeUndefined();
   });
 
-  it("throws on non-OK responses (no silent fallback for signal pipeline)", async () => {
+  it("retries transient non-OK responses, then throws after exhausting attempts", async () => {
+    // Always-429 → every attempt fails; assert it retried (not one-and-done)
+    // and still surfaced the error instead of silently returning nothing.
     const fakeFetch = vi.fn(async () =>
       new Response("rate limited", { status: 429 }),
     );
     await expect(
-      selectTopSignal(posts, env, "sys", fakeFetch as any),
-    ).rejects.toThrow();
+      selectTopSignal(posts, env, "sys", fakeFetch as any, {
+        retry: { maxAttempts: 3, sleep: async () => {} },
+      }),
+    ).rejects.toThrow(/429/);
+    expect(fakeFetch).toHaveBeenCalledTimes(3);
+  });
+
+  it("retries a transient 500 and succeeds on a later attempt", async () => {
+    // The exact failure that sank the 2026-07-10 run: a one-off API 500. A
+    // single blip should be absorbed silently rather than aborting the briefing.
+    let calls = 0;
+    const fakeFetch = vi.fn(async () => {
+      calls++;
+      if (calls === 1) return new Response("boom", { status: 500 });
+      return new Response(
+        JSON.stringify({
+          stop_reason: "tool_use",
+          content: [
+            {
+              type: "tool_use",
+              name: "select_top_signal",
+              input: {
+                lead: "back",
+                picks: [{ rank: 1, postIndex: 1, rationale: "r" }],
+              },
+            },
+          ],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
+    });
+    const result = await selectTopSignal(posts, env, "sys", fakeFetch as any, {
+      retry: { maxAttempts: 3, sleep: async () => {} },
+    });
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+    expect(result.picks).toHaveLength(1);
+  });
+
+  it("retries any 5xx, not just an enumerated subset (e.g. a 522 edge status)", async () => {
+    // Edge proxies emit 520/522/524 for transient origin trouble — the same
+    // blip class as a 500. The official SDKs retry every 5xx; so do we.
+    let calls = 0;
+    const fakeFetch = vi.fn(async () => {
+      calls++;
+      if (calls === 1) return new Response("edge timeout", { status: 522 });
+      return new Response(
+        JSON.stringify({
+          stop_reason: "tool_use",
+          content: [
+            {
+              type: "tool_use",
+              name: "select_top_signal",
+              input: { lead: "ok", picks: [] },
+            },
+          ],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
+    });
+    const result = await selectTopSignal(posts, env, "sys", fakeFetch as any, {
+      retry: { maxAttempts: 3, sleep: async () => {} },
+    });
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+    expect(result.picks).toEqual([]);
+  });
+
+  it("does not retry a non-retryable 4xx", async () => {
+    // A 400 is a bug in our request, not a blip — retrying just wastes calls.
+    const fakeFetch = vi.fn(async () =>
+      new Response("bad request", { status: 400 }),
+    );
+    await expect(
+      selectTopSignal(posts, env, "sys", fakeFetch as any, {
+        retry: { maxAttempts: 3, sleep: async () => {} },
+      }),
+    ).rejects.toThrow(/400/);
+    expect(fakeFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("retries network-level failures (fetch rejects)", async () => {
+    let calls = 0;
+    const fakeFetch = vi.fn(async () => {
+      calls++;
+      if (calls === 1) throw new Error("connection reset");
+      return new Response(
+        JSON.stringify({
+          stop_reason: "tool_use",
+          content: [
+            {
+              type: "tool_use",
+              name: "select_top_signal",
+              input: { lead: "ok", picks: [] },
+            },
+          ],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
+    });
+    const result = await selectTopSignal(posts, env, "sys", fakeFetch as any, {
+      retry: { maxAttempts: 3, sleep: async () => {} },
+    });
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+    expect(result.picks).toEqual([]);
   });
 });
 
