@@ -142,7 +142,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | `/api/refresh` returns `ingested: 0` | twitterapi.io key missing/invalid, out of credit, or all handle fetches failed (`failedHandles` > 0). Check `npx wrangler tail` and the twitterapi.io dashboard balance. |
 | One handle never appears | A renamed/suspended handle returns an empty result (HTTP 200), so it's **silently** skipped — it won't show up in `failedHandles` (that only counts network/auth/HTTP errors). If a handle stops appearing, check it still exists on X. |
 | Briefing reports `skipped` / nothing posts | Either no unsummarized posts in the window (run `/api/refresh` first, or check the cron ran) or Claude judged nothing worth surfacing. Silent skips are expected on quiet days. |
-| A failure alert showed up in Discord | The scheduled run threw. Check `npx wrangler tail` for the actual error. |
+| A failure alert showed up in Discord | The scheduled run threw. Transient Anthropic API errors (any 5xx, 408/409/429, network drops) are retried 3× with backoff first, so an alert means a persistent outage or a non-retryable error. Check `npx wrangler tail` for the actual error. |
 
 `npx wrangler tail` streams live Worker logs — the first place to look when something's off.
 
@@ -163,7 +163,7 @@ If you build your own version, these are the parts I would include:
 - **Router** — `src/router.ts`, a single switch over `(method, path)`; every route 404s on token mismatch.
 - **Briefing** — `src/briefing.ts`: `getUnsummarized → Claude.selectTopSignal → Discord embed → markSummarized`. The scheduled handler also prunes posts older than 30 days (summarized or not — the 7-day candidate window means older posts can never be briefed again) so D1 stays lean.
 - **Discover** — `src/discover.ts`: `twitterapi.io search → normalize → aggregate by author → Claude.suggestAccounts`.
-- **Claude** — `src/anthropic.ts`: tool-use for strict JSON, ephemeral cache on system prompts. Ported from `inbox-watcher`.
+- **Claude** — `src/anthropic.ts`: tool-use for strict JSON, ephemeral cache on system prompts; transient API errors retried with exponential backoff (honoring `Retry-After`) so a one-off blip can't sink a run. Ported from `inbox-watcher`.
 - **Source adapters** — `src/adapters/`. Twitter is the only one today, but the `SourceAdapter` interface means Reddit/Threads/etc. can drop in without touching the briefing logic.
 - **D1 schema** — `watch_targets`, `posts` (unique on `(source, source_id)`), `briefings`. See `schema.sql`.
 
