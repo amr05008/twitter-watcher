@@ -37,9 +37,14 @@ type FetchLike = typeof fetch;
 
 // A single transient blip from the Anthropic API (a 500, a 529 overload, a
 // dropped connection) used to sink the whole daily run and post a "briefing
-// failed" alert to #signals. These are exactly the statuses the official SDKs
-// retry, so we do too — a couple of backed-off attempts absorb the blip.
-const RETRYABLE_STATUS = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
+// failed" alert to #signals. Match the official SDKs' retry policy — 408/409/
+// 429 plus every 5xx (not an enumerated subset: edge proxies emit statuses
+// like 520/522/524 for exactly this class of blip).
+const RETRYABLE_STATUS = new Set([408, 409, 429]);
+
+function isRetryableStatus(status: number): boolean {
+  return status >= 500 || RETRYABLE_STATUS.has(status);
+}
 
 export interface RetryOptions {
   /** Total attempts, including the first. Default 3. */
@@ -104,7 +109,7 @@ async function callTool<T>(
     if (!res.ok) {
       const text = await res.text().catch(() => "<unreadable>");
       lastError = new Error(`Anthropic API ${res.status}: ${text}`);
-      if (RETRYABLE_STATUS.has(res.status) && attempt < maxAttempts) {
+      if (isRetryableStatus(res.status) && attempt < maxAttempts) {
         await sleep(
           backoffMs(attempt, baseDelayMs, res.headers.get("retry-after")),
         );

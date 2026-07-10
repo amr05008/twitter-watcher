@@ -206,6 +206,34 @@ describe("anthropic.selectTopSignal", () => {
     expect(result.picks).toHaveLength(1);
   });
 
+  it("retries any 5xx, not just an enumerated subset (e.g. a 522 edge status)", async () => {
+    // Edge proxies emit 520/522/524 for transient origin trouble — the same
+    // blip class as a 500. The official SDKs retry every 5xx; so do we.
+    let calls = 0;
+    const fakeFetch = vi.fn(async () => {
+      calls++;
+      if (calls === 1) return new Response("edge timeout", { status: 522 });
+      return new Response(
+        JSON.stringify({
+          stop_reason: "tool_use",
+          content: [
+            {
+              type: "tool_use",
+              name: "select_top_signal",
+              input: { lead: "ok", picks: [] },
+            },
+          ],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
+    });
+    const result = await selectTopSignal(posts, env, "sys", fakeFetch as any, {
+      retry: { maxAttempts: 3, sleep: async () => {} },
+    });
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+    expect(result.picks).toEqual([]);
+  });
+
   it("does not retry a non-retryable 4xx", async () => {
     // A 400 is a bug in our request, not a blip — retrying just wastes calls.
     const fakeFetch = vi.fn(async () =>
