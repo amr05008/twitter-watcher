@@ -35,40 +35,102 @@ interface AnthropicResponse {
 
 type FetchLike = typeof fetch;
 
+// A single transient blip from the Anthropic API (a 500, a 529 overload, a
+// dropped connection) used to sink the whole daily run and post a "briefing
+// failed" alert to #signals. These are exactly the statuses the official SDKs
+// retry, so we do too — a couple of backed-off attempts absorb the blip.
+const RETRYABLE_STATUS = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
+
+export interface RetryOptions {
+  /** Total attempts, including the first. Default 3. */
+  maxAttempts?: number;
+  /** Exponential backoff base in ms: delay = baseDelayMs * 2^(attempt-1). Default 1000. */
+  baseDelayMs?: number;
+  /** Injectable delay — defaults to real setTimeout; tests pass a no-op. */
+  sleep?: (ms: number) => Promise<void>;
+}
+
+const defaultSleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+// Prefer the server's Retry-After (seconds) when it sends one, otherwise back
+// off exponentially. Capped so a bad header can't stall a cron for minutes.
+function backoffMs(
+  attempt: number,
+  baseDelayMs: number,
+  retryAfter: string | null,
+): number {
+  if (retryAfter) {
+    const secs = Number(retryAfter);
+    if (Number.isFinite(secs) && secs >= 0) return Math.min(secs * 1000, 30_000);
+  }
+  return baseDelayMs * 2 ** (attempt - 1);
+}
+
 async function callTool<T>(
   body: object,
   apiKey: string,
   fetchImpl: FetchLike,
+  retry: RetryOptions = {},
 ): Promise<T> {
-  const res = await fetchImpl(ANTHROPIC_URL, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify(body),
-  });
+  const maxAttempts = Math.max(1, retry.maxAttempts ?? 3);
+  const baseDelayMs = retry.baseDelayMs ?? 1000;
+  const sleep = retry.sleep ?? defaultSleep;
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => "<unreadable>");
-    throw new Error(`Anthropic API ${res.status}: ${text}`);
+  let lastError: Error = new Error("Anthropic API: no attempts made");
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    let res: Response;
+    try {
+      res = await fetchImpl(ANTHROPIC_URL, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      // Network-level failure (connection reset, DNS, timeout) — transient.
+      lastError = err instanceof Error ? err : new Error(String(err));
+      if (attempt < maxAttempts) {
+        await sleep(backoffMs(attempt, baseDelayMs, null));
+        continue;
+      }
+      throw lastError;
+    }
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "<unreadable>");
+      lastError = new Error(`Anthropic API ${res.status}: ${text}`);
+      if (RETRYABLE_STATUS.has(res.status) && attempt < maxAttempts) {
+        await sleep(
+          backoffMs(attempt, baseDelayMs, res.headers.get("retry-after")),
+        );
+        continue;
+      }
+      throw lastError;
+    }
+
+    const data = (await res.json()) as AnthropicResponse;
+    // With forced tool_choice the only healthy stop is tool_use. Anything else
+    // (max_tokens = truncated tool input, refusal, …) must fail loudly — a
+    // truncated input can parse as valid-looking garbage. Not transient, so we
+    // deliberately do NOT retry these.
+    if (data.stop_reason !== "tool_use") {
+      throw new Error(
+        `Anthropic response stopped with "${data.stop_reason}" instead of tool_use`,
+      );
+    }
+    const tool = data.content?.find((b) => b.type === "tool_use");
+    if (!tool || tool.input == null) {
+      throw new Error("Anthropic response missing tool_use block");
+    }
+    return tool.input as T;
   }
 
-  const data = (await res.json()) as AnthropicResponse;
-  // With forced tool_choice the only healthy stop is tool_use. Anything else
-  // (max_tokens = truncated tool input, refusal, …) must fail loudly — a
-  // truncated input can parse as valid-looking garbage.
-  if (data.stop_reason !== "tool_use") {
-    throw new Error(
-      `Anthropic response stopped with "${data.stop_reason}" instead of tool_use`,
-    );
-  }
-  const tool = data.content?.find((b) => b.type === "tool_use");
-  if (!tool || tool.input == null) {
-    throw new Error("Anthropic response missing tool_use block");
-  }
-  return tool.input as T;
+  throw lastError;
 }
 
 function formatPostsForSignal(posts: AnthropicPostInput[]): string {
@@ -97,6 +159,8 @@ function formatAuthorsForDiscover(
 export interface SelectTopSignalOptions {
   minPicks?: number;
   maxPicks?: number;
+  /** Overrides the default transient-error retry policy (mainly for tests). */
+  retry?: RetryOptions;
 }
 
 export interface SignalSelection {
@@ -171,6 +235,7 @@ export async function selectTopSignal(
     body,
     env.ANTHROPIC_API_KEY,
     fetchImpl,
+    opts.retry,
   );
   const picks = [...(result.picks ?? [])]
     .sort((a, b) => a.rank - b.rank)
@@ -185,6 +250,7 @@ export async function suggestAccounts(
   systemPrompt: string,
   fetchImpl: FetchLike = fetch,
   lookbackDays = 7,
+  retry: RetryOptions = {},
 ): Promise<AccountSuggestion[]> {
   const body = {
     model: MODEL,
@@ -235,6 +301,7 @@ export async function suggestAccounts(
     body,
     env.ANTHROPIC_API_KEY,
     fetchImpl,
+    retry,
   );
   // Strict mode can't express maxItems — enforce the documented top-3 here.
   return (result.accounts ?? []).slice(0, 3);
