@@ -134,6 +134,9 @@ describe("briefing.runBriefing", () => {
   });
 
   it("cron scopes candidates to a recent window; manual flushes the backlog", async () => {
+    // Pin to a non-Monday: on Mondays the quiet cron path health-pings instead
+    // of skipping, which is not what this test is about.
+    vi.setSystemTime(new Date("2026-06-02T11:00:00.000Z")); // Tuesday
     // Drain the recent seed; leave one post well outside the ≤7d window.
     await db.prepare("UPDATE posts SET summarized_in = 'pre'").run();
     const old = new Date(Date.now() - 10 * 24 * 3600 * 1000).toISOString();
@@ -161,6 +164,7 @@ describe("briefing.runBriefing", () => {
     });
     const manualResult = await runBriefing(makeEnv(db), "manual", "system", manualFetch as any);
     expect("postCount" in manualResult && manualResult.postCount).toBe(1);
+    vi.useRealTimers();
   });
 
   describe("Monday liveness ping", () => {

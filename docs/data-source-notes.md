@@ -33,7 +33,7 @@ so it was chosen against a few hard requirements:
 
 | Endpoint | Used by | Notes |
 | --- | --- | --- |
-| `GET /twitter/user/last_tweets` | `ingest` (watched-account refresh), `explore.getAccountTweets` (any handle, paginated) | Tweets nest under `data.tweets`. |
+| `GET /twitter/user/last_tweets` | `ingest` (watched-account refresh), `explore.getAccountTweets` (any handle, paginated) | Tweets nest under `data.tweets`. Omits replies unless `includeReplies=true` — explore passes it (a mostly-replies account otherwise looks years stale); ingest deliberately doesn't (briefing stays originals-only). |
 | `GET /twitter/tweet/advanced_search` | `discover` (one page → Claude), `explore.searchTweets` (paginated raw) | Full Twitter query syntax; `queryType=Latest\|Top`; tweets top-level under `tweets`. |
 | `GET /twitter/user/followings` | `explore.getAccountFollowing` | `pageSize` 20–200; returns userName/name/followers/description. |
 

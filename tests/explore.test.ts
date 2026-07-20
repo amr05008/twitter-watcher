@@ -118,6 +118,15 @@ describe("explore.getAccountTweets", () => {
     expect(fetchImpl.mock.calls[0]![0]).toContain("userName=karpathy");
   });
 
+  it("asks last_tweets for replies too (the endpoint omits them by default)", async () => {
+    const fetchImpl = pagedFetch("/twitter/user/last_tweets", [
+      { data: { tweets: [tweet("a", "1", "hi", { isReply: true })], has_next_page: false } },
+    ]);
+    const res = await getAccountTweets(makeEnv(), { handle: "a" }, fetchImpl as any);
+    expect(fetchImpl.mock.calls[0]![0]).toContain("includeReplies=true");
+    expect(res.tweets[0]!.isReply).toBe(true);
+  });
+
   it("flags retweets via retweeted_tweet", async () => {
     const fetchImpl = pagedFetch("/twitter/user/last_tweets", [
       { tweets: [tweet("a", "1", "RT something", { retweeted_tweet: { id: "x" } })], has_next_page: false },

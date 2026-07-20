@@ -225,9 +225,11 @@ export async function getAccountTweets(
   const { items, hasMore } = await fetchPaginated(
     env,
     (cursor) =>
+      // includeReplies: the endpoint omits replies by default, which makes a
+      // mostly-replies account look years stale. Callers filter via isReply.
       `${TWITTERAPI_BASE}/twitter/user/last_tweets?userName=${encodeURIComponent(
         handle,
-      )}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
+      )}&includeReplies=true${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
     extractTweets,
     cap,
     fetchImpl,

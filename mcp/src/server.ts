@@ -98,7 +98,7 @@ const tools = [
   {
     name: "get_account_tweets",
     description:
-      "Pull the RAW recent tweets (text + engagement) for ANY handle (not just watched accounts) into this session. Use to read what a seed account actually posts — e.g. to derive its themes/vocabulary before finding similar accounts. Pass the handle without '@'. Paginates up to maxTweets.",
+      "Pull the RAW recent tweets (text + engagement) for ANY handle (not just watched accounts) into this session. Includes replies (filter in-session via the isReply flag) — an account whose recent activity is mostly replies would otherwise look years stale. Use to read what a seed account actually posts — e.g. to derive its themes/vocabulary before finding similar accounts. Pass the handle without '@'. Paginates up to maxTweets.",
     inputSchema: {
       type: "object",
       properties: {
