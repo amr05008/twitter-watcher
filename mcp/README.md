@@ -38,7 +38,7 @@ touch D1 or the briefing pipeline.
 | Tool | What it does |
 | --- | --- |
 | `search_tweets` | Paginated advanced search. `query` takes Twitter syntax (`OR`, quotes, `from:`, `-filter:replies`, `-filter:retweets`). `queryType` Latest\|Top. Default 150 tweets, max 1000. |
-| `get_account_tweets` | Raw recent tweets for any handle (not just watched ones). Default 150, max 1000. |
+| `get_account_tweets` | Raw recent tweets for any handle (not just watched ones), replies included — filter via `isReply`. Default 150, max 1000. |
 | `get_account_following` | The accounts a handle follows, with bios + follower counts — the backbone for "accounts similar to @X". Default 200, max 1000. |
 
 **"Accounts similar to @someone"** is composed in-session: `get_account_following` (curated
@@ -51,6 +51,10 @@ themes) → Claude synthesizes a shortlist → `add_watched_account` for keepers
 - **Over-long queries return zero** too. Keep each parenthesised `OR` group to ~6 terms.
 - Ambiguous single words pull unrelated meanings (e.g. a common-noun trade term can surface
   unrelated art/hobby tweets) — add context terms to disambiguate.
+- **Absence from results ≠ deleted.** X visibility-filters some live tweets (typically
+  link-bearing originals from small accounts) out of *both* search and timeline pulls; the
+  author still sees them on their own profile. The only existence ground truth is the by-ID
+  endpoint: `GET /twitter/tweets?tweet_ids=<id>` (not exposed as a tool — curl it directly).
 
 ## Install
 

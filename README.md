@@ -128,7 +128,7 @@ All routes require the `X-Trigger-Token` header. A wrong token returns **404, no
 | `POST` | `/api/refresh` | Pull fresh tweets from twitterapi.io and ingest into D1 (the cron does this first each run). |
 | `POST` | `/api/discover` | Topic search → top accounts. Body: `{ topic, lookbackDays? }`. |
 | `POST` | `/api/search-tweets` | Paginated advanced search → raw tweets. Body: `{ query, queryType?, maxTweets? }`. |
-| `POST` | `/api/account-tweets` | Raw recent tweets for any handle. Body: `{ handle, maxTweets? }`. |
+| `POST` | `/api/account-tweets` | Raw recent tweets for any handle, replies included. Body: `{ handle, maxTweets? }`. |
 | `POST` | `/api/account-following` | Accounts a handle follows (bios + follower counts). Body: `{ handle, maxAccounts? }`. |
 | `GET` | `/api/watch-targets` | List watched handles. |
 | `POST` | `/api/promote` | Add a handle. Body: `{ handle, source? }`. |
