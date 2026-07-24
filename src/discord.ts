@@ -40,11 +40,12 @@ function dateLabel(iso: string): string {
   return iso.slice(0, 10);
 }
 
-// A single tweet's headline line: "<rationale> — @author [↗](url)". The
+// A single tweet's headline line: "<rationale> — [@author ↗](url)". The
 // rationale is the standalone headline (full tweet text is no longer rendered).
+// The whole "@author ↗" is the link — a bare arrow is too small to tap on mobile.
 function headlineLine(item: BriefingItem): string {
   const headline = truncate(item.rationale.replace(/\s+/g, " ").trim(), 200);
-  return `${headline} — @${item.author} [↗](${item.url})`;
+  return `${headline} — [@${item.author} ↗](${item.url})`;
 }
 
 /**

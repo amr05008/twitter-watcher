@@ -57,8 +57,8 @@ describe("discord.formatBriefing", () => {
     const e = formatBriefing(samplePayload).embeds![0]!;
     // Headlines + author + link are present...
     expect(e.description).toContain("first benchmark comparing the two on real coding tasks");
-    expect(e.description).toContain("@karpathy");
-    expect(e.description).toContain("https://x.com/karpathy/status/123");
+    // The whole "@author ↗" is the link text (a bare arrow is too small to tap on mobile).
+    expect(e.description).toContain("[@karpathy ↗](https://x.com/karpathy/status/123)");
     expect(e.description).toContain("1. "); // numbered "Don't miss" list
     // ...but the raw tweet body is not.
     expect(e.description).not.toContain("New paper shows X beats Y");
