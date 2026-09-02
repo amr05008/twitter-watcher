@@ -17,13 +17,13 @@ It's a Cloudflare Worker on a cron. Every run (Sun–Fri) it pulls fresh tweets 
                      │   prune posts > 30 days                  │
                      └──────────────────────────────────────────┘
                                ▲
-                     MCP server│(optional) — drive it from any Claude client:
-                               │ run a briefing, refresh, discover/add/remove accounts
+                CLI / skill /  │ drive it from Pi, Claude Code, or a shell;
+             optional MCP      │ run a briefing, refresh, research, curate accounts
 ```
 
 - **Briefing.** Every run (Sun–Fri, skips Saturday) the Worker pulls fresh tweets, has Claude pick the day's top signals, and posts a tiered Discord embed: a one-line lead, a numbered **Don't miss** (1–3), and an **Also worth a look** tier only on heavy days. Each run covers the window since the last posted briefing, so Sunday reaches back over Saturday. If nothing clears the signal bar, it posts nothing — quiet days stay quiet. The one exception is a **quiet Monday**, which posts a one-line liveness ping ("watcher's alive, N days since last signal") so a dead cron is distinguishable from a quiet stretch. If the run *fails*, it posts a failure alert so it never silently goes dark.
 - **Discover (optional, on-demand).** `POST /api/discover { topic }` runs a live Twitter search and has Claude rank the accounts worth following on that topic. I keep this around to find new accounts to add to the watch list, this is not part of the scheduled run.
-- **Drive it from Claude.** A local [MCP server](./mcp/README.md) exposes the whole thing as tools, so I can run a briefing, refresh tweets, add/remove accounts, or pull raw tweets/accounts for ad-hoc research, from any Claude conversation.
+- **Drive it from any agent.** A portable [CLI + Agent Skill](./mcp/README.md) works from Pi, Claude Code, or a shell. The local MCP server remains as an optional Claude convenience. Both expose briefing, refresh, watch-list management, and raw tweet/account research through the same Worker API.
 
 ### Example briefing
 
@@ -120,6 +120,35 @@ curl -X POST -H "X-Trigger-Token: $TRIGGER_TOKEN" -H "Content-Type: application/
 
 All routes require the `X-Trigger-Token` header. A wrong token returns **404, not 401** — by design, so the route's existence is hidden from probes.
 
+## Pi, Claude Code, and CLI use
+
+Build the portable client, then preview and install machine-local links to the repo-owned skill:
+
+```bash
+npm --prefix mcp install
+npm --prefix mcp run build
+scripts/install-skill-links.sh --dry-run
+scripts/install-skill-links.sh --yes
+```
+
+The installer links:
+
+- `~/.agents/skills/twitter-watcher` for Pi
+- `~/.claude/skills/twitter-watcher` for Claude Code
+- `~/.local/bin/twitter-watcher` for shells and other skills
+
+Configure `TWITTER_WATCHER_BASE_URL` and `TWITTER_WATCHER_TRIGGER_TOKEN` in the shell that launches the harness; never pass the token as a CLI argument. The skill and CLI stay versioned in this repository, while each machine's symlinks and credentials remain local.
+
+```bash
+twitter-watcher search-tweets --query 'claude code' --type Top --max 50
+twitter-watcher watch-list
+
+twitter-watcher briefing --dry-run   # no request is made
+twitter-watcher briefing --yes       # may post to Discord and change briefing state
+```
+
+See [`mcp/README.md`](./mcp/README.md) for every CLI command and optional MCP configuration.
+
 ## API
 
 | Method | Path | Purpose |
@@ -183,8 +212,9 @@ src/
 ├── anthropic.ts     # selectTopSignal + suggestAccounts (tool-use)
 └── adapters/        # SourceAdapter interface + twitter.ts
 prompts/             # briefing.md + discover.md (bundled at build time)
-mcp/                 # local MCP server — drive it from any Claude client
-scripts/             # seed-handles.mjs — sync watch-handles.txt → D1 via the API
+skills/              # Agent Skills-standard Twitter Watcher workflow
+mcp/                 # shared HTTP client + portable CLI + optional Claude MCP adapter
+scripts/             # skill linker + seed-handles sync utility
 watch-handles.txt    # hand-editable watch list (source of truth for `npm run seed`)
 tests/               # vitest — real SQL against an in-memory SQLite shim
 ```
@@ -195,6 +225,8 @@ tests/               # vitest — real SQL against an in-memory SQLite shim
 npm test            # vitest
 npm run typecheck   # tsc --noEmit
 npm run dev         # wrangler dev (no cron — use POST /trigger)
+npm --prefix mcp test       # portable CLI + MCP client tests
+npm --prefix mcp run build  # build dist/cli.js + dist/server.js
 ```
 
 To tune the briefing selection prompt, use the offline eval harness — it runs the real

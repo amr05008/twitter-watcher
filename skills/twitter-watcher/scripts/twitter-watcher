@@ -1,0 +1,39 @@
+#!/bin/sh
+set -eu
+
+# Resolve this file even when invoked through ~/.local/bin/twitter-watcher.
+SOURCE=$0
+while [ -h "$SOURCE" ]; do
+  SOURCE_DIR=$(CDPATH= cd -P -- "$(dirname -- "$SOURCE")" && pwd)
+  LINK=$(readlink "$SOURCE")
+  case "$LINK" in
+    /*) SOURCE=$LINK ;;
+    *) SOURCE=$SOURCE_DIR/$LINK ;;
+  esac
+done
+
+SCRIPT_DIR=$(CDPATH= cd -P -- "$(dirname -- "$SOURCE")" && pwd)
+REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/../../.." && pwd -P)
+CLI="$REPO_ROOT/mcp/dist/cli.js"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "twitter-watcher: node is required but was not found on PATH" >&2
+  exit 2
+fi
+
+if [ ! -f "$CLI" ]; then
+  echo "twitter-watcher: CLI is not built at $CLI" >&2
+  echo "Run these commands after reviewing them:" >&2
+  echo "  npm --prefix '$REPO_ROOT/mcp' install" >&2
+  echo "  npm --prefix '$REPO_ROOT/mcp' run build" >&2
+  exit 2
+fi
+
+if find "$REPO_ROOT/mcp/src" -type f -name '*.ts' -newer "$CLI" -print -quit | grep -q .; then
+  echo "twitter-watcher: CLI build is stale; source files are newer than $CLI" >&2
+  echo "Run this command after reviewing it:" >&2
+  echo "  npm --prefix '$REPO_ROOT/mcp' run build" >&2
+  exit 2
+fi
+
+exec node "$CLI" "$@"

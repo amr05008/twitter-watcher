@@ -37,8 +37,9 @@ so it was chosen against a few hard requirements:
 | `GET /twitter/tweet/advanced_search` | `discover` (one page → Claude), `explore.searchTweets` (paginated raw) | Full Twitter query syntax; `queryType=Latest\|Top`; tweets top-level under `tweets`. |
 | `GET /twitter/user/followings` | `explore.getAccountFollowing` | `pageSize` 20–200; returns userName/name/followers/description. |
 
-The `explore.*` calls (added for interactive Claude Code sessions) all go through
-`src/twitterapi.ts`, which centralizes the `X-API-Key` header and cursor pagination
+The `explore.*` calls (added for interactive agent research through the CLI, Pi,
+Claude Code, or optional MCP) all go through `src/twitterapi.ts`, which centralizes
+the `X-API-Key` header and cursor pagination
 (`has_next_page` / `next_cursor`). They're read-only and pull a larger swath of raw data
 (default 150 / cap 1000 items per call); the briefing pipeline is untouched.
 

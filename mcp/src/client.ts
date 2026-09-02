@@ -2,6 +2,34 @@ export interface TwitterWatcherClientConfig {
   baseUrl: string;
   triggerToken: string;
   fetchImpl?: typeof fetch;
+  /** Retries for side-effect-free operations only. Defaults to 2. */
+  readRetries?: number;
+  retryBaseDelayMs?: number;
+  sleepImpl?: (ms: number) => Promise<void>;
+}
+
+export class TwitterWatcherHttpError extends Error {
+  constructor(
+    public readonly method: string,
+    public readonly path: string,
+    public readonly status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "TwitterWatcherHttpError";
+  }
+}
+
+export class TwitterWatcherNetworkError extends Error {
+  constructor(
+    public readonly method: string,
+    public readonly path: string,
+    message: string,
+    options?: ErrorOptions,
+  ) {
+    super(message, options);
+    this.name = "TwitterWatcherNetworkError";
+  }
 }
 
 export interface BriefingResult {
@@ -104,35 +132,75 @@ export class TwitterWatcherClient {
   private baseUrl: string;
   private triggerToken: string;
   private fetchImpl: typeof fetch;
+  private readRetries: number;
+  private retryBaseDelayMs: number;
+  private sleepImpl: (ms: number) => Promise<void>;
 
   constructor(config: TwitterWatcherClientConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, "");
     this.triggerToken = config.triggerToken;
     this.fetchImpl = config.fetchImpl ?? fetch;
+    this.readRetries = Math.max(0, config.readRetries ?? 2);
+    this.retryBaseDelayMs = Math.max(0, config.retryBaseDelayMs ?? 250);
+    this.sleepImpl = config.sleepImpl ?? ((ms) => new Promise((resolve) => setTimeout(resolve, ms)));
   }
 
   private async request<T>(
     method: string,
     path: string,
     body?: unknown,
+    options: { retrySafe?: boolean } = {},
   ): Promise<T> {
     const headers: Record<string, string> = {
       "X-Trigger-Token": this.triggerToken,
     };
     if (body !== undefined) headers["content-type"] = "application/json";
 
-    const res = await this.fetchImpl(`${this.baseUrl}${path}`, {
-      method,
-      headers,
-      ...(body !== undefined && { body: JSON.stringify(body) }),
-    });
+    const attempts = options.retrySafe ? this.readRetries + 1 : 1;
+    for (let attempt = 0; attempt < attempts; attempt++) {
+      let res: Response;
+      try {
+        res = await this.fetchImpl(`${this.baseUrl}${path}`, {
+          method,
+          headers,
+          ...(body !== undefined && { body: JSON.stringify(body) }),
+        });
+      } catch (error) {
+        if (attempt + 1 < attempts) {
+          await this.sleepImpl(this.retryBaseDelayMs * 2 ** attempt);
+          continue;
+        }
+        throw new TwitterWatcherNetworkError(
+          method,
+          path,
+          `Twitter Watcher ${method} ${path} failed: ${error instanceof Error ? error.message : String(error)}`,
+          error instanceof Error ? { cause: error } : undefined,
+        );
+      }
 
-    if (!res.ok) {
+      if (res.ok) return (await res.json()) as T;
+
+      const retryable = res.status === 408 || res.status === 429 || res.status >= 500;
+      if (retryable && attempt + 1 < attempts) {
+        const retryAfterHeader = res.headers.get("retry-after");
+        const retryAfter = retryAfterHeader === null ? Number.NaN : Number(retryAfterHeader);
+        const delay = Number.isFinite(retryAfter) && retryAfter >= 0
+          ? retryAfter * 1000
+          : this.retryBaseDelayMs * 2 ** attempt;
+        await this.sleepImpl(delay);
+        continue;
+      }
+
       const text = await res.text().catch(() => "<unreadable>");
-      throw new Error(`Twitter Watcher ${method} ${path} → ${res.status}: ${text}`);
+      throw new TwitterWatcherHttpError(
+        method,
+        path,
+        res.status,
+        `Twitter Watcher ${method} ${path} → ${res.status}: ${text.slice(0, 1000)}`,
+      );
     }
 
-    return (await res.json()) as T;
+    throw new TwitterWatcherNetworkError(method, path, `Twitter Watcher ${method} ${path} failed`);
   }
 
   async runBriefing(): Promise<BriefingResult> {
@@ -148,7 +216,7 @@ export class TwitterWatcherClient {
     lookbackDays?: number;
     maxResults?: number;
   }): Promise<DiscoverResult> {
-    return this.request<DiscoverResult>("POST", "/api/discover", input);
+    return this.request<DiscoverResult>("POST", "/api/discover", input, { retrySafe: true });
   }
 
   async searchTweets(input: {
@@ -156,25 +224,25 @@ export class TwitterWatcherClient {
     queryType?: "Latest" | "Top";
     maxTweets?: number;
   }): Promise<SearchTweetsResult> {
-    return this.request<SearchTweetsResult>("POST", "/api/search-tweets", input);
+    return this.request<SearchTweetsResult>("POST", "/api/search-tweets", input, { retrySafe: true });
   }
 
   async getAccountTweets(input: {
     handle: string;
     maxTweets?: number;
   }): Promise<AccountTweetsResult> {
-    return this.request<AccountTweetsResult>("POST", "/api/account-tweets", input);
+    return this.request<AccountTweetsResult>("POST", "/api/account-tweets", input, { retrySafe: true });
   }
 
   async getAccountFollowing(input: {
     handle: string;
     maxAccounts?: number;
   }): Promise<AccountFollowingResult> {
-    return this.request<AccountFollowingResult>("POST", "/api/account-following", input);
+    return this.request<AccountFollowingResult>("POST", "/api/account-following", input, { retrySafe: true });
   }
 
   async listWatchedAccounts(): Promise<{ targets: WatchTarget[] }> {
-    return this.request<{ targets: WatchTarget[] }>("GET", "/api/watch-targets");
+    return this.request<{ targets: WatchTarget[] }>("GET", "/api/watch-targets", undefined, { retrySafe: true });
   }
 
   async addWatchedAccount(input: {

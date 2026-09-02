@@ -183,6 +183,61 @@ describe("TwitterWatcherClient.refreshTweets", () => {
   });
 });
 
+describe("TwitterWatcherClient retries", () => {
+  it("retries side-effect-free operations on transient HTTP failures", async () => {
+    const fakeFetch = vi
+      .fn()
+      .mockResolvedValueOnce(new Response("busy", { status: 503 }))
+      .mockResolvedValueOnce(ok({ query: "ai", queryType: "Top", fetched: 0, hasMore: false, tweets: [] }));
+    const sleepImpl = vi.fn(async () => undefined);
+    const c = new TwitterWatcherClient({
+      baseUrl: "https://twitter-watcher.example.dev",
+      triggerToken: "t",
+      fetchImpl: fakeFetch as any,
+      retryBaseDelayMs: 25,
+      sleepImpl,
+    });
+
+    await c.searchTweets({ query: "ai", queryType: "Top" });
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+    expect(sleepImpl).toHaveBeenCalledWith(25);
+  });
+
+  it("retries side-effect-free operations on network failures", async () => {
+    const fakeFetch = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError("connection reset"))
+      .mockResolvedValueOnce(ok({ targets: [] }));
+    const c = new TwitterWatcherClient({
+      baseUrl: "https://twitter-watcher.example.dev",
+      triggerToken: "t",
+      fetchImpl: fakeFetch as any,
+      retryBaseDelayMs: 0,
+      sleepImpl: async () => undefined,
+    });
+
+    await c.listWatchedAccounts();
+    expect(fakeFetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("never retries briefing, refresh, add, or remove writes", async () => {
+    const fakeFetch = vi.fn(async () => new Response("busy", { status: 503 }));
+    const makeClient = () => new TwitterWatcherClient({
+      baseUrl: "https://twitter-watcher.example.dev",
+      triggerToken: "t",
+      fetchImpl: fakeFetch as any,
+      retryBaseDelayMs: 0,
+      sleepImpl: async () => undefined,
+    });
+
+    await expect(makeClient().runBriefing()).rejects.toThrow(/503/);
+    await expect(makeClient().refreshTweets()).rejects.toThrow(/503/);
+    await expect(makeClient().addWatchedAccount({ handle: "x" })).rejects.toThrow(/503/);
+    await expect(makeClient().removeWatchedAccount({ handle: "x" })).rejects.toThrow(/503/);
+    expect(fakeFetch).toHaveBeenCalledTimes(4);
+  });
+});
+
 describe("TwitterWatcherClient baseUrl handling", () => {
   it("strips trailing slash from baseUrl so paths don't double up", async () => {
     const fakeFetch = makeFetch([

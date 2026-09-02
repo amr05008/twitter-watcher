@@ -4,11 +4,13 @@
   "private": true,
   "type": "module",
   "bin": {
+    "twitter-watcher": "./dist/cli.js",
     "twitter-watcher-mcp": "./dist/server.js"
   },
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/server.js",
+    "cli": "tsx ./src/cli.ts",
     "dev": "tsx ./src/server.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

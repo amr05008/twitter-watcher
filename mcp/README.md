@@ -1,8 +1,13 @@
-# twitter-watcher-mcp
+# Twitter Watcher CLI + MCP clients
 
-A local MCP server that lets any Claude client (Claude Desktop, Claude Code, etc.) drive your deployed Twitter Watcher Worker on demand. It's a thin HTTP wrapper — all the real logic (twitterapi.io, Claude, Discord, D1) lives in the Worker.
+This directory contains two thin clients for the deployed Twitter Watcher Worker:
 
-Once installed, you can ask Claude things like:
+- **`twitter-watcher` CLI** — the portable interface for Pi, Claude Code, other agents, and ordinary shells.
+- **`twitter-watcher-mcp`** — an optional stdio MCP adapter for Claude clients.
+
+Both share the same HTTP client. All real logic (twitterapi.io, Claude, Discord, D1) remains in the Worker.
+
+Once installed, you can ask an agent things like:
 
 | Tool | Ask Claude like… |
 | --- | --- |
@@ -18,7 +23,34 @@ Once installed, you can ask Claude things like:
 
 Composable — Claude chains them automatically: *"Pull fresh tweets and run my briefing"* → `refresh_tweets` then `run_briefing`.
 
-## Tools
+## Portable CLI
+
+The CLI emits compact JSON on stdout and diagnostics on stderr:
+
+```bash
+twitter-watcher search-tweets --query 'claude code' --type Top --max 50
+twitter-watcher account-tweets --handle karpathy --max 100
+twitter-watcher account-following --handle karpathy --max 200
+twitter-watcher discover --topic 'AI agents' --lookback-days 7
+twitter-watcher watch-list
+```
+
+Commands with side effects require an explicit preview/execute flow:
+
+```bash
+twitter-watcher refresh --dry-run
+twitter-watcher refresh --yes
+
+twitter-watcher briefing --dry-run
+twitter-watcher briefing --yes
+
+twitter-watcher watch-add --handle karpathy --dry-run
+twitter-watcher watch-add --handle karpathy --yes
+```
+
+The CLI never accepts the trigger token as an argument. Run `twitter-watcher --help` for the full command list.
+
+## MCP tools
 
 | Tool | What it does |
 | --- | --- |
@@ -56,17 +88,29 @@ themes) → Claude synthesizes a shortlist → `add_watched_account` for keepers
   author still sees them on their own profile. The only existence ground truth is the by-ID
   endpoint: `GET /twitter/tweets?tweet_ids=<id>` (not exposed as a tool — curl it directly).
 
-## Install
+## Install and link the skill
+
+Build both `dist/cli.js` and `dist/server.js`:
 
 ```bash
-cd mcp
-npm install
-npm run build   # produces dist/server.js — the stdio MCP server
+npm --prefix mcp install
+npm --prefix mcp run build
 ```
+
+From the repository root, preview and then install global links for Pi, Claude Code, and the CLI:
+
+```bash
+scripts/install-skill-links.sh --dry-run
+scripts/install-skill-links.sh --yes
+```
+
+This links the repo-owned skill into `~/.agents/skills/` and `~/.claude/skills/`, and the launcher into `~/.local/bin/`. The installer refuses to overwrite regular files and requires `--force` to repoint a symlink from another checkout.
 
 ## Configure
 
-Add a `twitter-watcher` server entry to your Claude client config, using the **absolute path** to `dist/server.js`.
+The CLI reads `TWITTER_WATCHER_BASE_URL` and `TWITTER_WATCHER_TRIGGER_TOKEN` from the shell that launches it. Keep values outside the repository and never pass the token on the command line.
+
+For optional MCP use, add a `twitter-watcher` server entry to your Claude client config, using the **absolute path** to `dist/server.js`.
 
 **Claude Desktop** — `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS).
 **Claude Code** — `~/.claude/settings.json` or a project `.claude/settings.json`.
@@ -97,9 +141,16 @@ Restart the Claude client after editing config.
 
 ## Verify
 
-In a new Claude conversation: *"List the Twitter accounts I'm watching."* Claude should call `list_watched_accounts` and return your handles.
+Verify the portable CLI first:
 
-Or poke the server directly:
+```bash
+twitter-watcher --help
+twitter-watcher watch-list
+```
+
+In a new Pi or Claude Code conversation, *"List the Twitter accounts I'm watching"* should load the skill and use the CLI.
+
+To verify the optional MCP server directly:
 
 ```bash
 echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
@@ -110,7 +161,10 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
 
 ## Troubleshooting
 
-- **"missing required env vars"** at startup → set both `TWITTER_WATCHER_BASE_URL` and `TWITTER_WATCHER_TRIGGER_TOKEN` in the config `env` block.
+- **CLI is not built** → run `npm --prefix mcp install && npm --prefix mcp run build` from the repo root.
+- **`twitter-watcher` not found** → ensure `~/.local/bin` is on `PATH`, then run the link installer above.
+- **"missing required environment variable(s)"** → export both variables in the shell that launches the harness. Do not paste values into chat.
+- **"missing required env vars" from MCP startup** → set both variables in the MCP config `env` block.
 - **Tools don't appear** → restart the Claude client; make sure `args` is an absolute path to the built `dist/server.js` (not `src/server.ts`).
 - **Every tool call 404s** → wrong `TRIGGER_TOKEN`. The Worker returns 404 (not 401) on mismatch by design.
 - **`refresh_tweets` ingests 0** → check the Worker's `TWITTERAPI_IO_KEY` and the twitterapi.io credit balance.
@@ -118,8 +172,9 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
 ## Development
 
 ```bash
-npm run dev        # run from source with tsx (no build)
-npm run build      # compile to dist/
-npm test           # vitest — HTTP client unit tests
-npm run typecheck  # tsc --noEmit
+npm run cli -- --help  # run the CLI from source with tsx
+npm run dev             # run the MCP server from source
+npm run build           # compile CLI + MCP server to dist/
+npm test                # vitest — client and CLI unit tests
+npm run typecheck       # tsc --noEmit
 ```
